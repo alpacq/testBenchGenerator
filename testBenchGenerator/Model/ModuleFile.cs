@@ -206,7 +206,7 @@ namespace testBenchGenerator.Model
             {
                 if(input.Contains("clk") || input.Contains("clock"))
                 {
-                    this.Clocks.Add(input, 0.0);
+                    this.Clocks.Add(input, 491.52);
                 }
             }
         }

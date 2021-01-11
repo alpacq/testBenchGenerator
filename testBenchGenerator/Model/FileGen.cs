@@ -133,6 +133,14 @@ namespace testBenchGenerator.Model
                 this.lines.Add("\tlocalparam " + par + " = " + this.ModuleFile.Parameters[par] + ";");
             }
             this.lines.Add("");
+            this.lines.Add(generatedToAdaptComment);
+            this.lines.Add("//Clock signals period - change for proper values");
+            foreach(string clk in this.ModuleFile.Clocks.Keys)
+            {
+                if (this.ModuleFile.Clocks[clk] != 0.0)
+                    this.lines.Add("\tlocalparam " + clk.ToUpper() + "_PERIOD = " + (1000 / this.ModuleFile.Clocks[clk]) + "ns;");
+            }
+            this.lines.Add("");
             this.lines.Add(generatedComment);
             this.lines.Add("//Connections of Device Under Test");
             foreach (string conn in this.ModuleFile.Inputs.Keys)
@@ -216,7 +224,7 @@ namespace testBenchGenerator.Model
             {
                 if(this.ModuleFile.Clocks[clk] != 0.0)
                 {
-                    this.lines.Add("\t\t\t#(" + ((1 / this.ModuleFile.Clocks[clk]) / 2).ToString() + "ns) " + clk + " <= ~" + clk + ";");
+                    this.lines.Add("\t\t\t#(" + clk.ToUpper() + "_PERIOD / 2) " + clk + " <= ~" + clk + ";");
                 }
             }
             this.lines.Add("\t" + end);
