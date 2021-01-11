@@ -1,0 +1,23 @@
+﻿<Window x:Class="testBenchGenerator.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:testBenchGenerator"
+        xmlns:tbg="clr-namespace:testBenchGenerator"
+        xmlns:v="clr-namespace:testBenchGenerator.View"
+        mc:Ignorable="d"
+        Title="Testbench Generator" Height="450" Width="800" WindowStartupLocation="CenterScreen" Icon="icon2.png">
+    <Grid>
+        <TabControl Grid.Row="1" x:Name="tab" SelectionChanged="tab_SelectionChanged">
+            <TabItem Header="Generator">
+                <v:GeneratorView x:Name="genView" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+            </TabItem>
+
+            <TabItem Header="Analyzer">
+                <v:AnalyzerView x:Name="anView" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+            </TabItem>
+        </TabControl>        
+
+    </Grid>
+</Window>
