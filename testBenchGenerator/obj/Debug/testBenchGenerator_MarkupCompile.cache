@@ -4,15 +4,15 @@
 winexe
 C#
 .cs
-C:\Users\krzys\Documents\Archiwum\Projekty\testBenchGenerator\testBenchGenerator\obj\Debug\
+C:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\obj\Debug\
 testBenchGenerator
 none
 false
 DEBUG;TRACE
-C:\Users\krzys\Documents\Archiwum\Projekty\testBenchGenerator\testBenchGenerator\App.xaml
+C:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\App.xaml
 3-1457092454
 
-11528563456
+12-1771384158
 13-1505183044
 MainWindow.xaml;View\AnalyzerView.xaml;View\GeneratorView.xaml;
 

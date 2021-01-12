@@ -20,7 +20,6 @@
 
         <TextBlock Grid.Row="0" Grid.Column="0" Margin="100,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Text="Module under test source file"/>
         <TextBlock Grid.Row="1" Grid.Column="0" Margin="100,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Text="Input data file"/>
-        <TextBlock Grid.Row="2" Grid.Column="0" Margin="100,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Text="Output data file"/>
 
         <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1" Margin="20">
             <TextBox x:Name="dutFile" Width="300" Height="25" IsReadOnly="True" VerticalContentAlignment="Center"/>
@@ -29,10 +28,6 @@
         <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1" Margin="20">
             <TextBox x:Name="inFile" Width="300" Height="25" IsReadOnly="True" VerticalContentAlignment="Center"/>
             <Button x:Name="in" Margin="10,0" Height="25" Width="35" Content="..." Click="in_Click"/>
-        </StackPanel>
-        <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1" Margin="20">
-            <TextBox x:Name="outFile" Width="300" Height="25" IsReadOnly="True" VerticalContentAlignment="Center"/>
-            <Button x:Name="out" Margin="10,0" Height="25" Width="35" Content="..." Click="out_Click"/>
         </StackPanel>
 
         <TextBlock x:Name="infoBlock" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="3" Grid.Column="0"/>

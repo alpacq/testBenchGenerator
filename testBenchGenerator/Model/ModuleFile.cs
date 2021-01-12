@@ -143,7 +143,8 @@ namespace testBenchGenerator.Model
             {
                 if (codeLine.Contains("output"))
                 {
-                    string connName = codeLine.Split(']').ToList<string>().LastOrDefault().Split(' ').ToList<string>().LastOrDefault().Split('\t').ToList<string>().LastOrDefault().Replace(" ", "").Replace(",", "");
+                    
+                    string connName = codeLine.Replace("=", "").Replace("'0,", "").Replace("'0", "").Trim().Split(']').ToList<string>().LastOrDefault().Split(' ').ToList<string>().LastOrDefault().Split('\t').ToList<string>().LastOrDefault().Replace(" ", "").Replace(",", "");
 
                     if (codeLine.Contains("["))
                     {

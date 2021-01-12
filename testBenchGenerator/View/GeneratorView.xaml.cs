@@ -22,8 +22,6 @@ namespace testBenchGenerator.View
     /// </summary>
     public partial class GeneratorView : UserControl
     {
-        private string inFilePath;
-        private string outFilePath;
         private GeneratorViewModel viewModel;
         public GeneratorView()
         {
@@ -51,7 +49,7 @@ namespace testBenchGenerator.View
             {
                 // Open document 
                 string filename = dlg.FileName;
-                this.viewModel = new GeneratorViewModel(filename);
+                this.viewModel = new GeneratorViewModel(filename, inFile.Text);
                 dutFile.Text = filename;
             }
         }
@@ -77,36 +75,10 @@ namespace testBenchGenerator.View
             {
                 // Open document 
                 string filename = dlg.FileName;
-                inFile.Text = filename;
-                inFilePath = filename;
+                this.viewModel = new GeneratorViewModel(this.dutFile.Text, filename);
+                inFile.Text = filename;                
             }
-        }
-
-        private void out_Click(object sender, RoutedEventArgs e)
-        {
-            // Create OpenFileDialog 
-            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
-
-
-
-            // Set filter for file extension and default file extension 
-            dlg.DefaultExt = ".txt";
-            dlg.Filter = "txt Files (*.txt)|*.txt";
-
-
-            // Display OpenFileDialog by calling ShowDialog method 
-            Nullable<bool> result = dlg.ShowDialog();
-
-
-            // Get the selected file name and display in a TextBox 
-            if (result == true)
-            {
-                // Open document 
-                string filename = dlg.FileName;
-                outFile.Text = filename;
-                outFilePath = filename;
-            }
-        }
+        }        
 
         private void run_Click(object sender, RoutedEventArgs e)
         {

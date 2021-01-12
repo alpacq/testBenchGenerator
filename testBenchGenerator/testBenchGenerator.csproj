@@ -56,6 +56,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Model\FileGen.cs" />
+    <Compile Include="Model\InputFile.cs" />
     <Compile Include="ViewModel\AnalyzerViewModel.cs" />
     <Compile Include="ViewModel\GeneratorViewModel.cs" />
     <Compile Include="View\AnalyzerView.xaml.cs">
