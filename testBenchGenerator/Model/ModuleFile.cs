@@ -119,7 +119,7 @@ namespace testBenchGenerator.Model
             {
                 if (codeLine.Contains("input"))
                 {
-                    string connName = codeLine.Split(']').ToList<string>().LastOrDefault().Split(' ').ToList<string>().LastOrDefault().Split('\t').ToList<string>().LastOrDefault().Replace(" ", "").Replace(",", "");
+                    string connName = codeLine.Split(']').ToList<string>().LastOrDefault().Replace(" ","").Replace(",", "").Replace("input", "").Replace("output", "").Replace("wire", "").Replace("reg", "").Replace("logic", "");
 
                     if (codeLine.Contains("["))
                     {
@@ -144,7 +144,7 @@ namespace testBenchGenerator.Model
                 if (codeLine.Contains("output"))
                 {
                     
-                    string connName = codeLine.Replace("=", "").Replace("'0,", "").Replace("'0", "").Trim().Split(']').ToList<string>().LastOrDefault().Split(' ').ToList<string>().LastOrDefault().Split('\t').ToList<string>().LastOrDefault().Replace(" ", "").Replace(",", "");
+                    string connName = codeLine.Replace("=", "").Replace("'0,", "").Replace("'0", "").Trim().Split(']').ToList<string>().LastOrDefault().Replace(" ", "").Replace(",", "").Replace("input", "").Replace("output", "").Replace("wire", "").Replace("reg", "").Replace("logic", "");
 
                     if (codeLine.Contains("["))
                     {

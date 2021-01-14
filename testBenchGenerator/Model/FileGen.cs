@@ -295,14 +295,14 @@ namespace testBenchGenerator.Model
                 this.lines.Add("\t\t\tif(!$feof(data_in_file)) begin");
                 this.lines.Add("\t\t\t\t//Use proper valid signal for data input and proper data input port");
                 this.lines.Add("\t\t\t\tif(valid_in) begin"); 
-                this.lines.Add("\t\t\t\t\t$fscanf(data_in_file, \"%d\\n\", data_in);");
+                this.lines.Add("\t\t\t\t\t$fscanf(data_in_file, \"%d %d\\n\", data_in);");
                 this.lines.Add("\t\t\t" + end);
                 this.lines.Add("\t\t" + end + " else begin");
                 this.lines.Add("\t\t\t\t$fclose(data_in_file);");
                 this.lines.Add("\t\t" + end);                
                 this.lines.Add("\t\t\t//Use proper valid signal for data output and proper data output port");
                 this.lines.Add("\t\t\tif(valid_out) begin");
-                this.lines.Add("\t\t\t\t$fwrite(data_out_file, \"%d\\n\", data_out);");
+                this.lines.Add("\t\t\t\t$fwrite(data_out_file, \"%d %d\\n\", $signed(data_out));");
                 this.lines.Add("\t\t" + end);
                 this.lines.Add("\t" + end);
                 this.lines.Add(end);
