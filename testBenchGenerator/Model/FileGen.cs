@@ -174,7 +174,13 @@ namespace testBenchGenerator.Model
                 }
                 this.lines.Add(lineToAdd + "\t" + conn + ";");
             }
-
+            if(this.InFile != null)
+            {
+                string lineToAdd = "\tlogic\t";
+                for (int i = this.ModuleFile.BwLen; i > 0; i--)
+                    lineToAdd += "\t";
+                this.lines.Add(lineToAdd + "\t" + "eof = '0;");
+            }
             this.lines.Add("");
         }
 
@@ -299,6 +305,7 @@ namespace testBenchGenerator.Model
                 this.lines.Add("\t\t\t" + end);
                 this.lines.Add("\t\t" + end + " else begin");
                 this.lines.Add("\t\t\t\t$fclose(data_in_file);");
+                this.lines.Add("\t\t\t\teof <= 1'b1;");
                 this.lines.Add("\t\t" + end);                
                 this.lines.Add("\t\t\t//Use proper valid signal for data output and proper data output port");
                 this.lines.Add("\t\t\tif(valid_out) begin");

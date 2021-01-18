@@ -37,7 +37,7 @@ namespace testBenchGenerator.View
 
             // Set filter for file extension and default file extension 
             dlg.DefaultExt = ".sv";
-            dlg.Filter = "SystemVerilog Files (*.sv)|*.sv";
+            dlg.Filter = "SystemVerilog Files (*.sv)|*.sv|Verilog Files (*.v)|*.v";
 
 
             // Display OpenFileDialog by calling ShowDialog method 

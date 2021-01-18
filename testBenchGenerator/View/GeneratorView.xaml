@@ -5,11 +5,11 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:testBenchGenerator.View"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="700" d:DesignWidth="1200" Background="White">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition Height="400"/>
             <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
@@ -19,13 +19,68 @@
         </Grid.ColumnDefinitions>
 
         <TextBlock Grid.Row="0" Grid.Column="0" Margin="100,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Text="Module under test source file"/>
-        <TextBlock Grid.Row="1" Grid.Column="0" Margin="100,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Text="Input data file"/>
+        <TextBlock Grid.Row="2" Grid.Column="0" Margin="100,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Text="Input data file"/>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.ColumnSpan="2" Margin="20,0" VerticalAlignment="Stretch">
+            
+            <DockPanel>
+                <Border DockPanel.Dock="Top" BorderThickness="1 " BorderBrush="Black">
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock Text="Clocks" FontWeight="Bold" Margin="10,5,0,5"/>
+                        <ListView x:Name="clocks" VerticalAlignment="Stretch">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header="Name" Width="100" DisplayMemberBinding="{Binding Name}"/>
+                                    <GridViewColumn Header="Frequency" Width="100" DisplayMemberBinding="{Binding Freq}"/>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </StackPanel>
+                </Border>
+            </DockPanel>
+
+            <DockPanel>
+                <Border DockPanel.Dock="Top" BorderThickness="1" BorderBrush="Black">
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock Text="Resets" FontWeight="Bold" Margin="10,5,0,5"/>
+                        <ListView x:Name="resets" VerticalAlignment="Stretch">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header="Name" Width="100" DisplayMemberBinding="{Binding Name}"/>
+                                    <GridViewColumn Header="Polarization" Width="100" DisplayMemberBinding="{Binding Freq}"/>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </StackPanel>
+                </Border>
+            </DockPanel>
+
+            <DockPanel>
+                <Border DockPanel.Dock="Top" BorderThickness="1" BorderBrush="Black">
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock Text="Data Inputs" FontWeight="Bold" Margin="10,5,0,5"/>
+                        <ListView x:Name="datains" VerticalAlignment="Stretch">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header="Name" Width="100" DisplayMemberBinding="{Binding Name}"/>
+                                    <GridViewColumn Header="Clock sync" Width="100" DisplayMemberBinding="{Binding ClkSync}"/>
+                                    <GridViewColumn Header="Valid" Width="100" DisplayMemberBinding="{Binding Valid}"/>
+                                    <GridViewColumn Header="Input pattern" Width="200" DisplayMemberBinding="{Binding InPattern}"/>
+                                    <GridViewColumn Header="Valid sequence" Width="200" DisplayMemberBinding="{Binding VldSeq}"/>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </StackPanel>
+                </Border>
+            </DockPanel>
+
+        </StackPanel>
 
         <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1" Margin="20">
             <TextBox x:Name="dutFile" Width="300" Height="25" IsReadOnly="True" VerticalContentAlignment="Center"/>
             <Button x:Name="dut" Margin="10,0" Height="25" Width="35" Content="..." Click="dut_Click"/>
         </StackPanel>
-        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1" Margin="20">
+        <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1" Margin="20">
             <TextBox x:Name="inFile" Width="300" Height="25" IsReadOnly="True" VerticalContentAlignment="Center"/>
             <Button x:Name="in" Margin="10,0" Height="25" Width="35" Content="..." Click="in_Click"/>
         </StackPanel>
