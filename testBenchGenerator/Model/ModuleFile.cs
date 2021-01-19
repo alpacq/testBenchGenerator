@@ -11,11 +11,13 @@ namespace testBenchGenerator.Model
         private string path;
         private string name;
         private string[] dutLines;
-        private Dictionary<string, string> inputs;
-        private Dictionary<string, string> outputs;
+        private List<Port> inputs;
+        private List<Port> outputs;
         private Dictionary<string, string> parameters;
-        private Dictionary<string, bool> resets;
-        private Dictionary<string, double> clocks;
+        private List<Reset> resets;
+        private List<Clock> clocks;
+        private List<DataInput> dataInputs;
+        private List<ValidInput> validInputs;
         private int bwLen;
 
         public string Name
@@ -30,13 +32,13 @@ namespace testBenchGenerator.Model
             set { this.path = value; }
         }
 
-        public Dictionary<string, string> Inputs
+        public List<Port> Inputs
         {
             get { return this.inputs; }
             set { this.inputs = value; }
         }
 
-        public Dictionary<string, string> Outputs
+        public List<Port> Outputs
         {
             get { return this.outputs; }
             set { this.outputs = value; }
@@ -48,16 +50,28 @@ namespace testBenchGenerator.Model
             set { this.parameters = value; }
         }
 
-        public Dictionary<string, bool> Resets
+        public List<Reset> Resets
         {
             get { return this.resets; }
             set { this.resets = value; }
         }
 
-        public Dictionary<string, double> Clocks
+        public List<Clock> Clocks
         {
             get { return this.clocks; }
             set { this.clocks = value; }
+        }
+
+        public List<DataInput> DataInputs
+        {
+            get { return this.dataInputs; }
+            set { this.dataInputs = value; }
+        }
+
+        public List<ValidInput> ValidInputs
+        {
+            get { return this.validInputs; }
+            set { this.validInputs = value; }
         }
 
         public int BwLen
@@ -94,26 +108,27 @@ namespace testBenchGenerator.Model
             this.ReadParameters(this.dutLines);
             this.RecognizeResets();
             this.RecognizeClocks();
+            this.InitializeDataInputs();
 
             this.bwLen = 0;
-            foreach (string bw in this.inputs.Values)
+            foreach (Port input in this.inputs)
             {
-                if (bw != null)
-                    if (bw.Length > this.bwLen)
-                        this.BwLen = bw.Length;
+                if (input.Bitwidth != null)
+                    if (input.Bitwidth.Length > this.bwLen)
+                        this.BwLen = input.Bitwidth.Length;
             }
-            foreach (string bw in this.outputs.Values)
+            foreach (Port output in this.outputs)
             {
-                if (bw != null)
-                    if (bw.Length > this.bwLen)
-                        this.BwLen = bw.Length;
+                if (output.Bitwidth != null)
+                    if (output.Bitwidth.Length > this.bwLen)
+                        this.BwLen = output.Bitwidth.Length;
             }
             this.BwLen /= 4;
         }
 
         private void ReadInputs(string[] codeLines)
         {
-            this.Inputs = new Dictionary<string, string>();
+            this.Inputs = new List<Port>();
 
             foreach (string codeLine in codeLines)
             {
@@ -125,11 +140,11 @@ namespace testBenchGenerator.Model
                     {
                         string bitwidth = String.Join(String.Empty, codeLine.Split(']').ToList<string>().Where(s => s.Contains("["))).Replace(" ", "").Replace("input", "").Replace("output", "").Replace("wire", "").Replace("reg", "").Replace("logic", "").Replace(",", "");
                         bitwidth = bitwidth.Replace("0[", "0][") + "]";
-                        this.Inputs.Add(connName, bitwidth);
+                        this.Inputs.Add(new Port(connName, bitwidth));
                     }
                     else
                     {
-                        this.Inputs.Add(connName, null);
+                        this.Inputs.Add(new Port(connName));
                     }
                 }
             }
@@ -137,7 +152,7 @@ namespace testBenchGenerator.Model
 
         private void ReadOutputs(string[] codeLines)
         {
-            this.Outputs = new Dictionary<string, string>();
+            this.Outputs = new List<Port>();
 
             foreach (string codeLine in codeLines)
             {
@@ -150,11 +165,11 @@ namespace testBenchGenerator.Model
                     {
                         string bitwidth = String.Join(String.Empty, codeLine.Split(']').ToList<string>().Where(s => s.Contains("["))).Replace(" ", "").Replace("input", "").Replace("output", "").Replace("wire", "").Replace("reg", "").Replace("logic", "").Replace(",", "");
                         bitwidth = bitwidth.Replace("0[", "0][") + "]";
-                        this.Outputs.Add(connName, bitwidth);
+                        this.Outputs.Add(new Port(connName, bitwidth));
                     }
                     else
                     {
-                        this.Outputs.Add(connName, null);
+                        this.Outputs.Add(new Port(connName));
                     }
                 }
             }
@@ -187,27 +202,39 @@ namespace testBenchGenerator.Model
 
         private void RecognizeResets()
         {
-            this.Resets = new Dictionary<string, bool>();
-            foreach(string input in this.Inputs.Keys)
+            this.Resets = new List<Reset>();
+            foreach(Port input in this.Inputs)
             {
-                if(input.Contains("rst") || input.Contains("reset"))
+                if(input.Name.Contains("rst") || input.Name.Contains("reset"))
                 {
-                    if (input.Contains("n"))
-                        this.Resets.Add(input, false); //rst = 0
+                    if (input.Name.Contains("n"))
+                        this.Resets.Add(new Reset(input, false)); //rst = 0
                     else
-                        this.Resets.Add(input, true); //rst = 1
+                        this.Resets.Add(new Reset(input, true)); //rst = 1
                 }
             }
         }
 
         private void RecognizeClocks()
         {
-            this.Clocks = new Dictionary<string, double>();
-            foreach(string input in this.Inputs.Keys)
+            this.Clocks = new List<Clock>();
+            foreach(Port input in this.Inputs)
             {
-                if(input.Contains("clk") || input.Contains("clock"))
+                if(input.Name.Contains("clk") || input.Name.Contains("clock"))
                 {
-                    this.Clocks.Add(input, 491.52);
+                    this.Clocks.Add(new Clock(input, 491.52));
+                }
+            }
+        }
+
+        private void InitializeDataInputs()
+        {
+            this.DataInputs = new List<DataInput>();
+            foreach(Port input in this.Inputs)
+            {
+                if((!this.Clocks.Any(c => c.Name == input.Name)) && (!this.Resets.Any(r => r.Name == input.Name)))
+                {
+                    this.DataInputs.Add(new DataInput(input));
                 }
             }
         }

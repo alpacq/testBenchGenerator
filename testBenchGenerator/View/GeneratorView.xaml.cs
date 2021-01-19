@@ -50,7 +50,11 @@ namespace testBenchGenerator.View
                 // Open document 
                 string filename = dlg.FileName;
                 this.viewModel = new GeneratorViewModel(filename, inFile.Text);
+                this.DataContext = this.viewModel;
                 dutFile.Text = filename;
+                this.clocks.UpdateLayout();
+                this.resets.UpdateLayout();
+                this.datains.UpdateLayout();
             }
         }
 
@@ -76,7 +80,11 @@ namespace testBenchGenerator.View
                 // Open document 
                 string filename = dlg.FileName;
                 this.viewModel = new GeneratorViewModel(this.dutFile.Text, filename);
-                inFile.Text = filename;                
+                this.DataContext = this.viewModel;
+                inFile.Text = filename;
+                this.clocks.UpdateLayout();
+                this.resets.UpdateLayout();
+                this.datains.UpdateLayout();
             }
         }        
 

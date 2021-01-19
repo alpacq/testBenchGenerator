@@ -27,11 +27,11 @@
                 <Border DockPanel.Dock="Top" BorderThickness="1 " BorderBrush="Black">
                     <StackPanel Orientation="Vertical">
                         <TextBlock Text="Clocks" FontWeight="Bold" Margin="10,5,0,5"/>
-                        <ListView x:Name="clocks" VerticalAlignment="Stretch">
+                        <ListView x:Name="clocks" VerticalAlignment="Stretch" ItemsSource="{Binding Clocks}" BorderThickness="0">
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn Header="Name" Width="100" DisplayMemberBinding="{Binding Name}"/>
-                                    <GridViewColumn Header="Frequency" Width="100" DisplayMemberBinding="{Binding Freq}"/>
+                                    <GridViewColumn Header="Frequency (MHz)" Width="100" DisplayMemberBinding="{Binding Frequency}"/>
                                 </GridView>
                             </ListView.View>
                         </ListView>
@@ -43,11 +43,11 @@
                 <Border DockPanel.Dock="Top" BorderThickness="1" BorderBrush="Black">
                     <StackPanel Orientation="Vertical">
                         <TextBlock Text="Resets" FontWeight="Bold" Margin="10,5,0,5"/>
-                        <ListView x:Name="resets" VerticalAlignment="Stretch">
+                        <ListView x:Name="resets" VerticalAlignment="Stretch" ItemsSource="{Binding Resets}" BorderThickness="0">
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn Header="Name" Width="100" DisplayMemberBinding="{Binding Name}"/>
-                                    <GridViewColumn Header="Polarization" Width="100" DisplayMemberBinding="{Binding Freq}"/>
+                                    <GridViewColumn Header="Polarization" Width="100" DisplayMemberBinding="{Binding Polarization}"/>
                                 </GridView>
                             </ListView.View>
                         </ListView>
@@ -59,13 +59,13 @@
                 <Border DockPanel.Dock="Top" BorderThickness="1" BorderBrush="Black">
                     <StackPanel Orientation="Vertical">
                         <TextBlock Text="Data Inputs" FontWeight="Bold" Margin="10,5,0,5"/>
-                        <ListView x:Name="datains" VerticalAlignment="Stretch">
+                        <ListView x:Name="datains" VerticalAlignment="Stretch" ItemsSource="{Binding DataInputs}" BorderThickness="0">
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn Header="Name" Width="100" DisplayMemberBinding="{Binding Name}"/>
-                                    <GridViewColumn Header="Clock sync" Width="100" DisplayMemberBinding="{Binding ClkSync}"/>
+                                    <GridViewColumn Header="Clock sync" Width="100" DisplayMemberBinding="{Binding ClockSync}"/>
                                     <GridViewColumn Header="Valid" Width="100" DisplayMemberBinding="{Binding Valid}"/>
-                                    <GridViewColumn Header="Input pattern" Width="200" DisplayMemberBinding="{Binding InPattern}"/>
+                                    <GridViewColumn Header="Input pattern" Width="200" DisplayMemberBinding="{Binding DataVector}"/>
                                     <GridViewColumn Header="Valid sequence" Width="200" DisplayMemberBinding="{Binding VldSeq}"/>
                                 </GridView>
                             </ListView.View>

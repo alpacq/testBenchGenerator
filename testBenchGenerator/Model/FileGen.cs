@@ -134,21 +134,21 @@ namespace testBenchGenerator.Model
             this.lines.Add("");
             this.lines.Add(generatedToAdaptComment);
             this.lines.Add("//Clock signals period - change for proper values");
-            foreach (string clk in this.ModuleFile.Clocks.Keys)
+            foreach (Clock clk in this.ModuleFile.Clocks)
             {
-                if (this.ModuleFile.Clocks[clk] != 0.0)
-                    this.lines.Add("\tlocalparam " + clk.ToUpper() + "_PERIOD = " + (1000 / this.ModuleFile.Clocks[clk]).ToString("N3").Replace(",",".") + "ns;");
+                if (clk.Frequency != 0.0)
+                    this.lines.Add("\tlocalparam " + clk.Name.ToUpper() + "_PERIOD = " + (1000 / clk.Frequency).ToString("N3").Replace(",",".") + "ns;");
             }
             this.lines.Add("");
             this.lines.Add(generatedComment);
             this.lines.Add("//Connections of Device Under Test");
-            foreach (string conn in this.ModuleFile.Inputs.Keys)
+            foreach (Port conn in this.ModuleFile.Inputs)
             {
                 string lineToAdd = "\tlogic\t";
-                if (this.ModuleFile.Inputs[conn] != null)
+                if (conn.Bitwidth != null)
                 {
-                    lineToAdd += this.ModuleFile.Inputs[conn];
-                    for (int i = this.ModuleFile.BwLen - (this.ModuleFile.Inputs[conn].Length / 4); i > 0; i--)
+                    lineToAdd += conn.Bitwidth;
+                    for (int i = this.ModuleFile.BwLen - (conn.Bitwidth.Length / 4); i > 0; i--)
                         lineToAdd += "\t";
                 }
                 else
@@ -156,15 +156,15 @@ namespace testBenchGenerator.Model
                     for (int i = this.ModuleFile.BwLen; i > 0; i--)
                         lineToAdd += "\t";
                 }
-                this.lines.Add(lineToAdd + "\t" + conn + " = '0;");
+                this.lines.Add(lineToAdd + "\t" + conn.Name + " = '0;");
             }
-            foreach (string conn in this.ModuleFile.Outputs.Keys)
+            foreach (Port conn in this.ModuleFile.Outputs)
             {
                 string lineToAdd = "\tlogic\t";
-                if (this.ModuleFile.Outputs[conn] != null)
+                if (conn.Bitwidth != null)
                 {
-                    lineToAdd += this.ModuleFile.Outputs[conn];
-                    for (int i = this.ModuleFile.BwLen - (this.ModuleFile.Outputs[conn].Length / 4); i > 0; i--)
+                    lineToAdd += conn.Bitwidth;
+                    for (int i = this.ModuleFile.BwLen - (conn.Bitwidth.Length / 4); i > 0; i--)
                         lineToAdd += "\t";
                 }
                 else
@@ -172,7 +172,7 @@ namespace testBenchGenerator.Model
                     for (int i = this.ModuleFile.BwLen; i > 0; i--)
                         lineToAdd += "\t";
                 }
-                this.lines.Add(lineToAdd + "\t" + conn + ";");
+                this.lines.Add(lineToAdd + "\t" + conn.Name + ";");
             }
             if(this.InFile != null)
             {
@@ -204,16 +204,16 @@ namespace testBenchGenerator.Model
             {
                 this.lines.Add("\t" + this.ModuleFile.Name + " dut(");
             }
-            foreach (string conn in this.ModuleFile.Inputs.Keys)
+            foreach (Port conn in this.ModuleFile.Inputs)
             {
-                this.lines.Add("\t\t." + conn + "(" + conn + "),");
+                this.lines.Add("\t\t." + conn.Name + "(" + conn.Name + "),");
             }
-            foreach (string conn in this.ModuleFile.Outputs.Keys)
+            foreach (Port conn in this.ModuleFile.Outputs)
             {
-                if (conn == this.ModuleFile.Outputs.Keys.Last())
-                    this.lines.Add("\t\t." + conn + "(" + conn + ")");
+                if (conn == this.ModuleFile.Outputs.Last())
+                    this.lines.Add("\t\t." + conn.Name + "(" + conn.Name + ")");
                 else
-                    this.lines.Add("\t\t." + conn + "(" + conn + "),");
+                    this.lines.Add("\t\t." + conn.Name + "(" + conn.Name + "),");
             }
             this.lines.Add("\t);");
             this.lines.Add("");
@@ -225,11 +225,11 @@ namespace testBenchGenerator.Model
             this.lines.Add("//Clocks generation");
             this.lines.Add(initial);
             this.lines.Add(forever);
-            foreach (string clk in this.ModuleFile.Clocks.Keys)
+            foreach (Clock clk in this.ModuleFile.Clocks)
             {
-                if (this.ModuleFile.Clocks[clk] != 0.0)
+                if (clk.Frequency != 0.0)
                 {
-                    this.lines.Add("\t\t\t#(" + clk.ToUpper() + "_PERIOD / 2) " + clk + " <= ~" + clk + ";");
+                    this.lines.Add("\t\t\t#(" + clk.Name.ToUpper() + "_PERIOD / 2) " + clk.Name + " <= ~" + clk.Name + ";");
                 }
             }
             this.lines.Add("\t" + end);
@@ -242,14 +242,14 @@ namespace testBenchGenerator.Model
             this.lines.Add(generatedComment);
             this.lines.Add("//Initial reset state");
             this.lines.Add(initial);
-            foreach (string rst in this.ModuleFile.Resets.Keys)
+            foreach (Reset rst in this.ModuleFile.Resets)
             {
-                this.lines.Add("\t\t" + rst + " = " + (this.ModuleFile.Resets[rst] ? "1'b1;" : "1'b0;"));
+                this.lines.Add("\t\t" + rst.Name + " = " + (rst.Polarization ? "1'b1;" : "1'b0;"));
             }
             this.lines.Add("\t\t#100ns;");
-            foreach (string rst in this.ModuleFile.Resets.Keys)
+            foreach (Reset rst in this.ModuleFile.Resets)
             {
-                this.lines.Add("\t\t" + rst + " = " + (this.ModuleFile.Resets[rst] ? "1'b0;" : "1'b1;"));
+                this.lines.Add("\t\t" + rst.Name + " = " + (rst.Polarization ? "1'b0;" : "1'b1;"));
             }
             this.lines.Add(end);
             this.lines.Add("");
@@ -260,9 +260,9 @@ namespace testBenchGenerator.Model
             this.lines.Add(generatedToAdaptComment);
             this.lines.Add("//Inputs stimulus - fill in proper values");
             this.lines.Add(initial);
-            foreach (string input in this.ModuleFile.Inputs.Keys)
+            foreach (Port input in this.ModuleFile.Inputs)
             {
-                if (!this.ModuleFile.Resets.Keys.Contains(input) && !(this.ModuleFile.Clocks.Keys.Contains(input)))
+                if ((!this.ModuleFile.Resets.Any(r => r.Name == input.Name)) && !(this.ModuleFile.Clocks.Any(r => r.Name == input.Name)))
                 {
                     this.lines.Add("\t\t" + input + " = '0;");
                 }
@@ -295,9 +295,9 @@ namespace testBenchGenerator.Model
                 this.lines.Add(generatedToAdaptComment);
                 this.lines.Add("//Reading from input data file and writing to output data file - modify for your needs");
                 this.lines.Add("\t//Check for proper clock signal for this process");
-                this.lines.Add(always + this.ModuleFile.Clocks.Keys.FirstOrDefault() + ") begin");
+                this.lines.Add(always + this.ModuleFile.Clocks.FirstOrDefault().Name + ") begin");
                 this.lines.Add("\t\t//Check for proper reset signal");
-                this.lines.Add("\t\tif(!" + this.ModuleFile.Resets.Keys.FirstOrDefault() + ") begin");
+                this.lines.Add("\t\tif(!" + this.ModuleFile.Resets.FirstOrDefault().Name + ") begin");
                 this.lines.Add("\t\t\tif(!$feof(data_in_file)) begin");
                 this.lines.Add("\t\t\t\t//Use proper valid signal for data input and proper data input port");
                 this.lines.Add("\t\t\t\tif(valid_in) begin"); 
