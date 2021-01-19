@@ -11,7 +11,6 @@
             <RowDefinition/>
             <RowDefinition Height="400"/>
             <RowDefinition/>
-            <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"/>
@@ -19,19 +18,24 @@
         </Grid.ColumnDefinitions>
 
         <TextBlock Grid.Row="0" Grid.Column="0" Margin="100,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Text="Module under test source file"/>
-        <TextBlock Grid.Row="2" Grid.Column="0" Margin="100,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Text="Input data file"/>
 
         <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.ColumnSpan="2" Margin="20,0" VerticalAlignment="Stretch">
             
             <DockPanel>
-                <Border DockPanel.Dock="Top" BorderThickness="1 " BorderBrush="Black">
+                <Border DockPanel.Dock="Top" BorderThickness="1,1,0,1" BorderBrush="Black">
                     <StackPanel Orientation="Vertical">
                         <TextBlock Text="Clocks" FontWeight="Bold" Margin="10,5,0,5"/>
                         <ListView x:Name="clocks" VerticalAlignment="Stretch" ItemsSource="{Binding Clocks}" BorderThickness="0">
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn Header="Name" Width="100" DisplayMemberBinding="{Binding Name}"/>
-                                    <GridViewColumn Header="Frequency (MHz)" Width="100" DisplayMemberBinding="{Binding Frequency}"/>
+                                    <GridViewColumn Header="Frequency (MHz)" Width="100">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBox Text="{Binding Frequency, Mode=TwoWay}" Width="100" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0"/>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
                                 </GridView>
                             </ListView.View>
                         </ListView>
@@ -40,14 +44,20 @@
             </DockPanel>
 
             <DockPanel>
-                <Border DockPanel.Dock="Top" BorderThickness="1" BorderBrush="Black">
+                <Border DockPanel.Dock="Top" BorderThickness="1,1,0,1" BorderBrush="Black">
                     <StackPanel Orientation="Vertical">
                         <TextBlock Text="Resets" FontWeight="Bold" Margin="10,5,0,5"/>
                         <ListView x:Name="resets" VerticalAlignment="Stretch" ItemsSource="{Binding Resets}" BorderThickness="0">
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn Header="Name" Width="100" DisplayMemberBinding="{Binding Name}"/>
-                                    <GridViewColumn Header="Polarization" Width="100" DisplayMemberBinding="{Binding Polarization}"/>
+                                    <GridViewColumn Header="Polarization" Width="100">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBox Text="{Binding Polarization, Mode=TwoWay}" Width="100" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0"/>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
                                 </GridView>
                             </ListView.View>
                         </ListView>
@@ -63,10 +73,34 @@
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn Header="Name" Width="100" DisplayMemberBinding="{Binding Name}"/>
-                                    <GridViewColumn Header="Clock sync" Width="100" DisplayMemberBinding="{Binding ClockSync}"/>
-                                    <GridViewColumn Header="Valid" Width="100" DisplayMemberBinding="{Binding Valid}"/>
-                                    <GridViewColumn Header="Input pattern" Width="200" DisplayMemberBinding="{Binding DataVector}"/>
-                                    <GridViewColumn Header="Valid sequence" Width="200" DisplayMemberBinding="{Binding VldSeq}"/>
+                                    <GridViewColumn Header="Clock sync" Width="100">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBox Text="{Binding ClockSync, Mode=TwoWay}" Width="100" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0"/>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn Header="Valid" Width="100">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBox Text="{Binding Valid, Mode=TwoWay}" Width="100" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0"/>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn Header="Input pattern" Width="200">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBox Text="{Binding DataVector, Mode=TwoWay}" Width="200" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0"/>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn Header="Valid sequence" Width="200">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBox Text="{Binding VldSeq, Mode=TwoWay}" Width="200" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0"/>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
                                 </GridView>
                             </ListView.View>
                         </ListView>
@@ -79,10 +113,6 @@
         <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1" Margin="20">
             <TextBox x:Name="dutFile" Width="300" Height="25" IsReadOnly="True" VerticalContentAlignment="Center"/>
             <Button x:Name="dut" Margin="10,0" Height="25" Width="35" Content="..." Click="dut_Click"/>
-        </StackPanel>
-        <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1" Margin="20">
-            <TextBox x:Name="inFile" Width="300" Height="25" IsReadOnly="True" VerticalContentAlignment="Center"/>
-            <Button x:Name="in" Margin="10,0" Height="25" Width="35" Content="..." Click="in_Click"/>
         </StackPanel>
 
         <TextBlock x:Name="infoBlock" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="3" Grid.Column="0"/>
