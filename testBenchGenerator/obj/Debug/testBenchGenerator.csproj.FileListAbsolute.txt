@@ -36,3 +36,10 @@ C:\Users\krzys\Documents\Archiwum\Projekty\testBenchGenerator\testBenchGenerator
 C:\Users\krzys\Documents\Archiwum\Projekty\testBenchGenerator\testBenchGenerator\obj\Debug\testBenchGenerator.csproj.GenerateResource.cache
 C:\Users\krzys\Documents\Archiwum\Projekty\testBenchGenerator\testBenchGenerator\obj\Debug\testBenchGenerator.exe
 C:\Users\krzys\Documents\Archiwum\Projekty\testBenchGenerator\testBenchGenerator\obj\Debug\testBenchGenerator.pdb
+C:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\bin\Debug\LiveCharts.dll
+C:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\bin\Debug\LiveCharts.Wpf.dll
+C:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\bin\Debug\LiveCharts.pdb
+C:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\bin\Debug\LiveCharts.xml
+C:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\bin\Debug\LiveCharts.Wpf.pdb
+C:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\bin\Debug\LiveCharts.Wpf.xml
+C:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\obj\Debug\testBenchGenerator.csproj.CopyComplete
