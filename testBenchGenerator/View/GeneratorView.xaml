@@ -94,13 +94,7 @@
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
-                                    <GridViewColumn Header="Valid sequence" Width="200">
-                                        <GridViewColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <TextBox Text="{Binding VldSeq, Mode=TwoWay}" Width="200" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0"/>
-                                            </DataTemplate>
-                                        </GridViewColumn.CellTemplate>
-                                    </GridViewColumn>
+                                    <GridViewColumn Header="Valid sequence" Width="200" DisplayMemberBinding="{Binding VldSeq}"/>
                                 </GridView>
                             </ListView.View>
                         </ListView>

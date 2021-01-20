@@ -10,9 +10,11 @@ namespace testBenchGenerator.Model
     {
         
         private Clock clockSync;
-        private ValidInput valid;
+        private Port validIn;
         private string dataVector;
         private string vldSeq;
+        private Port validOut;
+        private Port dataOut;
 
         public Clock ClockSync
         {
@@ -20,10 +22,10 @@ namespace testBenchGenerator.Model
             set { this.clockSync = value; }
         }
 
-        public ValidInput Valid
+        public Port ValidIn
         {
-            get { return this.valid; }
-            set { this.valid = value; }
+            get { return this.validIn; }
+            set { this.validIn = value; }
         }
 
         public string DataVector
@@ -36,6 +38,18 @@ namespace testBenchGenerator.Model
         {
             get { return this.vldSeq; }
             set { this.vldSeq = value; }
+        }
+
+        public Port ValidOut
+        {
+            get { return this.validOut; }
+            set { this.validOut = value; }
+        }
+
+        public Port DataOut
+        {
+            get { return this.dataOut; }
+            set { this.dataOut = value; }
         }
 
         public DataInput(string name, string bitwidth = null) : base(name, bitwidth)

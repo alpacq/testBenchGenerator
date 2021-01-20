@@ -69,7 +69,14 @@
     <Compile Include="Model\Reset.cs" />
     <Compile Include="Model\ValidInput.cs" />
     <Compile Include="ViewModel\AnalyzerViewModel.cs" />
+    <Compile Include="ViewModel\ClockViewModel.cs" />
+    <Compile Include="ViewModel\DataInputViewModel.cs" />
     <Compile Include="ViewModel\GeneratorViewModel.cs" />
+    <Compile Include="ViewModel\InputFileViewModel.cs" />
+    <Compile Include="ViewModel\ModuleFileViewModel.cs" />
+    <Compile Include="ViewModel\PortViewModel.cs" />
+    <Compile Include="ViewModel\ResetViewModel.cs" />
+    <Compile Include="ViewModel\ValidInputViewModel.cs" />
     <Compile Include="View\AnalyzerView.xaml.cs">
       <DependentUpon>AnalyzerView.xaml</DependentUpon>
     </Compile>
