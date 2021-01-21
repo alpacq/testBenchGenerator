@@ -40,5 +40,10 @@ namespace testBenchGenerator.ViewModel
         {
             this.port = port;
         }
+
+        public override string ToString()
+        {
+            return this.Name;
+        }
     }
 }

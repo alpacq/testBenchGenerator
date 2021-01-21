@@ -27,5 +27,10 @@ namespace testBenchGenerator.ViewModel
         {
             this.clock = clock;
         }
+
+        public override string ToString()
+        {
+            return this.Name + " (" + this.Frequency + " MHz)";
+        }
     }
 }

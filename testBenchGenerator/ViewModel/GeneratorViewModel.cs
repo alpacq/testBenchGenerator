@@ -12,6 +12,7 @@ namespace testBenchGenerator.ViewModel
     {
         private ModuleFileViewModel moduleFile;
         private InputFileViewModel inputFile;
+        private DataInputViewModel selectedDataIn;
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged(string name = null)
@@ -29,6 +30,18 @@ namespace testBenchGenerator.ViewModel
         {
             get { return this.inputFile; }
             set { this.inputFile = value; }
+        }
+
+        public List<PortViewModel> Outputs
+        {
+            get { return this.ModuleFile.Outputs; }
+            set { this.ModuleFile.Outputs = value; this.OnPropertyChanged("Outputs"); }
+        }
+
+        public List<ParameterViewModel> Parameters
+        {
+            get { return this.ModuleFile.Parameters; }
+            set { this.ModuleFile.Parameters = value; this.OnPropertyChanged("Parameters"); }
         }
 
         public List<ClockViewModel> Clocks
@@ -55,6 +68,12 @@ namespace testBenchGenerator.ViewModel
             set { this.ModuleFile.ValidInputs = value; this.OnPropertyChanged("ValidInputs"); }
         }
 
+        public DataInputViewModel SelectedDataIn
+        {
+            get { return this.selectedDataIn; }
+            set { this.selectedDataIn = value; this.OnPropertyChanged("SelectedDataIn"); }
+        }
+
         public GeneratorViewModel(string modulePath, string inputPath = null)
         {
             if (modulePath != null && modulePath != String.Empty)
@@ -63,6 +82,8 @@ namespace testBenchGenerator.ViewModel
                 this.OnPropertyChanged("Clocks");
                 this.OnPropertyChanged("Resets");
                 this.OnPropertyChanged("DataInputs");
+                this.OnPropertyChanged("Outputs");
+                this.OnPropertyChanged("Parameters");
             }
             if (inputPath != null && inputPath != String.Empty)
                 this.InputFile = new InputFileViewModel(new InputFile(inputPath));
