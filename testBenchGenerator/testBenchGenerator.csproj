@@ -64,6 +64,7 @@
     <Compile Include="Model\Clock.cs" />
     <Compile Include="Model\DataInput.cs" />
     <Compile Include="Model\FileGen.cs" />
+    <Compile Include="Model\Parameter.cs" />
     <Compile Include="Model\Port.cs" />
     <Compile Include="Model\InputFile.cs" />
     <Compile Include="Model\Reset.cs" />
@@ -74,6 +75,7 @@
     <Compile Include="ViewModel\GeneratorViewModel.cs" />
     <Compile Include="ViewModel\InputFileViewModel.cs" />
     <Compile Include="ViewModel\ModuleFileViewModel.cs" />
+    <Compile Include="ViewModel\ParameterViewModel.cs" />
     <Compile Include="ViewModel\PortViewModel.cs" />
     <Compile Include="ViewModel\ResetViewModel.cs" />
     <Compile Include="ViewModel\ValidInputViewModel.cs" />

@@ -106,7 +106,7 @@ namespace testBenchGenerator.Model
             this.lines.Add(nettypeBegin);
             this.lines.Add("");
 
-            this.lines.Add("module " + this.TbFileName.Split('\\').ToList<string>().LastOrDefault().Replace(".sv", "();"));
+            this.lines.Add("module " + this.TbFileName.Split('\\').ToList<string>().LastOrDefault().Replace(".sv", "();").Replace(".v", "();"));
             this.lines.Add("");
         }
 
@@ -127,9 +127,9 @@ namespace testBenchGenerator.Model
                 this.lines.Add(generatedToAdaptComment);
                 this.lines.Add("//Parameters of Device Under Test - change values if needed");
             }
-            foreach (string par in this.ModuleFile.Parameters.Keys)
+            foreach (Parameter par in this.ModuleFile.Parameters)
             {
-                this.lines.Add("\tlocalparam " + par + " = " + this.ModuleFile.Parameters[par] + ";");
+                this.lines.Add("\tlocalparam " + par.Name + " = " + par.Value + ";");
             }
             this.lines.Add("");
             this.lines.Add(generatedToAdaptComment);
@@ -191,12 +191,12 @@ namespace testBenchGenerator.Model
             if (this.ModuleFile.Parameters.Count > 0)
             {
                 this.lines.Add("\t" + this.ModuleFile.Name + " #(");
-                foreach (string par in this.ModuleFile.Parameters.Keys)
+                foreach (Parameter par in this.ModuleFile.Parameters)
                 {
-                    if (par == this.ModuleFile.Parameters.Keys.Last())
-                        this.lines.Add("\t\t." + par + "(" + par + ")");
+                    if (par == this.ModuleFile.Parameters.Last())
+                        this.lines.Add("\t\t." + par.Name + "(" + par.Name + ")");
                     else
-                        this.lines.Add("\t\t." + par + "(" + par + "),");
+                        this.lines.Add("\t\t." + par.Name + "(" + par.Name + "),");
                 }
                 this.lines.Add("\t) dut(");
             }
@@ -264,7 +264,7 @@ namespace testBenchGenerator.Model
             {
                 if ((!this.ModuleFile.Resets.Any(r => r.Name == input.Name)) && !(this.ModuleFile.Clocks.Any(r => r.Name == input.Name)))
                 {
-                    this.lines.Add("\t\t" + input + " = '0;");
+                    this.lines.Add("\t\t" + input.Name + " = '0;");
                 }
             }
             this.lines.Add(end);

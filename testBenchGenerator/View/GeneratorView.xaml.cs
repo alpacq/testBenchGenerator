@@ -52,9 +52,6 @@ namespace testBenchGenerator.View
                 this.viewModel = new GeneratorViewModel(filename, string.Empty);
                 this.DataContext = this.viewModel;
                 dutFile.Text = filename;
-                this.clocks.UpdateLayout();
-                this.resets.UpdateLayout();
-                this.datains.UpdateLayout();
             }
         }
 
@@ -82,9 +79,6 @@ namespace testBenchGenerator.View
                 this.viewModel = new GeneratorViewModel(this.dutFile.Text, filename);
                 this.DataContext = this.viewModel;
                 //inFile.Text = filename;
-                this.clocks.UpdateLayout();
-                this.resets.UpdateLayout();
-                this.datains.UpdateLayout();
             }
         }        
 

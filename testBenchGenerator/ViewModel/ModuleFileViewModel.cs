@@ -11,6 +11,13 @@ namespace testBenchGenerator.ViewModel
     public class ModuleFileViewModel : INotifyPropertyChanged
     {
         private ModuleFile moduleFile;
+        private List<PortViewModel> inputs;
+        private List<PortViewModel> outputs;
+        private List<ParameterViewModel> parameters;
+        private List<ResetViewModel> resets;
+        private List<ClockViewModel> clocks;
+        private List<DataInputViewModel> dataInputs;
+        private List<ValidInputViewModel> validInputs;
 
         public ModuleFile ModuleFile
         {
@@ -29,46 +36,158 @@ namespace testBenchGenerator.ViewModel
             set { this.ModuleFile.Name = value; OnPropertyChanged("Name"); }
         }
 
-        public List<Port> Inputs
+        public List<PortViewModel> Inputs
         {
-            get { return this.ModuleFile.Inputs; }
-            set { this.ModuleFile.Inputs = value; OnPropertyChanged("Inputs"); }
+            get 
+            {
+                this.inputs = new List<PortViewModel>();
+                foreach(Port input in this.ModuleFile.Inputs)
+                {
+                    this.inputs.Add(new PortViewModel(input));
+                }
+                return this.inputs; 
+            }
+            set 
+            {
+                this.ModuleFile.Inputs = new List<Port>();
+                foreach (PortViewModel input in this.inputs)
+                {
+                    this.ModuleFile.Inputs.Add(input.Port);
+                }
+                OnPropertyChanged("Inputs"); 
+            }
         }
 
-        public List<Port> Outputs
+        public List<PortViewModel> Outputs
         {
-            get { return this.ModuleFile.Outputs; }
-            set { this.ModuleFile.Outputs = value; OnPropertyChanged("Outputs"); }
+            get
+            {
+                this.outputs = new List<PortViewModel>();
+                foreach (Port output in this.ModuleFile.Outputs)
+                {
+                    this.outputs.Add(new PortViewModel(output));
+                }
+                return this.outputs;
+            }
+            set
+            {
+                this.ModuleFile.Outputs = new List<Port>();
+                foreach (PortViewModel output in this.outputs)
+                {
+                    this.ModuleFile.Outputs.Add(output.Port);
+                }
+                OnPropertyChanged("Outputs");
+            }
         }
 
-        public Dictionary<string, string> Parameters
+        public List<ParameterViewModel> Parameters
         {
-            get { return this.ModuleFile.Parameters; }
-            set { this.ModuleFile.Parameters = value; OnPropertyChanged("Parameters"); }
+            get
+            {
+                this.parameters = new List<ParameterViewModel>();
+                foreach (Parameter param in this.ModuleFile.Parameters)
+                {
+                    this.parameters.Add(new ParameterViewModel(param));
+                }
+                return this.parameters;
+            }
+            set
+            {
+                this.ModuleFile.Parameters = new List<Parameter>();
+                foreach (ParameterViewModel param in this.parameters)
+                {
+                    this.ModuleFile.Parameters.Add(param.Parameter);
+                }
+                OnPropertyChanged("Parameters");
+            }
         }
 
-        public List<Reset> Resets
+        public List<ResetViewModel> Resets
         {
-            get { return this.ModuleFile.Resets; }
-            set { this.ModuleFile.Resets = value; OnPropertyChanged("Resets"); }
+            get
+            {
+                this.resets = new List<ResetViewModel>();
+                foreach(Reset reset in this.ModuleFile.Resets)
+                {
+                    this.resets.Add(new ResetViewModel(reset));
+                }
+                return this.resets;
+            }
+            set
+            {
+                this.ModuleFile.Resets = new List<Reset>();
+                foreach(ResetViewModel reset in this.resets)
+                {
+                    this.ModuleFile.Resets.Add(reset.Reset);
+                }
+                OnPropertyChanged("Resets");
+            }
         }
 
-        public List<Clock> Clocks
+        public List<ClockViewModel> Clocks
         {
-            get { return this.ModuleFile.Clocks; }
-            set { this.ModuleFile.Clocks = value; OnPropertyChanged("Clocks"); }
+            get
+            {
+                this.clocks = new List<ClockViewModel>();
+                foreach(Clock clk in this.ModuleFile.Clocks)
+                {
+                    this.clocks.Add(new ClockViewModel(clk));
+                }
+                return this.clocks;
+            }
+            set
+            {
+                this.ModuleFile.Clocks = new List<Clock>();
+                foreach(ClockViewModel clk in this.clocks)
+                {
+                    this.ModuleFile.Clocks.Add(clk.Clock);
+                }
+                OnPropertyChanged("Clocks");
+            }
         }
 
-        public List<DataInput> DataInputs
+        public List<DataInputViewModel> DataInputs
         {
-            get { return this.ModuleFile.DataInputs; }
-            set { this.ModuleFile.DataInputs = value; OnPropertyChanged("DataInputs"); }
+            get
+            {
+                this.dataInputs = new List<DataInputViewModel>();
+                foreach(DataInput di in this.ModuleFile.DataInputs)
+                {
+                    this.dataInputs.Add(new DataInputViewModel(di));
+                }
+                return this.dataInputs;
+            }
+            set
+            {
+                this.ModuleFile.DataInputs = new List<DataInput>();
+                foreach(DataInputViewModel di in this.dataInputs)
+                {
+                    this.ModuleFile.DataInputs.Add(di.DataInput);
+                }
+                OnPropertyChanged("DataInputs");
+            }
         }
 
-        public List<ValidInput> ValidInputs
+        public List<ValidInputViewModel> ValidInputs
         {
-            get { return this.ModuleFile.ValidInputs; }
-            set { this.ModuleFile.ValidInputs = value; OnPropertyChanged("ValidInputs"); }
+            get
+            {
+                this.validInputs = new List<ValidInputViewModel>();
+                foreach(ValidInput vi in this.ModuleFile.ValidInputs)
+                {
+                    this.validInputs.Add(new ValidInputViewModel(vi));
+                }
+                return this.validInputs;
+            }
+            set
+            {
+                this.ModuleFile.ValidInputs = new List<ValidInput>();
+                foreach(ValidInputViewModel vi in this.validInputs)
+                {
+                    this.ModuleFile.ValidInputs.Add(vi.ValidInput);
+                }
+                OnPropertyChanged("ValidInputs");
+            }
         }
 
         public int BwLen
@@ -82,6 +201,11 @@ namespace testBenchGenerator.ViewModel
         protected void OnPropertyChanged(string name = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
+
+        public ModuleFileViewModel(ModuleFile moduleFile)
+        {
+            this.moduleFile = moduleFile;
         }
     }
 }

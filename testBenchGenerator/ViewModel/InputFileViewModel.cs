@@ -36,9 +36,9 @@ namespace testBenchGenerator.ViewModel
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
-        public InputFileViewModel()
+        public InputFileViewModel(InputFile inputFile)
         {
-
+            this.inputFile = inputFile;
         }
     }
 }

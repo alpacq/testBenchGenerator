@@ -13,7 +13,7 @@ namespace testBenchGenerator.Model
         private string[] dutLines;
         private List<Port> inputs;
         private List<Port> outputs;
-        private Dictionary<string, string> parameters;
+        private List<Parameter> parameters;
         private List<Reset> resets;
         private List<Clock> clocks;
         private List<DataInput> dataInputs;
@@ -44,7 +44,7 @@ namespace testBenchGenerator.Model
             set { this.outputs = value; }
         }
 
-        public Dictionary<string, string> Parameters
+        public List<Parameter> Parameters
         {
             get { return this.parameters; }
             set { this.parameters = value; }
@@ -88,7 +88,7 @@ namespace testBenchGenerator.Model
 
         private void Read()
         {
-            this.Name = this.Path.Split('\\').ToList<string>().LastOrDefault().Replace(".sv", "");
+            this.Name = this.Path.Split('\\').ToList<string>().LastOrDefault().Replace(".sv", "").Replace(".v","");
 
             this.dutLines = System.IO.File.ReadAllLines(this.Path);
 
@@ -177,7 +177,7 @@ namespace testBenchGenerator.Model
 
         private void ReadParameters(string[] codeLines)
         {
-            this.Parameters = new Dictionary<string, string>();
+            this.Parameters = new List<Parameter>();
 
             foreach (string codeLine in codeLines)
             {
@@ -194,7 +194,7 @@ namespace testBenchGenerator.Model
                         line.Remove(wrd);
                     if (line.Count > 3)
                     {
-                        this.Parameters.Add(line[1], line[3].Replace(",", ""));
+                        this.Parameters.Add(new Parameter(line[1], line[3].Replace(",", "")));
                     }
                 }
             }

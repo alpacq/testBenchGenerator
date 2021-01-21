@@ -10,8 +10,8 @@ namespace testBenchGenerator.ViewModel
 {
     public class GeneratorViewModel : INotifyPropertyChanged
     {
-        private ModuleFile moduleFile;
-        private InputFile inputFile;
+        private ModuleFileViewModel moduleFile;
+        private InputFileViewModel inputFile;
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged(string name = null)
@@ -19,37 +19,37 @@ namespace testBenchGenerator.ViewModel
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
-        public ModuleFile ModuleFile
+        public ModuleFileViewModel ModuleFile
         {
             get { return this.moduleFile; }
             set { this.moduleFile = value; }
         }
 
-        public InputFile InputFile
+        public InputFileViewModel InputFile
         {
             get { return this.inputFile; }
             set { this.inputFile = value; }
         }
 
-        public List<Clock> Clocks
+        public List<ClockViewModel> Clocks
         {
             get { return this.ModuleFile.Clocks; }
             set { this.ModuleFile.Clocks = value; this.OnPropertyChanged("Clocks"); }
         }
 
-        public List<Reset> Resets
+        public List<ResetViewModel> Resets
         {
             get { return this.ModuleFile.Resets; }
             set { this.ModuleFile.Resets = value; this.OnPropertyChanged("Resets"); }
         }
 
-        public List<DataInput> DataInputs
+        public List<DataInputViewModel> DataInputs
         {
             get { return this.ModuleFile.DataInputs; }
             set { this.ModuleFile.DataInputs = value; this.OnPropertyChanged("DataInputs"); }
         }
 
-        public List<ValidInput> ValidInputs
+        public List<ValidInputViewModel> ValidInputs
         {
             get { return this.ModuleFile.ValidInputs; }
             set { this.ModuleFile.ValidInputs = value; this.OnPropertyChanged("ValidInputs"); }
@@ -59,20 +59,20 @@ namespace testBenchGenerator.ViewModel
         {
             if (modulePath != null && modulePath != String.Empty)
             {
-                this.ModuleFile = new ModuleFile(modulePath);
+                this.ModuleFile = new ModuleFileViewModel(new ModuleFile(modulePath));
                 this.OnPropertyChanged("Clocks");
                 this.OnPropertyChanged("Resets");
                 this.OnPropertyChanged("DataInputs");
             }
             if (inputPath != null && inputPath != String.Empty)
-                this.InputFile = new InputFile(inputPath);
+                this.InputFile = new InputFileViewModel(new InputFile(inputPath));
         }
 
         public bool GenerateFile()
         {
-            string tbFilePath = this.ModuleFile.Path.Replace(".sv", "_tb.sv");
+            string tbFilePath = this.ModuleFile.Path.Replace(".sv", "_tb.sv").Replace(".v", "_tb.sv");
 
-            FileGen file = (this.InputFile != null) ? new FileGen(this.ModuleFile, tbFilePath, this.InputFile) : new FileGen(this.ModuleFile, tbFilePath);
+            FileGen file = (this.InputFile != null) ? new FileGen(this.ModuleFile.ModuleFile, tbFilePath, this.InputFile.InputFile) : new FileGen(this.ModuleFile.ModuleFile, tbFilePath);
 
             return file.GenerateFile();
         }
