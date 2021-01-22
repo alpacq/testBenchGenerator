@@ -222,26 +222,24 @@ namespace testBenchGenerator.Model
         private void AddClocks()
         {
             this.lines.Add(generatedComment);
-            this.lines.Add("//Clocks generation");
-            this.lines.Add(initial);
-            this.lines.Add(forever);
+            this.lines.Add("//Clocks generation");            
             foreach (Clock clk in this.ModuleFile.Clocks)
             {
+                this.lines.Add(initial);
+                this.lines.Add(forever);
                 if (clk.Frequency != 0.0)
                 {
                     this.lines.Add("\t\t\t#(" + clk.Name.ToUpper() + "_PERIOD / 2) " + clk.Name + " <= ~" + clk.Name + ";");
                 }
-            }
-            this.lines.Add("\t" + end);
-            this.lines.Add(end);
+                this.lines.Add("\t" + end);
+                this.lines.Add(end);
+            }            
             this.lines.Add("");
         }
 
         private void AddResets()
         {
-            this.lines.Add(generatedComment);
-            this.lines.Add("//Initial reset state");
-            this.lines.Add(initial);
+            this.lines.Add("\t\t//Initial resets conditions");
             foreach (Reset rst in this.ModuleFile.Resets)
             {
                 this.lines.Add("\t\t" + rst.Name + " = " + (rst.Polarization ? "1'b1;" : "1'b0;"));
@@ -251,15 +249,11 @@ namespace testBenchGenerator.Model
             {
                 this.lines.Add("\t\t" + rst.Name + " = " + (rst.Polarization ? "1'b0;" : "1'b1;"));
             }
-            this.lines.Add(end);
-            this.lines.Add("");
         }
 
         private void AddInputsInit()
         {
-            this.lines.Add(generatedToAdaptComment);
-            this.lines.Add("//Inputs stimulus - fill in proper values");
-            this.lines.Add(initial);
+            this.lines.Add("\t\t//Initial inputs states - adapt to your needs");
             foreach (Port input in this.ModuleFile.Inputs)
             {
                 if ((!this.ModuleFile.Resets.Any(r => r.Name == input.Name)) && !(this.ModuleFile.Clocks.Any(r => r.Name == input.Name)))
@@ -267,25 +261,34 @@ namespace testBenchGenerator.Model
                     this.lines.Add("\t\t" + input.Name + " = '0;");
                 }
             }
-            this.lines.Add(end);
-            this.lines.Add("");
         }
 
-        private void AddFileIDs()
+        private void AddFileOpens()
         {
             if (this.InFile != null)
             {
-                this.lines.Add(generatedComment);
-                this.lines.Add("//Opening files for input/output data");
+                this.lines.Add("\t\t//Opening input and output files");
+                this.lines.Add("\t\tdata_in_file = $fopen(\"" + this.InFile.Path.Replace("\\","/") + "\",\"r\");");
+                this.lines.Add("\t\tdata_out_file = $fopen(\"" + this.OutFileName.Replace("\\", "/") + "\",\"w\");");
+            }
+        }
+
+        private void AddInitialBlock()
+        {
+            this.lines.Add(generatedToAdaptComment);
+            this.lines.Add("//Initial connections' conditions, initial reset state, files' opening and test tasks");
+            if(this.InFile != null)
+            {
                 this.lines.Add("\tinteger\t\tdata_in_file;");
                 this.lines.Add("\tinteger\t\tdata_out_file;");
                 this.lines.Add("");
-                this.lines.Add(initial);
-                this.lines.Add("\t\tdata_in_file = $fopen(\"" + this.InFile.Path.Replace("\\","/") + "\",\"r\");");
-                this.lines.Add("\t\tdata_out_file = $fopen(\"" + this.OutFileName.Replace("\\", "/") + "\",\"w\");");
-                this.lines.Add(end);
-                this.lines.Add("");
             }
+            this.lines.Add(initial);
+            this.AddFileOpens();
+            this.AddInputsInit();
+            this.AddResets();
+            this.lines.Add(end);
+            this.lines.Add("");
         }
 
         private void AddFileIO()
@@ -338,9 +341,7 @@ namespace testBenchGenerator.Model
             this.AddParamsAndConnections();
             this.AddDut();
             this.AddClocks();
-            this.AddResets();
-            this.AddFileIDs();
-            this.AddInputsInit();
+            this.AddInitialBlock();
             this.AddFileIO();
             this.AddFooter();
 

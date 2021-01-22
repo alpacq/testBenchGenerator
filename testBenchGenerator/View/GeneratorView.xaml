@@ -9,7 +9,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
-            <RowDefinition Height="400"/>
+            <RowDefinition Height="700"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -27,7 +27,7 @@
                     <Border DockPanel.Dock="Top" BorderThickness="1,1,0,0" BorderBrush="Black">
                         <StackPanel Orientation="Vertical">
                             <TextBlock Text="Clocks" FontWeight="Bold" Margin="10,5,0,5"/>
-                            <ListView x:Name="clocks" VerticalAlignment="Stretch" ItemsSource="{Binding Clocks}" BorderThickness="0">
+                            <ListView x:Name="clocks" VerticalAlignment="Stretch" ItemsSource="{Binding Clocks}" BorderThickness="0" Height="150">
                                 <ListView.View>
                                     <GridView>
                                         <GridViewColumn Header="Name" Width="200" DisplayMemberBinding="{Binding Name}"/>
@@ -97,7 +97,7 @@
                     <Border DockPanel.Dock="Top" BorderThickness="1" BorderBrush="Black">
                         <StackPanel Orientation="Vertical">
                             <TextBlock Text="Data Inputs" FontWeight="Bold" Margin="10,5,0,5"/>
-                            <ListView x:Name="datains" VerticalAlignment="Stretch" ItemsSource="{Binding DataInputs}" BorderThickness="0" SelectedItem="{Binding SelectedDataIn}">
+                            <ListView x:Name="datains" VerticalAlignment="Stretch" ItemsSource="{Binding DataInputs}" BorderThickness="0" SelectedItem="{Binding SelectedDataIn}" Height="250">
                                 <ListView.Resources>
                                     <Style TargetType="ListViewItem">
                                         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -157,7 +157,7 @@
                     <Border DockPanel.Dock="Top" BorderThickness="1,0,1,1" BorderBrush="Black">
                         <StackPanel Orientation="Vertical">
                             <TextBlock Text="Test Cases" FontWeight="Bold" Margin="10,5,0,5"/>
-                            <ListView x:Name="tests" VerticalAlignment="Stretch" BorderThickness="0">
+                            <ListView x:Name="tests" VerticalAlignment="Stretch" BorderThickness="0" Height="200">
                                 <ListView.Resources>
                                     <Style TargetType="ListViewItem">
                                         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
