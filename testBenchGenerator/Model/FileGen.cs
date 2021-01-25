@@ -15,6 +15,8 @@ namespace testBenchGenerator.Model
         private const string nettypeBegin = "`default_nettype none";
         private const string nettypeEnd = "`default_nettype wire";
         private const string always = "\talways @(posedge ";
+        private const string task = "\ttask ";
+        private const string endtask = "\tendtask";
         private const string endmodule = "endmodule";
         private const string initial = "\tinitial begin";
         private const string forever = "\t\tforever begin";
@@ -25,8 +27,6 @@ namespace testBenchGenerator.Model
         #region private variables
         private ModuleFile moduleFile;
         private string tbFileName;
-        private InputFile inFile;
-        private string outFileName;
         private List<string> lines;
         #endregion
         #region public properties
@@ -42,17 +42,6 @@ namespace testBenchGenerator.Model
             set { this.tbFileName = value; }
         }
 
-        public InputFile InFile
-        {
-            get { return this.inFile; }
-            set { this.inFile = value; }
-        }
-
-        public string OutFileName
-        {
-            get { return this.outFileName; }
-            set { this.outFileName = value; }
-        }
         #endregion
         #region helper methods
 
@@ -174,7 +163,7 @@ namespace testBenchGenerator.Model
                 }
                 this.lines.Add(lineToAdd + "\t" + conn.Name + ";");
             }
-            if(this.InFile != null)
+            if(this.ModuleFile.DataInputs.Any(di => di.DataVector != null))
             {
                 string lineToAdd = "\tlogic\t";
                 for (int i = this.ModuleFile.BwLen; i > 0; i--)
@@ -265,11 +254,17 @@ namespace testBenchGenerator.Model
 
         private void AddFileOpens()
         {
-            if (this.InFile != null)
+            if (this.ModuleFile.DataInputs.Any(di => di.DataVector != null))
             {
                 this.lines.Add("\t\t//Opening input and output files");
-                this.lines.Add("\t\tdata_in_file = $fopen(\"" + this.InFile.Path.Replace("\\","/") + "\",\"r\");");
-                this.lines.Add("\t\tdata_out_file = $fopen(\"" + this.OutFileName.Replace("\\", "/") + "\",\"w\");");
+                foreach (DataInput di in this.ModuleFile.DataInputs)
+                {
+                    if (di.DataVector != null)
+                    {
+                        this.lines.Add("\t\tdata_in_" + di.Name + "_file  = $fopen(\"" + di.DataVector.Replace("\\", "/") + "\",\"r\");");
+                        this.lines.Add("\t\tdata_out_" + di.Name + "_file = $fopen(\"" + di.DataOutVector.Replace("\\", "/") + "\",\"w\");");
+                    }
+                }
             }
         }
 
@@ -277,7 +272,7 @@ namespace testBenchGenerator.Model
         {
             this.lines.Add(generatedToAdaptComment);
             this.lines.Add("//Initial connections' conditions, initial reset state, files' opening and test tasks");
-            if(this.InFile != null)
+            if(this.ModuleFile.DataInputs.Any(di => di.DataVector != null))
             {
                 this.lines.Add("\tinteger\t\tdata_in_file;");
                 this.lines.Add("\tinteger\t\tdata_out_file;");
@@ -293,42 +288,44 @@ namespace testBenchGenerator.Model
 
         private void AddFileIO()
         {
-            if (this.InFile != null)
+            if (this.ModuleFile.DataInputs.Any(di => di.DataVector != null))
             {
                 this.lines.Add(generatedToAdaptComment);
-                this.lines.Add("//Reading from input data file and writing to output data file - modify for your needs");
-                this.lines.Add("\t//Check for proper clock signal for this process");
-                this.lines.Add(always + this.ModuleFile.Clocks.FirstOrDefault().Name + ") begin");
-                this.lines.Add("\t\t//Check for proper reset signal");
-                this.lines.Add("\t\tif(!" + this.ModuleFile.Resets.FirstOrDefault().Name + ") begin");
-                this.lines.Add("\t\t\tif(!$feof(data_in_file)) begin");
-                this.lines.Add("\t\t\t\t//Use proper valid signal for data input and proper data input port");
-                this.lines.Add("\t\t\t\tif(valid_in) begin"); 
-                this.lines.Add("\t\t\t\t\t$fscanf(data_in_file, \"%d %d\\n\", data_in);");
-                this.lines.Add("\t\t\t" + end);
-                this.lines.Add("\t\t" + end + " else begin");
-                this.lines.Add("\t\t\t\t$fclose(data_in_file);");
-                this.lines.Add("\t\t\t\teof <= 1'b1;");
-                this.lines.Add("\t\t" + end);                
-                this.lines.Add("\t\t\t//Use proper valid signal for data output and proper data output port");
-                this.lines.Add("\t\t\tif(valid_out) begin");
-                this.lines.Add("\t\t\t\t$fwrite(data_out_file, \"%d %d\\n\", $signed(data_out));");
-                this.lines.Add("\t\t" + end);
-                this.lines.Add("\t" + end);
-                this.lines.Add(end);
-                this.lines.Add("");
+                this.lines.Add("//Tasks for reading from input data files and writing to output data files - modify for your needs");
+                foreach (DataInput di in this.ModuleFile.DataInputs)
+                {
+                    if (di.DataVector != null)
+                    {
+                        this.lines.Add(task + di.Name + "_" + di.DataVector.Split('\\').LastOrDefault().Replace(".txt", ";"));
+                        this.lines.Add("\t\t//Check for proper reset signal");
+                        this.lines.Add("\t\tif(!" + this.ModuleFile.Resets.FirstOrDefault().Name + ") begin");
+                        this.lines.Add("\t\t\tif(!$feof(data_in_file)) begin");
+                        this.lines.Add("\t\t\t\t//Use proper valid signal for data input and proper data input port");
+                        this.lines.Add("\t\t\t\tif(valid_in) begin");
+                        this.lines.Add("\t\t\t\t\t$fscanf(data_in_file, \"%d %d\\n\", data_in);");
+                        this.lines.Add("\t\t\t" + end);
+                        this.lines.Add("\t\t" + end + " else begin");
+                        this.lines.Add("\t\t\t\t$fclose(data_in_file);");
+                        this.lines.Add("\t\t\t\teof <= 1'b1;");
+                        this.lines.Add("\t\t" + end);
+                        this.lines.Add("\t\t\t//Use proper valid signal for data output and proper data output port");
+                        this.lines.Add("\t\t\tif(valid_out) begin");
+                        this.lines.Add("\t\t\t\t$fwrite(data_out_file, \"%d %d\\n\", $signed(data_out));");
+                        this.lines.Add("\t\t" + end);
+                        this.lines.Add("\t" + end);
+                        this.lines.Add(endtask);
+                        this.lines.Add("");
+                    }
+                }
             }
         }
 
         #endregion
 
-        public FileGen(ModuleFile moduleFile, string tbFileName, InputFile inputFile = null)
+        public FileGen(ModuleFile moduleFile, string tbFileName)
         {
             this.ModuleFile = moduleFile;
             this.TbFileName = tbFileName;
-            this.InFile = inputFile;
-            if(this.InFile != null)
-                this.OutFileName = this.ModuleFile.Path.Replace(".sv", "_" + this.InFile.Name + "_out.txt");
             this.lines = new List<string>();
         }
 

@@ -49,38 +49,11 @@ namespace testBenchGenerator.View
             {
                 // Open document 
                 string filename = dlg.FileName;
-                this.viewModel = new GeneratorViewModel(filename, string.Empty);
+                this.viewModel = new GeneratorViewModel(filename);
                 this.DataContext = this.viewModel;
                 dutFile.Text = filename;
             }
         }
-
-        private void in_Click(object sender, RoutedEventArgs e)
-        {
-            // Create OpenFileDialog 
-            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
-
-
-
-            // Set filter for file extension and default file extension 
-            dlg.DefaultExt = ".txt";
-            dlg.Filter = "txt Files (*.txt)|*.txt";
-
-
-            // Display OpenFileDialog by calling ShowDialog method 
-            Nullable<bool> result = dlg.ShowDialog();
-
-
-            // Get the selected file name and display in a TextBox 
-            if (result == true)
-            {
-                // Open document 
-                string filename = dlg.FileName;
-                this.viewModel = new GeneratorViewModel(this.dutFile.Text, filename);
-                this.DataContext = this.viewModel;
-                //inFile.Text = filename;
-            }
-        }        
 
         private void run_Click(object sender, RoutedEventArgs e)
         {

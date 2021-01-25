@@ -11,7 +11,6 @@ namespace testBenchGenerator.ViewModel
     public class GeneratorViewModel : INotifyPropertyChanged
     {
         private ModuleFileViewModel moduleFile;
-        private InputFileViewModel inputFile;
         private DataInputViewModel selectedDataIn;
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -24,12 +23,6 @@ namespace testBenchGenerator.ViewModel
         {
             get { return this.moduleFile; }
             set { this.moduleFile = value; }
-        }
-
-        public InputFileViewModel InputFile
-        {
-            get { return this.inputFile; }
-            set { this.inputFile = value; }
         }
 
         public List<PortViewModel> Outputs
@@ -74,7 +67,7 @@ namespace testBenchGenerator.ViewModel
             set { this.selectedDataIn = value; this.OnPropertyChanged("SelectedDataIn"); }
         }
 
-        public GeneratorViewModel(string modulePath, string inputPath = null)
+        public GeneratorViewModel(string modulePath)
         {
             if (modulePath != null && modulePath != String.Empty)
             {
@@ -85,15 +78,13 @@ namespace testBenchGenerator.ViewModel
                 this.OnPropertyChanged("Outputs");
                 this.OnPropertyChanged("Parameters");
             }
-            if (inputPath != null && inputPath != String.Empty)
-                this.InputFile = new InputFileViewModel(new InputFile(inputPath));
         }
 
         public bool GenerateFile()
         {
             string tbFilePath = this.ModuleFile.Path.Replace(".sv", "_tb.sv").Replace(".v", "_tb.sv");
 
-            FileGen file = (this.InputFile != null) ? new FileGen(this.ModuleFile.ModuleFile, tbFilePath, this.InputFile.InputFile) : new FileGen(this.ModuleFile.ModuleFile, tbFilePath);
+            FileGen file = new FileGen(this.ModuleFile.ModuleFile, tbFilePath);
 
             return file.GenerateFile();
         }

@@ -153,7 +153,7 @@ namespace testBenchGenerator.ViewModel
                 this.dataInputs = new List<DataInputViewModel>();
                 foreach(DataInput di in this.ModuleFile.DataInputs)
                 {
-                    this.dataInputs.Add(new DataInputViewModel(di));
+                    this.dataInputs.Add(new DataInputViewModel(di, this));
                 }
                 return this.dataInputs;
             }

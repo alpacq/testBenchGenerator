@@ -12,6 +12,7 @@ namespace testBenchGenerator.Model
         private Clock clockSync;
         private Port validIn;
         private string dataVector;
+        private string dataOutVector;
         private string vldSeq;
         private Port validOut;
         private Port dataOut;
@@ -32,6 +33,12 @@ namespace testBenchGenerator.Model
         {
             get { return this.dataVector; }
             set { this.dataVector = value; }
+        }
+
+        public string DataOutVector
+        {
+            get { return this.dataOutVector; }
+            set { this.dataOutVector = value; }
         }
 
         public string VldSeq

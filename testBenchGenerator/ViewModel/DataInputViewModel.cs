@@ -11,6 +11,7 @@ namespace testBenchGenerator.ViewModel
     public class DataInputViewModel : PortViewModel, INotifyPropertyChanged
     {
         private DataInput dataInput;
+        private ModuleFileViewModel module;
 
         public DataInput DataInput
         {
@@ -32,7 +33,18 @@ namespace testBenchGenerator.ViewModel
         public string DataVector
         {
             get { return this.DataInput.DataVector; }
-            set { this.DataInput.DataVector = value; OnPropertyChanged("DataVector"); }
+            set 
+            { 
+                this.DataInput.DataVector = value; 
+                OnPropertyChanged("DataVector"); 
+                this.DataOutVector = this.module.Path.Replace(".sv", "_" + value.Split('\\').LastOrDefault().Replace(".txt","_out.txt")); 
+            }
+        }
+
+        public string DataOutVector
+        {
+            get { return this.DataInput.DataOutVector; }
+            set { this.DataInput.DataOutVector = value; OnPropertyChanged("DataOutVector"); }
         }
 
         public string VldSeq
@@ -56,6 +68,12 @@ namespace testBenchGenerator.ViewModel
         public DataInputViewModel(DataInput dataInput) : base((Port)dataInput)
         {
             this.dataInput = dataInput;
+        }
+
+        public DataInputViewModel(DataInput dataInput, ModuleFileViewModel module) : base((Port)dataInput)
+        {
+            this.dataInput = dataInput;
+            this.module = module;
         }
     }
 }
