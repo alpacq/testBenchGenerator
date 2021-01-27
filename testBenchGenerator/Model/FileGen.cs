@@ -252,41 +252,30 @@ namespace testBenchGenerator.Model
             }
         }
 
-        private void AddFileOpens()
-        {
-            if (this.ModuleFile.DataInputs.Any(di => di.DataVector != null))
-            {
-                this.lines.Add("\t\t//Opening input and output files");
-                foreach (DataInput di in this.ModuleFile.DataInputs)
-                {
-                    if (di.DataVector != null)
-                    {
-                        this.lines.Add("\t\tdata_in_" + di.Name + "_file  = $fopen(\"" + di.DataVector.Replace("\\", "/") + "\",\"r\");");
-                        this.lines.Add("\t\tdata_out_" + di.Name + "_file = $fopen(\"" + di.DataOutVector.Replace("\\", "/") + "\",\"w\");");
-                    }
-                }
-            }
-        }
-
         private void AddInitialBlock()
         {
             this.lines.Add(generatedToAdaptComment);
             this.lines.Add("//Initial connections' conditions, initial reset state, files' opening and test tasks");
-            if(this.ModuleFile.DataInputs.Any(di => di.DataVector != null))
-            {
-                this.lines.Add("\tinteger\t\tdata_in_file;");
-                this.lines.Add("\tinteger\t\tdata_out_file;");
-                this.lines.Add("");
-            }
             this.lines.Add(initial);
-            this.AddFileOpens();
             this.AddInputsInit();
             this.AddResets();
+            if (this.ModuleFile.DataInputs.Any(di => di.DataVector != null))
+            {
+                this.lines.Add("\t\tfork");
+                foreach (DataInput di in this.ModuleFile.DataInputs)
+                {
+                    if (di.DataVector != null)
+                    {
+                        this.lines.Add("\t\t\t" + di.Name + "_" + di.DataVector.Split('\\').LastOrDefault().Replace(".txt", "();"));
+                    }
+                }
+                this.lines.Add("\t\tjoin");
+            }
             this.lines.Add(end);
             this.lines.Add("");
         }
 
-        private void AddFileIO()
+        private void AddFileInput()
         {
             if (this.ModuleFile.DataInputs.Any(di => di.DataVector != null))
             {
@@ -296,24 +285,41 @@ namespace testBenchGenerator.Model
                 {
                     if (di.DataVector != null)
                     {
-                        this.lines.Add(task + di.Name + "_" + di.DataVector.Split('\\').LastOrDefault().Replace(".txt", ";"));
-                        this.lines.Add("\t\t//Check for proper reset signal");
-                        this.lines.Add("\t\tif(!" + this.ModuleFile.Resets.FirstOrDefault().Name + ") begin");
-                        this.lines.Add("\t\t\tif(!$feof(data_in_file)) begin");
-                        this.lines.Add("\t\t\t\t//Use proper valid signal for data input and proper data input port");
-                        this.lines.Add("\t\t\t\tif(valid_in) begin");
-                        this.lines.Add("\t\t\t\t\t$fscanf(data_in_file, \"%d %d\\n\", data_in);");
+                        string name = di.Name + "_" + di.DataVector.Split('\\').LastOrDefault().Replace(".txt", "");
+
+                        this.lines.Add(task + name + "();");
+
+                        this.lines.Add("\t\tstring line_" + name + ";");
+                        this.lines.Add("\t\tinteger fid_" + name + ";");
+                        this.lines.Add("\t\tfid_" + name + " = $fopen(\"" + di.DataVector.Replace("\\", "/") + "\",\"r\");");
+                        this.lines.Add("\t\tif(fid" + name + " == 0) begin");
+                        this.lines.Add("\t\t\t$display(\"Error opening file - could not open.\");");
+                        this.lines.Add("\t\t\t$stop;");
+                        this.lines.Add("\t" + end + " else begin");
+                        this.lines.Add("\t\t\t$display(\"File " + di.DataVector.Replace("\\", "/") + " opened successfully.\");");
+                        this.lines.Add("\t" + end);
+
+                        this.lines.Add(forever);
+                        this.lines.Add("\t\t\t@posedge(" + di.ClockSync.Name + ");");
+                        this.lines.Add("\t\t\tif(" + di.ValidIn.Name + "_pre) begin");
+                        this.lines.Add("\t\t\t\tif($feof(fid_" + name + ")) begin");
+                        //TBD if(di.Loop)
+                        //{
+                        //TBD
+                        //}
+                        //TBD else
+                        //{
+                        this.lines.Add("\t\t\t\t\t$fclose(fid_" + name + ");");
+                        //}
+                        this.lines.Add("\t\t\t" + end + " else if($fgets(line_" + name + ", fid_" + name + ")) begin");
+                        this.lines.Add("\t\t\t\tvoid'($sscanf(line_" + name + ", \"%d %d\\n\", " + di.Name + ");");
+                        this.lines.Add("\t\t\t" + end + " else begin");
+                        this.lines.Add("\t\t\t\t" + di.Name + " <= '0;");
                         this.lines.Add("\t\t\t" + end);
-                        this.lines.Add("\t\t" + end + " else begin");
-                        this.lines.Add("\t\t\t\t$fclose(data_in_file);");
-                        this.lines.Add("\t\t\t\teof <= 1'b1;");
-                        this.lines.Add("\t\t" + end);
-                        this.lines.Add("\t\t\t//Use proper valid signal for data output and proper data output port");
-                        this.lines.Add("\t\t\tif(valid_out) begin");
-                        this.lines.Add("\t\t\t\t$fwrite(data_out_file, \"%d %d\\n\", $signed(data_out));");
                         this.lines.Add("\t\t" + end);
                         this.lines.Add("\t" + end);
-                        this.lines.Add(endtask);
+                                               
+                        this.lines.Add(endtask + " : " + name);
                         this.lines.Add("");
                     }
                 }
@@ -339,7 +345,7 @@ namespace testBenchGenerator.Model
             this.AddDut();
             this.AddClocks();
             this.AddInitialBlock();
-            this.AddFileIO();
+            this.AddFileInput();
             this.AddFooter();
 
             //put code in tb file
