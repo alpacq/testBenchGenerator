@@ -64,6 +64,18 @@ namespace testBenchGenerator.ViewModel
             get { return this.DataInput.DataOut; }
             set { this.DataInput.DataOut = value; OnPropertyChanged("DataOut"); }
         }
+        
+        public bool Loop
+        {
+            get { return this.DataInput.Loop; }
+            set { this.DataInput.Loop = value; OnPropertyChanged("Loop"); }
+        }
+
+        public Radix Radix
+        {
+            get { return this.DataInput.Radix; }
+            set { this.DataInput.Radix = value; OnPropertyChanged("Radix"); }
+        }
 
         public DataInputViewModel(DataInput dataInput) : base((Port)dataInput)
         {

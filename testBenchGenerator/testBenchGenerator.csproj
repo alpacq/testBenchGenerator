@@ -67,6 +67,7 @@
     <Compile Include="Model\Parameter.cs" />
     <Compile Include="Model\Port.cs" />
     <Compile Include="Model\InputFile.cs" />
+    <Compile Include="Model\Radix.cs" />
     <Compile Include="Model\Reset.cs" />
     <Compile Include="Model\ValidInput.cs" />
     <Compile Include="ViewModel\AnalyzerViewModel.cs" />

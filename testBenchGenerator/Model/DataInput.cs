@@ -16,6 +16,8 @@ namespace testBenchGenerator.Model
         private string vldSeq;
         private Port validOut;
         private Port dataOut;
+        private bool loop;
+        private Radix radix;
 
         public Clock ClockSync
         {
@@ -57,6 +59,18 @@ namespace testBenchGenerator.Model
         {
             get { return this.dataOut; }
             set { this.dataOut = value; }
+        }
+
+        public bool Loop
+        {
+            get { return this.loop; }
+            set { this.loop = value; }
+        }
+
+        public Radix Radix
+        {
+            get { return this.radix; }
+            set { this.radix = value; }
         }
 
         public DataInput(string name, string bitwidth = null) : base(name, bitwidth)

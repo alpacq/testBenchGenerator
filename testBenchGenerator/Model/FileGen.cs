@@ -299,24 +299,31 @@ namespace testBenchGenerator.Model
                         this.lines.Add("\t\t\t$display(\"File " + di.DataVector.Replace("\\", "/") + " opened successfully.\");");
                         this.lines.Add("\t" + end);
 
-                        this.lines.Add(forever);
-                        this.lines.Add("\t\t\t@posedge(" + di.ClockSync.Name + ");");
-                        this.lines.Add("\t\t\tif(" + di.ValidIn.Name + "_pre) begin");
-                        this.lines.Add("\t\t\t\tif($feof(fid_" + name + ")) begin");
-                        //TBD if(di.Loop)
-                        //{
-                        //TBD
-                        //}
-                        //TBD else
-                        //{
-                        this.lines.Add("\t\t\t\t\t$fclose(fid_" + name + ");");
-                        //}
-                        this.lines.Add("\t\t\t" + end + " else if($fgets(line_" + name + ", fid_" + name + ")) begin");
-                        this.lines.Add("\t\t\t\tvoid'($sscanf(line_" + name + ", \"%d %d\\n\", " + di.Name + ");");
-                        this.lines.Add("\t\t\t" + end + " else begin");
-                        this.lines.Add("\t\t\t\t" + di.Name + " <= '0;");
-                        this.lines.Add("\t\t\t" + end);
-                        this.lines.Add("\t\t" + end);
+                        if (di.Loop)
+                        {
+                            this.lines.Add(forever);
+                            this.lines.Add("\t\t\t@posedge(" + di.ClockSync.Name + ");");
+                            this.lines.Add("\t\t\tif(" + di.ValidIn.Name + "_pre) begin");
+                            this.lines.Add("\t\t\t\tif($feof(fid_" + name + ")) begin");
+                            //LOOP TBD
+                            this.lines.Add("\t\t\t" + end + " else if($fgets(line_" + name + ", fid_" + name + ")) begin");
+                            this.lines.Add("\t\t\t\tvoid'($sscanf(line_" + name + ", \"%d %d\\n\", " + di.Name + ");");
+                            this.lines.Add("\t\t" + end + " else begin");
+                            this.lines.Add("\t\t\t" + di.Name + " <= '0;");
+                            this.lines.Add("\t\t" + end);
+                        }
+                        else
+                        {
+                            this.lines.Add("\t\t\twhile(!$feof(fid_" + name + ")) begin");
+                            this.lines.Add("\t\t\t\t@posedge(" + di.ClockSync.Name + ");");
+                            this.lines.Add("\t\t\t\tif(" + di.ValidIn.Name + "_pre) begin");
+                            this.lines.Add("\t\t\t\t\tvoid'($sscanf(line_" + name + ", \"%d %d\\n\", " + di.Name + ");");
+                            this.lines.Add("\t\t\t" + end + " else begin");
+                            this.lines.Add("\t\t\t\t" + di.Name + " <= '0;");
+                            this.lines.Add("\t\t\t" + end);
+                            this.lines.Add("\t\t" + end);
+                        }                                        
+                        
                         this.lines.Add("\t" + end);
                                                
                         this.lines.Add(endtask + " : " + name);
