@@ -96,8 +96,8 @@
                 <DockPanel>
                     <Border DockPanel.Dock="Top" BorderThickness="1" BorderBrush="Black">
                         <StackPanel Orientation="Vertical">
-                            <TextBlock Text="Data Inputs" FontWeight="Bold" Margin="10,5,0,5"/>
-                            <ListView x:Name="datains" VerticalAlignment="Stretch" ItemsSource="{Binding DataInputs}" BorderThickness="0" SelectedItem="{Binding SelectedDataIn}" Height="250">
+                            <TextBlock Text="Test Cases" FontWeight="Bold" Margin="10,5,0,5"/>
+                            <ListView x:Name="datains" VerticalAlignment="Stretch" ItemsSource="{Binding TestCases}" BorderThickness="0" SelectedItem="{Binding SelectedTestCase}" Height="250">
                                 <ListView.Resources>
                                     <Style TargetType="ListViewItem">
                                         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -150,32 +150,7 @@
                 </DockPanel>
 
             </StackPanel>
-
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Stretch">
-
-                <DockPanel>
-                    <Border DockPanel.Dock="Top" BorderThickness="1,0,1,1" BorderBrush="Black">
-                        <StackPanel Orientation="Vertical">
-                            <TextBlock Text="Test Cases" FontWeight="Bold" Margin="10,5,0,5"/>
-                            <ListView x:Name="tests" VerticalAlignment="Stretch" BorderThickness="0" Height="200">
-                                <ListView.Resources>
-                                    <Style TargetType="ListViewItem">
-                                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                                    </Style>
-                                </ListView.Resources>
-                                <ListView.View>
-                                    <GridView>
-                                        <GridViewColumn Header="Name" Width="200" DisplayMemberBinding="{Binding Name}"/>
-                                        
-                                    </GridView>
-                                </ListView.View>
-                            </ListView>
-                        </StackPanel>
-                    </Border>
-                </DockPanel>
-
-            </StackPanel>
-            
+                        
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1" Margin="20">

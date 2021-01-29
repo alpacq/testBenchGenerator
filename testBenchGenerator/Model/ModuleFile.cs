@@ -16,8 +16,7 @@ namespace testBenchGenerator.Model
         private List<Parameter> parameters;
         private List<Reset> resets;
         private List<Clock> clocks;
-        private List<DataInput> dataInputs;
-        private List<ValidInput> validInputs;
+        private List<TestCase> testCases;
         private int bwLen;
 
         public string Name
@@ -62,16 +61,10 @@ namespace testBenchGenerator.Model
             set { this.clocks = value; }
         }
 
-        public List<DataInput> DataInputs
+        public List<TestCase> TestCases
         {
-            get { return this.dataInputs; }
-            set { this.dataInputs = value; }
-        }
-
-        public List<ValidInput> ValidInputs
-        {
-            get { return this.validInputs; }
-            set { this.validInputs = value; }
+            get { return this.testCases; }
+            set { this.testCases = value; }
         }
 
         public int BwLen
@@ -108,7 +101,6 @@ namespace testBenchGenerator.Model
             this.ReadParameters(this.dutLines);
             this.RecognizeResets();
             this.RecognizeClocks();
-            this.InitializeDataInputs();
 
             this.bwLen = 0;
             foreach (Port input in this.inputs)
@@ -223,18 +215,6 @@ namespace testBenchGenerator.Model
                 if(input.Name.Contains("clk") || input.Name.Contains("clock"))
                 {
                     this.Clocks.Add(new Clock(input, 491.52));
-                }
-            }
-        }
-
-        private void InitializeDataInputs()
-        {
-            this.DataInputs = new List<DataInput>();
-            foreach(Port input in this.Inputs)
-            {
-                if((!this.Clocks.Any(c => c.Name == input.Name)) && (!this.Resets.Any(r => r.Name == input.Name)))
-                {
-                    this.DataInputs.Add(new DataInput(input));
                 }
             }
         }

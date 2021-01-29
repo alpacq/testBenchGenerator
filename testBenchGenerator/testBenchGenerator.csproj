@@ -62,24 +62,22 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Model\Clock.cs" />
-    <Compile Include="Model\DataInput.cs" />
+    <Compile Include="Model\TestCase.cs" />
     <Compile Include="Model\FileGen.cs" />
     <Compile Include="Model\Parameter.cs" />
     <Compile Include="Model\Port.cs" />
     <Compile Include="Model\InputFile.cs" />
     <Compile Include="Model\Radix.cs" />
     <Compile Include="Model\Reset.cs" />
-    <Compile Include="Model\ValidInput.cs" />
     <Compile Include="ViewModel\AnalyzerViewModel.cs" />
     <Compile Include="ViewModel\ClockViewModel.cs" />
-    <Compile Include="ViewModel\DataInputViewModel.cs" />
+    <Compile Include="ViewModel\TestCaseViewModel.cs" />
     <Compile Include="ViewModel\GeneratorViewModel.cs" />
     <Compile Include="ViewModel\InputFileViewModel.cs" />
     <Compile Include="ViewModel\ModuleFileViewModel.cs" />
     <Compile Include="ViewModel\ParameterViewModel.cs" />
     <Compile Include="ViewModel\PortViewModel.cs" />
     <Compile Include="ViewModel\ResetViewModel.cs" />
-    <Compile Include="ViewModel\ValidInputViewModel.cs" />
     <Compile Include="View\AnalyzerView.xaml.cs">
       <DependentUpon>AnalyzerView.xaml</DependentUpon>
     </Compile>

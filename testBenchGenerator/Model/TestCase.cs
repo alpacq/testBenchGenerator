@@ -6,19 +6,25 @@ using System.Threading.Tasks;
 
 namespace testBenchGenerator.Model
 {
-    public class DataInput : Port
+    public class TestCase 
     {
-        
+        private List<Port> dataIns;
         private Clock clockSync;
         private Port validIn;
         private string dataVector;
         private string dataOutVector;
         private string vldSeq;
         private Port validOut;
-        private Port dataOut;
+        private List<Port> dataOuts;
         private bool loop;
         private Radix radix;
 
+        public List<Port> DataIns
+        {
+            get { return this.dataIns; }
+            set { this.dataIns = value; }
+        }
+        
         public Clock ClockSync
         {
             get { return this.clockSync; }
@@ -55,10 +61,10 @@ namespace testBenchGenerator.Model
             set { this.validOut = value; }
         }
 
-        public Port DataOut
+        public List<Port> DataOuts
         {
-            get { return this.dataOut; }
-            set { this.dataOut = value; }
+            get { return this.dataOuts; }
+            set { this.dataOuts = value; }
         }
 
         public bool Loop
@@ -73,12 +79,10 @@ namespace testBenchGenerator.Model
             set { this.radix = value; }
         }
 
-        public DataInput(string name, string bitwidth = null) : base(name, bitwidth)
-        {            
-        }
-
-        public DataInput(Port port) : base(port.Name, port.Bitwidth)
+        public TestCase()
         {
+            this.dataIns = new List<Port>();
+            this.dataOuts = new List<Port>();
         }
     }
 }

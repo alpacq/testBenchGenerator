@@ -28,6 +28,10 @@ namespace testBenchGenerator.Model
         private ModuleFile moduleFile;
         private string tbFileName;
         private List<string> lines;
+        private string formatOut;
+        private string formatIn;
+        private string dos;
+        private string dis;
         #endregion
         #region public properties
         public ModuleFile ModuleFile
@@ -73,6 +77,44 @@ namespace testBenchGenerator.Model
                 return false;
             }
             return true;
+        }
+
+        private void FormatsForFileIO(TestCase di)
+        {
+            this.formatIn = String.Empty;
+            this.formatOut = String.Empty;
+            this.dis = String.Empty;
+            this.dos = String.Empty;
+            foreach(Port inp in di.DataIns)
+            {
+                this.formatIn += di.Radix == Radix.Decimal ? "%d" : "%h";
+                this.dis += inp.Name;
+                if (inp == di.DataIns.LastOrDefault())
+                {
+                    this.formatIn += "\\n";
+                    this.dis += ");";
+                }
+                else
+                {
+                    this.formatIn += " ";
+                    this.dis += ", ";
+                }
+            }
+            foreach (Port outp in di.DataOuts)
+            {
+                formatOut += di.Radix == Radix.Decimal ? "%d" : "%h";
+                dos += outp.Name;
+                if (outp == di.DataOuts.LastOrDefault())
+                {
+                    formatOut += "\\n";
+                    dos += ");";
+                }
+                else
+                {
+                    formatOut += " ";
+                    dos += ", ";
+                }
+            }
         }
 
         #endregion
@@ -163,13 +205,6 @@ namespace testBenchGenerator.Model
                 }
                 this.lines.Add(lineToAdd + "\t" + conn.Name + ";");
             }
-            if(this.ModuleFile.DataInputs.Any(di => di.DataVector != null))
-            {
-                string lineToAdd = "\tlogic\t";
-                for (int i = this.ModuleFile.BwLen; i > 0; i--)
-                    lineToAdd += "\t";
-                this.lines.Add(lineToAdd + "\t" + "eof = '0;");
-            }
             this.lines.Add("");
         }
 
@@ -259,14 +294,14 @@ namespace testBenchGenerator.Model
             this.lines.Add(initial);
             this.AddInputsInit();
             this.AddResets();
-            if (this.ModuleFile.DataInputs.Any(di => di.DataVector != null))
+            if (this.ModuleFile.TestCases.Any(di => di.DataVector != null))
             {
                 this.lines.Add("\t\tfork");
-                foreach (DataInput di in this.ModuleFile.DataInputs)
+                foreach (TestCase di in this.ModuleFile.TestCases)
                 {
-                    if (di.DataVector != null)
+                    if (di.DataVector != null && di.DataIns.FirstOrDefault() != null)
                     {
-                        this.lines.Add("\t\t\t" + di.Name + "_" + di.DataVector.Split('\\').LastOrDefault().Replace(".txt", "();"));
+                        this.lines.Add("\t\t\t" + di.DataIns.FirstOrDefault().Name + "_" + di.DataVector.Split('\\').LastOrDefault().Replace(".txt", "();"));
                     }
                 }
                 this.lines.Add("\t\tjoin");
@@ -275,29 +310,86 @@ namespace testBenchGenerator.Model
             this.lines.Add("");
         }
 
-        private void AddFileInput()
+        private void AddFileOutput()
         {
-            if (this.ModuleFile.DataInputs.Any(di => di.DataVector != null))
+            if (this.ModuleFile.TestCases.Any(di => di.DataVector != null))
             {
                 this.lines.Add(generatedToAdaptComment);
-                this.lines.Add("//Tasks for reading from input data files and writing to output data files - modify for your needs");
-                foreach (DataInput di in this.ModuleFile.DataInputs)
+                this.lines.Add("//Tasks for writingto output data files - modify for your needs");
+                foreach (TestCase di in this.ModuleFile.TestCases)
                 {
                     if (di.DataVector != null)
                     {
-                        string name = di.Name + "_" + di.DataVector.Split('\\').LastOrDefault().Replace(".txt", "");
+                        string name = this.ModuleFile.Name + "_" + di.DataOutVector.Split('\\').LastOrDefault().Replace(".txt", "");
 
                         this.lines.Add(task + name + "();");
 
-                        this.lines.Add("\t\tstring line_" + name + ";");
-                        this.lines.Add("\t\tinteger fid_" + name + ";");
-                        this.lines.Add("\t\tfid_" + name + " = $fopen(\"" + di.DataVector.Replace("\\", "/") + "\",\"r\");");
-                        this.lines.Add("\t\tif(fid" + name + " == 0) begin");
+                        if(!di.Loop)
+                        {
+                            int linesCount = File.ReadAllLines(di.DataVector).Length;
+                            this.lines.Add("\t\tinteger num_lines_" + name + " = " + linesCount + ";");
+                            this.lines.Add("\t\tinteger num_vlds_" + name + " = 0;");
+                        }
+                        this.lines.Add("\t\tinteger fid_out_" + name + " = $fopen(" + di.DataOutVector.Replace("\\", "/") + "\",\"w\");");
+                        this.lines.Add("\t\tif(fid_out_" + name + " == 0) begin");
                         this.lines.Add("\t\t\t$display(\"Error opening file - could not open.\");");
                         this.lines.Add("\t\t\t$stop;");
                         this.lines.Add("\t" + end + " else begin");
                         this.lines.Add("\t\t\t$display(\"File " + di.DataVector.Replace("\\", "/") + " opened successfully.\");");
                         this.lines.Add("\t" + end);
+                        this.FormatsForFileIO(di);
+
+                        if (di.Loop)
+                        {
+                            this.lines.Add(forever);
+                            this.lines.Add("\t\t\t@posedge(" + di.ClockSync.Name + ");");
+                            this.lines.Add("\t\t\tif(" + di.ValidOut.Name + ") begin");                            
+                            this.lines.Add("\t\t\t\t$fdisplay(fid_out_" + name + ", \"" + this.formatOut + "\", " + this.dos);
+                            this.lines.Add("\t\t" + end);
+                        }
+                        else
+                        {
+                            this.lines.Add("\t\twhile(num_vlds_" + name + " != num_lines_" + name + ");");
+                            this.lines.Add("\t\t\t@posedge(" + di.ClockSync.Name + ");");
+                            this.lines.Add("\t\t\tif(" + di.ValidOut.Name + ") begin");
+                            this.lines.Add("\t\t\t\t$fdisplay(fid_out_" + name + ", \"" + this.formatOut + "\", " + this.dos);
+                            this.lines.Add("\t\t\t\tnum_vlds_" + name + " <= num_vlds_" + name + " + 1;");
+                            this.lines.Add("\t\t" + end);
+                        }
+
+                        this.lines.Add("\t" + end);
+
+                        this.lines.Add(endtask + " : " + name);
+                        this.lines.Add("");
+                    }
+                }
+            }
+        }
+
+        private void AddFileInput()
+        {
+            if (this.ModuleFile.TestCases.Any(di => di.DataVector != null))
+            {
+                this.lines.Add(generatedToAdaptComment);
+                this.lines.Add("//Tasks for reading from input data files - modify for your needs");
+                foreach (TestCase di in this.ModuleFile.TestCases)
+                {
+                    if (di.DataVector != null && di.DataIns.FirstOrDefault() != null)
+                    {
+                        string name = di.DataIns.FirstOrDefault().Name + "_" + di.DataVector.Split('\\').LastOrDefault().Replace(".txt", "");
+
+                        this.lines.Add(task + name + "();");
+
+                        this.lines.Add("\t\tstring line_" + name + ";");
+                        this.lines.Add("\t\tinteger fid_" + name + " = $fopen(\"" + di.DataVector.Replace("\\", "/") + "\",\"r\");");
+                        this.lines.Add("\t\tif(fid_" + name + " == 0) begin");
+                        this.lines.Add("\t\t\t$display(\"Error opening file - could not open.\");");
+                        this.lines.Add("\t\t\t$stop;");
+                        this.lines.Add("\t" + end + " else begin");
+                        this.lines.Add("\t\t\t$display(\"File " + di.DataVector.Replace("\\", "/") + " opened successfully.\");");
+                        this.lines.Add("\t" + end);
+
+                        this.FormatsForFileIO(di);
 
                         if (di.Loop)
                         {
@@ -305,11 +397,19 @@ namespace testBenchGenerator.Model
                             this.lines.Add("\t\t\t@posedge(" + di.ClockSync.Name + ");");
                             this.lines.Add("\t\t\tif(" + di.ValidIn.Name + "_pre) begin");
                             this.lines.Add("\t\t\t\tif($feof(fid_" + name + ")) begin");
-                            //LOOP TBD
+                            this.lines.Add("\t\t\t\t\t$fclose(fid_" + name + ");");
+                            this.lines.Add("\t\t\t\t\tfid_" + name + " = $fopen(\"" + di.DataVector.Replace("\\", "/") + "\",\"r\");");
+                            this.lines.Add("\t\t\t\t\tif(fid_" + name + " == 0) begin");
+                            this.lines.Add("\t\t\t\t\t\t$display(\"Error opening file - could not open.\");");
+                            this.lines.Add("\t\t\t\t\t\t$stop;");
+                            this.lines.Add("\t\t\t\t" + end + " else begin");
+                            this.lines.Add("\t\t\t\t\t\t$display(\"File " + di.DataVector.Replace("\\", "/") + " opened successfully.\");");
+                            this.lines.Add("\t\t\t\t" + end);
                             this.lines.Add("\t\t\t" + end + " else if($fgets(line_" + name + ", fid_" + name + ")) begin");
-                            this.lines.Add("\t\t\t\tvoid'($sscanf(line_" + name + ", \"%d %d\\n\", " + di.Name + ");");
+                                this.lines.Add("\t\t\t\tvoid'($sscanf(line_" + name + ", \"" + this.formatIn + "\", " + this.dis);
                             this.lines.Add("\t\t" + end + " else begin");
-                            this.lines.Add("\t\t\t" + di.Name + " <= '0;");
+                            foreach(Port inp in di.DataIns)
+                                this.lines.Add("\t\t\t" + inp.Name + " <= '0;");
                             this.lines.Add("\t\t" + end);
                         }
                         else
@@ -317,11 +417,18 @@ namespace testBenchGenerator.Model
                             this.lines.Add("\t\t\twhile(!$feof(fid_" + name + ")) begin");
                             this.lines.Add("\t\t\t\t@posedge(" + di.ClockSync.Name + ");");
                             this.lines.Add("\t\t\t\tif(" + di.ValidIn.Name + "_pre) begin");
-                            this.lines.Add("\t\t\t\t\tvoid'($sscanf(line_" + name + ", \"%d %d\\n\", " + di.Name + ");");
+                            this.lines.Add("\t\t\t\t\tif($fgets(line_" + name + ", fid_" + name + ")) begin");
+                            this.lines.Add("\t\t\t\t\t\tvoid'($sscanf(line_" + name + ", \"" + this.formatIn + "\", " + this.dis);
+                            this.lines.Add("\t\t\t\t" + end + " else begin");
+                            foreach (Port inp in di.DataIns)
+                                this.lines.Add("\t\t\t\t\t\t" + inp.Name + " <= '0;");
+                            this.lines.Add("\t\t\t\t" + end);
                             this.lines.Add("\t\t\t" + end + " else begin");
-                            this.lines.Add("\t\t\t\t" + di.Name + " <= '0;");
+                            foreach (Port inp in di.DataIns)
+                                this.lines.Add("\t\t\t\t\t" + inp.Name + " <= '0;");
                             this.lines.Add("\t\t\t" + end);
                             this.lines.Add("\t\t" + end);
+                            this.lines.Add("\t\t\t$fclose(fid_" + name + ");");
                         }                                        
                         
                         this.lines.Add("\t" + end);

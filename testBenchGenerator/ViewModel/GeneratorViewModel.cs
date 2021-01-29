@@ -11,7 +11,7 @@ namespace testBenchGenerator.ViewModel
     public class GeneratorViewModel : INotifyPropertyChanged
     {
         private ModuleFileViewModel moduleFile;
-        private DataInputViewModel selectedDataIn;
+        private TestCaseViewModel selectedTC;
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged(string name = null)
@@ -49,22 +49,17 @@ namespace testBenchGenerator.ViewModel
             set { this.ModuleFile.Resets = value; this.OnPropertyChanged("Resets"); }
         }
 
-        public List<DataInputViewModel> DataInputs
+        public List<TestCaseViewModel> TestCases
         {
-            get { return this.ModuleFile.DataInputs; }
-            set { this.ModuleFile.DataInputs = value; this.OnPropertyChanged("DataInputs"); }
+            get { return this.ModuleFile.TestCases; }
+            set { this.ModuleFile.TestCases = value; this.OnPropertyChanged("TestCases"); }
         }
 
-        public List<ValidInputViewModel> ValidInputs
-        {
-            get { return this.ModuleFile.ValidInputs; }
-            set { this.ModuleFile.ValidInputs = value; this.OnPropertyChanged("ValidInputs"); }
-        }
 
-        public DataInputViewModel SelectedDataIn
+        public TestCaseViewModel SelectedTestCase
         {
-            get { return this.selectedDataIn; }
-            set { this.selectedDataIn = value; this.OnPropertyChanged("SelectedDataIn"); }
+            get { return this.selectedTC; }
+            set { this.selectedTC = value; this.OnPropertyChanged("SelectedTestCase"); }
         }
 
         public GeneratorViewModel(string modulePath)

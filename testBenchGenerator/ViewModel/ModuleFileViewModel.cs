@@ -16,8 +16,7 @@ namespace testBenchGenerator.ViewModel
         private List<ParameterViewModel> parameters;
         private List<ResetViewModel> resets;
         private List<ClockViewModel> clocks;
-        private List<DataInputViewModel> dataInputs;
-        private List<ValidInputViewModel> validInputs;
+        private List<TestCaseViewModel> testCases;
 
         public ModuleFile ModuleFile
         {
@@ -146,47 +145,25 @@ namespace testBenchGenerator.ViewModel
             }
         }
 
-        public List<DataInputViewModel> DataInputs
+        public List<TestCaseViewModel> TestCases
         {
             get
             {
-                this.dataInputs = new List<DataInputViewModel>();
-                foreach(DataInput di in this.ModuleFile.DataInputs)
+                this.testCases = new List<TestCaseViewModel>();
+                foreach(TestCase tc in this.ModuleFile.TestCases)
                 {
-                    this.dataInputs.Add(new DataInputViewModel(di, this));
+                    this.testCases.Add(new TestCaseViewModel(tc));
                 }
-                return this.dataInputs;
+                return this.testCases;
             }
             set
             {
-                this.ModuleFile.DataInputs = new List<DataInput>();
-                foreach(DataInputViewModel di in this.dataInputs)
+                this.ModuleFile.TestCases = new List<TestCase>();
+                foreach(TestCaseViewModel tc in this.testCases)
                 {
-                    this.ModuleFile.DataInputs.Add(di.DataInput);
+                    this.ModuleFile.TestCases.Add(tc.TestCase);
                 }
-                OnPropertyChanged("DataInputs");
-            }
-        }
-
-        public List<ValidInputViewModel> ValidInputs
-        {
-            get
-            {
-                this.validInputs = new List<ValidInputViewModel>();
-                foreach(ValidInput vi in this.ModuleFile.ValidInputs)
-                {
-                    this.validInputs.Add(new ValidInputViewModel(vi));
-                }
-                return this.validInputs;
-            }
-            set
-            {
-                this.ModuleFile.ValidInputs = new List<ValidInput>();
-                foreach(ValidInputViewModel vi in this.validInputs)
-                {
-                    this.ModuleFile.ValidInputs.Add(vi.ValidInput);
-                }
-                OnPropertyChanged("ValidInputs");
+                OnPropertyChanged("TestCases");
             }
         }
 
