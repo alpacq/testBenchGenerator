@@ -205,7 +205,45 @@ namespace testBenchGenerator.Model
                 }
                 this.lines.Add(lineToAdd + "\t" + conn.Name + ";");
             }
+            foreach (TestCase tc in this.ModuleFile.TestCases)
+            {
+                if (tc.DataVector != null && tc.DataIns.FirstOrDefault() != null)
+                {
+                    string name = tc.DataIns.FirstOrDefault().Name + "_" + tc.DataVector.Split('\\').LastOrDefault().Replace(".txt", "");
+
+                    int len = tc.VldSeq.Length;
+
+                    string lineToAdd = "\tlogic\t";
+                    for (int i = this.ModuleFile.BwLen; i > 0; i--)
+                        lineToAdd += "\t";
+                    this.lines.Add(lineToAdd + "\ttest_" + name + "_in_progress = '0;");
+                    this.lines.Add(lineToAdd + "\tvalid_" + name + "_pre;");
+
+                    if (len > 1)
+                    {
+                        lineToAdd = "\tlogic\t[";
+                        lineToAdd += (len - 1);
+                        lineToAdd += ":0]";
+                        for (int i = this.ModuleFile.BwLen - ((len.ToString().Length + 4) / 4); i > 0; i--)
+                            lineToAdd += "\t";
+                    }
+                    this.lines.Add(lineToAdd + "\tvalid_" + name + "_seq = " + len + "'b" + tc.VldSeq + ";");
+                    this.lines.Add(lineToAdd + "\tvalid_" + name + "_srl;");
+                }
+            }
             this.lines.Add("");
+            foreach (TestCase tc in this.ModuleFile.TestCases)
+            {
+                if (tc.DataVector != null && tc.DataIns.FirstOrDefault() != null)
+                {
+                    string name = tc.DataIns.FirstOrDefault().Name + "_" + tc.DataVector.Split('\\').LastOrDefault().Replace(".txt", "");
+
+                    int len = tc.VldSeq.Length;
+
+                    this.lines.Add("\tassign valid_" + name + "_pre = valid_" + name + "_srl[" + (len - 1) + "];");
+                }
+            }
+           this.lines.Add("");
         }
 
         private void AddDut()
@@ -387,6 +425,7 @@ namespace testBenchGenerator.Model
                         this.lines.Add("\t\t\t$stop;");
                         this.lines.Add("\t" + end + " else begin");
                         this.lines.Add("\t\t\t$display(\"File " + di.DataVector.Replace("\\", "/") + " opened successfully.\");");
+                        this.lines.Add("\t\t\ttest_" + name + "_in_progress <= 1'b1;");
                         this.lines.Add("\t" + end);
 
                         this.FormatsForFileIO(di);
@@ -428,12 +467,41 @@ namespace testBenchGenerator.Model
                                 this.lines.Add("\t\t\t\t\t" + inp.Name + " <= '0;");
                             this.lines.Add("\t\t\t" + end);
                             this.lines.Add("\t\t" + end);
+                            this.lines.Add("\t\t\ttest_" + name + "_in_progress <= 1'b0;");
                             this.lines.Add("\t\t\t$fclose(fid_" + name + ");");
                         }                                        
                         
                         this.lines.Add("\t" + end);
                                                
                         this.lines.Add(endtask + " : " + name);
+                        this.lines.Add("");
+                    }
+                }
+            }
+        }
+
+        private void AddValidSeqs()
+        {
+            if (this.ModuleFile.TestCases.Any(di => di.DataVector != null))
+            {
+                this.lines.Add(generatedToAdaptComment);
+                this.lines.Add("//Always blocks for valid input signals generation - modify for your needs");
+                foreach (TestCase di in this.ModuleFile.TestCases)
+                {
+                    if (di.DataVector != null && di.DataIns.FirstOrDefault() != null)
+                    {
+                        string name = di.DataIns.FirstOrDefault().Name + "_" + di.DataVector.Split('\\').LastOrDefault().Replace(".txt", "");
+
+                        int len = di.VldSeq.Length;
+
+                        this.lines.Add(always + di.ClockSync.Name + ") begin");
+                        this.lines.Add("\t\tif(!test_" + name + "_in_progress) begin");
+                        this.lines.Add("\t\t\tvalid_" + name + "_srl <= valid_" + name + "_seq;");
+                        this.lines.Add("\t" + end + " else begin");
+                        this.lines.Add("\t\t\tvalid_" + name + "_srl <= {valid_" + name + "_srl[" + (len - 2) + ":0], valid_" + name + "_srl[" + (len - 1) + "]};");
+                        this.lines.Add("\t" + end);
+                        this.lines.Add("\t\t" + di.ValidIn.Name + " <= valid_" + name + "_srl[" + (len - 1) + "] & test_" + name + "_in_progress;");
+                        this.lines.Add(end);
                         this.lines.Add("");
                     }
                 }
@@ -459,7 +527,9 @@ namespace testBenchGenerator.Model
             this.AddDut();
             this.AddClocks();
             this.AddInitialBlock();
+            this.AddValidSeqs();
             this.AddFileInput();
+            this.AddFileOutput();
             this.AddFooter();
 
             //put code in tb file

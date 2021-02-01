@@ -30,8 +30,8 @@
                             <ListView x:Name="clocks" VerticalAlignment="Stretch" ItemsSource="{Binding Clocks}" BorderThickness="0" Height="150">
                                 <ListView.View>
                                     <GridView>
-                                        <GridViewColumn Header="Name" Width="200" DisplayMemberBinding="{Binding Name}"/>
-                                        <GridViewColumn Header="Frequency (MHz)" Width="100">
+                                        <GridViewColumn Header="Name" Width="150" DisplayMemberBinding="{Binding Name}"/>
+                                        <GridViewColumn Header="Frequency (MHz)" Width="120">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <TextBox Text="{Binding Frequency, Mode=TwoWay}" Width="100" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0"/>
@@ -52,7 +52,7 @@
                             <ListView x:Name="resets" VerticalAlignment="Stretch" ItemsSource="{Binding Resets}" BorderThickness="0">
                                 <ListView.View>
                                     <GridView>
-                                        <GridViewColumn Header="Name" Width="200" DisplayMemberBinding="{Binding Name}"/>
+                                        <GridViewColumn Header="Name" Width="150" DisplayMemberBinding="{Binding Name}"/>
                                         <GridViewColumn Header="Polarization" Width="100">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
@@ -68,13 +68,13 @@
                 </DockPanel>
 
                 <DockPanel>
-                    <Border DockPanel.Dock="Top" BorderThickness="1,1,1,0" BorderBrush="Black">
+                    <Border DockPanel.Dock="Top" BorderThickness="1,1,0,0" BorderBrush="Black">
                         <StackPanel Orientation="Vertical">
                             <TextBlock Text="Parameters" FontWeight="Bold" Margin="10,5,0,5"/>
                             <ListView x:Name="params" VerticalAlignment="Stretch" ItemsSource="{Binding Parameters}" BorderThickness="0">
                                 <ListView.View>
                                     <GridView>
-                                        <GridViewColumn Header="Name" Width="200" DisplayMemberBinding="{Binding Name}"/>
+                                        <GridViewColumn Header="Name" Width="150" DisplayMemberBinding="{Binding Name}"/>
                                         <GridViewColumn Header="Value" Width="100">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
@@ -82,6 +82,38 @@
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                        </StackPanel>
+                    </Border>
+                </DockPanel>
+
+                <DockPanel>
+                    <Border DockPanel.Dock="Top" BorderThickness="1,1,0,0" BorderBrush="Black">
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock Text="Inputs" FontWeight="Bold" Margin="10,5,0,5"/>
+                            <ListView x:Name="inputs" VerticalAlignment="Stretch" ItemsSource="{Binding Inputs}" BorderThickness="0" Height="150">
+                                <ListView.View>
+                                    <GridView>
+                                        <GridViewColumn Header="Name" Width="150" DisplayMemberBinding="{Binding Name}"/>
+                                        <GridViewColumn Header="Bitwidth" Width="100" DisplayMemberBinding="{Binding Bitwidth}"/>
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                        </StackPanel>
+                    </Border>
+                </DockPanel>
+
+                <DockPanel>
+                    <Border DockPanel.Dock="Top" BorderThickness="1,1,1,0" BorderBrush="Black">
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock Text="Outputs" FontWeight="Bold" Margin="10,5,0,5"/>
+                            <ListView x:Name="outputs" VerticalAlignment="Stretch" ItemsSource="{Binding Outputs}" BorderThickness="0" Height="150">
+                                <ListView.View>
+                                    <GridView>
+                                        <GridViewColumn Header="Name" Width="150" DisplayMemberBinding="{Binding Name}"/>
+                                        <GridViewColumn Header="Bitwidth" Width="100" DisplayMemberBinding="{Binding Bitwidth}"/>
                                     </GridView>
                                 </ListView.View>
                             </ListView>
@@ -105,15 +137,15 @@
                                 </ListView.Resources>
                                 <ListView.View>
                                     <GridView>
-                                        <GridViewColumn Header="Name" Width="200" DisplayMemberBinding="{Binding Name}"/>
-                                        <GridViewColumn Header="Clock sync" Width="200">
+                                        <GridViewColumn Header="Input ports" Width="250" DisplayMemberBinding="{Binding DIs}"/>
+                                        <GridViewColumn Header="Clock sync" Width="100">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <ComboBox Width="180" ItemsSource="{Binding ElementName=genView, Path=DataContext.Clocks}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0" SelectedItem="{Binding ElementName=genView, Path=DataContext.SelectedDataIn.ClockSync, Mode=OneWayToSource}"/>
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
-                                        <GridViewColumn Header="Valid" Width="200">
+                                        <GridViewColumn Header="Input valid port" Width="150">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <ComboBox Width="180" ItemsSource="{Binding ElementName=genView, Path=DataContext.DataInputs}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0" SelectedItem="{Binding ElementName=genView, Path=DataContext.SelectedDataIn.ValidIn, Mode=OneWayToSource}"/>
@@ -128,13 +160,7 @@
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
                                         <GridViewColumn Header="Valid sequence" Width="200" DisplayMemberBinding="{Binding VldSeq}"/>
-                                        <GridViewColumn Header="Output port" Width="150">
-                                            <GridViewColumn.CellTemplate>
-                                                <DataTemplate>
-                                                    <ComboBox ItemsSource="{Binding ElementName=genView, Path=DataContext.Outputs}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0" SelectedItem="{Binding ElementName=genView, Path=DataContext.SelectedDataIn.DataOut, Mode=OneWayToSource}"/>
-                                                </DataTemplate>
-                                            </GridViewColumn.CellTemplate>
-                                        </GridViewColumn>
+                                        <GridViewColumn Header="Output ports" Width="250" DisplayMemberBinding="{Binding DOs}"/>
                                         <GridViewColumn Header="Output valid port" Width="150">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
