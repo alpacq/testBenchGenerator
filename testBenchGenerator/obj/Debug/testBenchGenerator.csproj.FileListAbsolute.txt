@@ -50,3 +50,5 @@ C:\Users\krzys\Documents\Archiwum\Projekty\testBenchGenerator\testBenchGenerator
 C:\Users\krzys\Documents\Archiwum\Projekty\testBenchGenerator\testBenchGenerator\bin\Debug\LiveCharts.Wpf.pdb
 C:\Users\krzys\Documents\Archiwum\Projekty\testBenchGenerator\testBenchGenerator\bin\Debug\LiveCharts.Wpf.xml
 C:\Users\krzys\Documents\Archiwum\Projekty\testBenchGenerator\testBenchGenerator\obj\Debug\testBenchGenerator.csproj.CopyComplete
+C:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\obj\Debug\View\NewTCView.g.cs
+C:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\obj\Debug\View\NewTCView.baml

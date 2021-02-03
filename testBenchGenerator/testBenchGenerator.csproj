@@ -84,6 +84,9 @@
     <Compile Include="View\GeneratorView.xaml.cs">
       <DependentUpon>GeneratorView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\NewTCView.xaml.cs">
+      <DependentUpon>NewTCView.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -101,6 +104,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\GeneratorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\NewTCView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -12,6 +12,7 @@ namespace testBenchGenerator.ViewModel
     {
         private ModuleFile moduleFile;
         private List<PortViewModel> inputs;
+        private List<PortViewModel> ins;
         private List<PortViewModel> outputs;
         private List<ParameterViewModel> parameters;
         private List<ResetViewModel> resets;
@@ -33,6 +34,28 @@ namespace testBenchGenerator.ViewModel
         {
             get { return this.ModuleFile.Name; }
             set { this.ModuleFile.Name = value; OnPropertyChanged("Name"); }
+        }
+
+        public List<PortViewModel> Ins
+        {
+            get
+            {
+                this.ins = new List<PortViewModel>();
+                foreach (Port input in this.ModuleFile.Ins)
+                {
+                    this.ins.Add(new PortViewModel(input));
+                }
+                return this.ins;
+            }
+            set
+            {
+                this.ModuleFile.Ins = new List<Port>();
+                foreach (PortViewModel input in this.ins)
+                {
+                    this.ModuleFile.Ins.Add(input.Port);
+                }
+                OnPropertyChanged("Ins");
+            }
         }
 
         public List<PortViewModel> Inputs

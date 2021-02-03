@@ -17,6 +17,7 @@ namespace testBenchGenerator.Model
         private List<Reset> resets;
         private List<Clock> clocks;
         private List<TestCase> testCases;
+        private List<Port> ins;
         private int bwLen;
 
         public string Name
@@ -67,6 +68,12 @@ namespace testBenchGenerator.Model
             set { this.testCases = value; }
         }
 
+        public List<Port> Ins
+        {
+            get { return this.ins; }
+            set { this.ins = value; }
+        }
+
         public int BwLen
         {
             get { return this.bwLen; }
@@ -76,6 +83,7 @@ namespace testBenchGenerator.Model
         public ModuleFile(string path)
         {
             this.Path = path;
+            this.testCases = new List<TestCase>();
             this.Read();
         }
 
@@ -101,6 +109,7 @@ namespace testBenchGenerator.Model
             this.ReadParameters(this.dutLines);
             this.RecognizeResets();
             this.RecognizeClocks();
+            this.RecognizeIns();
 
             this.bwLen = 0;
             foreach (Port input in this.inputs)
@@ -215,6 +224,18 @@ namespace testBenchGenerator.Model
                 if(input.Name.Contains("clk") || input.Name.Contains("clock"))
                 {
                     this.Clocks.Add(new Clock(input, 491.52));
+                }
+            }
+        }
+
+        private void RecognizeIns()
+        {
+            this.Ins = new List<Port>();
+            foreach(Port input in this.Inputs)
+            {
+                if(!input.Name.Contains("clk") && !input.Name.Contains("clock") && !input.Name.Contains("rst") && !input.Name.Contains("reset"))
+                {
+                    this.Ins.Add(input);
                 }
             }
         }

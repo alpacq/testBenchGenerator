@@ -25,6 +25,12 @@ namespace testBenchGenerator.ViewModel
             set { this.moduleFile = value; }
         }
 
+        public List<PortViewModel> Inputs
+        {
+            get { return this.ModuleFile.Ins; }
+            set { this.ModuleFile.Ins = value; this.OnPropertyChanged("Inputs"); }
+        }
+
         public List<PortViewModel> Outputs
         {
             get { return this.ModuleFile.Outputs; }
@@ -55,7 +61,6 @@ namespace testBenchGenerator.ViewModel
             set { this.ModuleFile.TestCases = value; this.OnPropertyChanged("TestCases"); }
         }
 
-
         public TestCaseViewModel SelectedTestCase
         {
             get { return this.selectedTC; }
@@ -69,7 +74,7 @@ namespace testBenchGenerator.ViewModel
                 this.ModuleFile = new ModuleFileViewModel(new ModuleFile(modulePath));
                 this.OnPropertyChanged("Clocks");
                 this.OnPropertyChanged("Resets");
-                this.OnPropertyChanged("DataInputs");
+                this.OnPropertyChanged("Inputs");
                 this.OnPropertyChanged("Outputs");
                 this.OnPropertyChanged("Parameters");
             }

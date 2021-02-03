@@ -141,14 +141,14 @@
                                         <GridViewColumn Header="Clock sync" Width="100">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <ComboBox Width="180" ItemsSource="{Binding ElementName=genView, Path=DataContext.Clocks}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0" SelectedItem="{Binding ElementName=genView, Path=DataContext.SelectedDataIn.ClockSync, Mode=OneWayToSource}"/>
+                                                    <ComboBox Width="100" ItemsSource="{Binding ElementName=genView, Path=DataContext.Clocks}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0" SelectedItem="{Binding ElementName=genView, Path=DataContext.SelectedDataIn.ClockSync, Mode=OneWayToSource}"/>
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
                                         <GridViewColumn Header="Input valid port" Width="150">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <ComboBox Width="180" ItemsSource="{Binding ElementName=genView, Path=DataContext.DataInputs}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0" SelectedItem="{Binding ElementName=genView, Path=DataContext.SelectedDataIn.ValidIn, Mode=OneWayToSource}"/>
+                                                    <ComboBox Width="150" ItemsSource="{Binding ElementName=genView, Path=DataContext.DataInputs}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0" SelectedItem="{Binding ElementName=genView, Path=DataContext.SelectedDataIn.ValidIn, Mode=OneWayToSource}"/>
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
@@ -164,7 +164,7 @@
                                         <GridViewColumn Header="Output valid port" Width="150">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <ComboBox Width="130" ItemsSource="{Binding ElementName=genView, Path=DataContext.Outputs}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0" SelectedItem="{Binding ElementName=genView, Path=DataContext.SelectedDataIn.ValidOut, Mode=OneWayToSource}"/>
+                                                    <ComboBox Width="150" ItemsSource="{Binding ElementName=genView, Path=DataContext.Outputs}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0" SelectedItem="{Binding ElementName=genView, Path=DataContext.SelectedDataIn.ValidOut, Mode=OneWayToSource}"/>
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
