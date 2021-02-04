@@ -6,15 +6,15 @@
         xmlns:local="clr-namespace:testBenchGenerator.View"
         mc:Ignorable="d"
         Title="New Test Case" Height="450" Width="1330">
-    <Grid>
+    <Grid Margin="0,0,10,0">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="2*"/>
+            <!--<ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>-->
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -22,94 +22,99 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0" Grid.Column="0" Text="Clock sync" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-        <TextBlock Grid.Row="0" Grid.Column="1" Text="Input ports" VerticalAlignment="Center" HorizontalAlignment="Center"/>        
-        <TextBlock Grid.Row="0" Grid.Column="2" Text="Input valid port" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-        <TextBlock Grid.Row="0" Grid.Column="3" Text="Input pattern" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-        <TextBlock Grid.Row="0" Grid.Column="4" Text="Valid sequence" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-        <TextBlock Grid.Row="0" Grid.Column="5" Text="Output ports" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-        <TextBlock Grid.Row="0" Grid.Column="6" Text="Output valid port" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <Grid Grid.Column="0" Grid.RowSpan="2" Margin="0,15,5,0">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
 
-        <ListBox Grid.Row="1" Grid.Column="0" Name="csLB" HorizontalContentAlignment="Stretch" Margin="2" ItemsSource="{Binding CSs}" SelectionMode="Single">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <Grid Margin="0,2">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="50"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="{Binding Name}" Grid.Column="0"/>
-                        <CheckBox IsChecked="{Binding IsSel}"/>
-                    </Grid>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-        <ListBox Grid.Row="1" Grid.Column="1" Name="diLB" HorizontalContentAlignment="Stretch" Margin="2" ItemsSource="{Binding Ins}" SelectionMode="Multiple">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <Grid Margin="0,2">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="50"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="{Binding Name}" Grid.Column="0"/>
-                        <CheckBox IsChecked="{Binding IsSel}"/>
-                    </Grid>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>        
-        <ListBox Grid.Row="1" Grid.Column="2" Name="vipLB" HorizontalContentAlignment="Stretch" Margin="2" ItemsSource="{Binding Ins}" SelectionMode="Single">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <Grid Margin="0,2">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="50"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="{Binding Name}" Grid.Column="0"/>
-                        <CheckBox IsChecked="{Binding IsSel}"/>
-                    </Grid>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-        <StackPanel Grid.Row="1" Grid.Column="3" Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="2">
-            <StackPanel Orientation="Horizontal">
-                <TextBox x:Name="inFile" Width="270" Height="25" IsReadOnly="True" VerticalContentAlignment="Center" Margin="2,2,0,0"/>
-                <Button x:Name="in" Margin="10,2,10,0" Height="25" Width="35" Content="..." Click="in_Click"/>
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="Clock sync" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="Input pattern" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <TextBlock Grid.Row="4" Grid.Column="0" Text="Radix" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <TextBlock Grid.Row="6" Grid.Column="0" Text="Valid sequence" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <StackPanel Orientation="Horizontal" Grid.Row="8" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Center">
+                <TextBlock Text="Loop" Margin="50,10" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                <CheckBox x:Name="loop" IsChecked="{Binding Loop}" Margin="50,10" VerticalAlignment="Center" HorizontalAlignment="Center"/>
             </StackPanel>
-             <!--TODO display file content!-->
-        </StackPanel>
-        <ComboBox Grid.Row="1" Grid.Column="4" Name="vsCB" Margin="4,6" ItemsSource="{Binding Seqs}" HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
-        <ListBox Grid.Row="1" Grid.Column="5" Name="doLB" HorizontalContentAlignment="Stretch" Margin="2" ItemsSource="{Binding Outs}" SelectionMode="Multiple">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <Grid Margin="0,2">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="50"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="{Binding Name}" Grid.Column="0"/>
-                        <CheckBox IsChecked="{Binding IsSel}"/>
-                    </Grid>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-        <ListBox Grid.Row="1" Grid.Column="6" Name="vopLB" HorizontalContentAlignment="Stretch" Margin="2" ItemsSource="{Binding Outs}" SelectionMode="Single">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <Grid Margin="0,2">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="50"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="{Binding Name}" Grid.Column="0"/>
-                        <CheckBox IsChecked="{Binding IsSel}"/>
-                    </Grid>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
 
-        <StackPanel Orientation="Horizontal" Grid.Column="6" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <ComboBox Grid.Row="1" Name="clkCB" Margin="50,5" ItemsSource="{Binding Clocks}" HorizontalAlignment="Stretch" VerticalAlignment="Center" SelectedItem="{Binding Clock}"/>
+            <StackPanel Grid.Row="3" Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Center" Margin="2">
+                <StackPanel Orientation="Horizontal">
+                    <TextBox x:Name="inFile" Width="270" Height="25" IsReadOnly="True" Text="{Binding InputPath}" VerticalContentAlignment="Center" Margin="2,2,0,0"/>
+                    <Button x:Name="in" Margin="10,2,10,0" Height="25" Width="35" Content="..." Click="in_Click"/>
+                </StackPanel>
+            </StackPanel>
+            <ComboBox Grid.Row="5" Name="rCB" Margin="50,5" ItemsSource="{Binding Radixes}" HorizontalAlignment="Stretch" VerticalAlignment="Center" SelectedItem="{Binding Radix}"/>
+            <ComboBox Grid.Row="7" Name="vsCB" Margin="50,5" ItemsSource="{Binding Seqs}" HorizontalAlignment="Stretch" VerticalAlignment="Center" SelectedItem="{Binding Seq}"/>
+
+        </Grid>
+
+        <Grid Grid.Column="1" Grid.RowSpan="2" Margin="5,15,5,0">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="6*"/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Text="Input ports" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <TextBlock Grid.Row="2" Text="Input valid port" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
+            <ListBox Grid.Row="1" Name="diLB" HorizontalContentAlignment="Stretch" Margin="2" ItemsSource="{Binding Ins}" SelectionMode="Multiple">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Margin="0,2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="50"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="{Binding Name}" Grid.Column="0"/>
+                            <CheckBox IsChecked="{Binding IsSel}"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <ComboBox Grid.Row="3" Name="vipCB" Margin="50,5" ItemsSource="{Binding Inputs}" HorizontalAlignment="Stretch" VerticalAlignment="Center" SelectedItem="{Binding ValidIn}"/>
+
+        </Grid>
+
+        <Grid Grid.Column="2" Grid.RowSpan="2" Margin="5,15,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="6*"/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Text="Output ports" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <TextBlock Grid.Row="2" Text="Output valid port" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
+            <ListBox Grid.Row="1" Name="doLB" HorizontalContentAlignment="Stretch" Margin="2" ItemsSource="{Binding Outs}" SelectionMode="Multiple">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Margin="0,2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="50"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="{Binding Name}" Grid.Column="0"/>
+                            <CheckBox IsChecked="{Binding IsSel}"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <ComboBox Grid.Row="3" Name="vopCB" Margin="50,5" ItemsSource="{Binding Outputs}" HorizontalAlignment="Stretch" VerticalAlignment="Center" SelectedItem="{Binding ValidOut}"/>
+
+        </Grid>     
+        
+        <StackPanel Orientation="Horizontal" Grid.Column="6" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,30,0">
             <Button x:Name="add" Content="Add" Click="add_Click" HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Margin="0,0,10,0"/>
             <Button x:Name="cancel" Content="Cancel" Click="cancel_Click" HorizontalAlignment="Center" VerticalAlignment="Center" Width="50"/>
         </StackPanel>

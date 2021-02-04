@@ -62,6 +62,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Model\Clock.cs" />
+    <Compile Include="Model\PortSel.cs" />
     <Compile Include="Model\TestCase.cs" />
     <Compile Include="Model\FileGen.cs" />
     <Compile Include="Model\Parameter.cs" />
@@ -71,6 +72,8 @@
     <Compile Include="Model\Reset.cs" />
     <Compile Include="ViewModel\AnalyzerViewModel.cs" />
     <Compile Include="ViewModel\ClockViewModel.cs" />
+    <Compile Include="ViewModel\NewTCViewModel.cs" />
+    <Compile Include="ViewModel\PortSelViewModel.cs" />
     <Compile Include="ViewModel\TestCaseViewModel.cs" />
     <Compile Include="ViewModel\GeneratorViewModel.cs" />
     <Compile Include="ViewModel\InputFileViewModel.cs" />
