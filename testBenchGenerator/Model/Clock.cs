@@ -25,5 +25,10 @@ namespace testBenchGenerator.Model
         {
             this.Frequency = freq;
         }
+
+        public override string ToString()
+        {
+            return this.Name + " (" + this.Frequency + " MHz)";
+        }
     }
 }

@@ -64,5 +64,20 @@ namespace testBenchGenerator.View
                 this.infoBlock.Text = result ? DateTime.Now.ToLongTimeString() + " Testbench file generated successfully." : DateTime.Now.ToLongTimeString() + " Error - testbench file not generated.";
             }
         }
+
+        private void add_Click(object sender, RoutedEventArgs e)
+        {
+            NewTCView newTCWindow = new NewTCView(new NewTCViewModel(this.viewModel.ModuleFile));
+            newTCWindow.ShowDialog();
+            this.viewModel.TestCases = ((NewTCViewModel)newTCWindow.DataContext).ModuleFileVM.TestCases;
+            this.datains.Items.Refresh();
+        }
+
+        private void remove_Click(object sender, RoutedEventArgs e)
+        {
+            this.viewModel.TestCases.Remove(this.viewModel.SelectedTestCase);
+            this.viewModel.SelectedTestCase = null;
+            this.datains.Items.Refresh();
+        }
     }
 }

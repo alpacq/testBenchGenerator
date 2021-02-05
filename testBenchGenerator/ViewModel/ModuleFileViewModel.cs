@@ -172,15 +172,11 @@ namespace testBenchGenerator.ViewModel
         {
             get
             {
-                this.testCases = new List<TestCaseViewModel>();
-                foreach(TestCase tc in this.ModuleFile.TestCases)
-                {
-                    this.testCases.Add(new TestCaseViewModel(tc));
-                }
                 return this.testCases;
             }
             set
             {
+                this.testCases = value;
                 this.ModuleFile.TestCases = new List<TestCase>();
                 foreach(TestCaseViewModel tc in this.testCases)
                 {
@@ -206,6 +202,7 @@ namespace testBenchGenerator.ViewModel
         public ModuleFileViewModel(ModuleFile moduleFile)
         {
             this.moduleFile = moduleFile;
+            this.testCases = new List<TestCaseViewModel>();
         }
     }
 }

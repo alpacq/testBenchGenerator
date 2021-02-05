@@ -28,5 +28,10 @@ namespace testBenchGenerator.Model
             this.Name = name;
             this.Bitwidth = bitwidth;
         }
+
+        public override string ToString()
+        {
+            return this.Name;
+        }
     }
 }

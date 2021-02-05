@@ -77,7 +77,37 @@ namespace testBenchGenerator.ViewModel
             get { return this.TestCase.DataOuts; }
             set { this.TestCase.DataOuts = value; OnPropertyChanged("DataOuts"); }
         }
-        
+
+        public string DIs
+        {
+            get
+            {
+                string dis = String.Empty;
+                foreach(Port port in this.DataIns)
+                {
+                    dis += port.Name;
+                    if (!(port == this.DataIns.LastOrDefault()))
+                        dis += ", ";
+                }
+                return dis;
+            }
+        }
+
+        public string DOs
+        {
+            get
+            {
+                string dos = String.Empty;
+                foreach (Port port in this.DataOuts)
+                {
+                    dos += port.Name;
+                    if (!(port == this.DataOuts.LastOrDefault()))
+                        dos += ", ";
+                }
+                return dos;
+            }
+        }
+
         public bool Loop
         {
             get { return this.TestCase.Loop; }

@@ -5,11 +5,11 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:testBenchGenerator.View"
              mc:Ignorable="d" 
-             d:DesignHeight="900" d:DesignWidth="1400" Background="White" x:Name="genView">
+             d:DesignHeight="700" d:DesignWidth="1440" Background="White" x:Name="genView">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
-            <RowDefinition Height="700"/>
+            <RowDefinition Height="500"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -132,47 +132,27 @@
                             <ListView x:Name="datains" VerticalAlignment="Stretch" ItemsSource="{Binding TestCases}" BorderThickness="0" SelectedItem="{Binding SelectedTestCase}" Height="250">
                                 <ListView.Resources>
                                     <Style TargetType="ListViewItem">
-                                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                        <Setter Property="HorizontalContentAlignment" Value="Center" />
                                     </Style>
                                 </ListView.Resources>
                                 <ListView.View>
                                     <GridView>
                                         <GridViewColumn Header="Input ports" Width="250" DisplayMemberBinding="{Binding DIs}"/>
-                                        <GridViewColumn Header="Clock sync" Width="100">
-                                            <GridViewColumn.CellTemplate>
-                                                <DataTemplate>
-                                                    <ComboBox Width="100" ItemsSource="{Binding ElementName=genView, Path=DataContext.Clocks}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0" SelectedItem="{Binding ElementName=genView, Path=DataContext.SelectedDataIn.ClockSync, Mode=OneWayToSource}"/>
-                                                </DataTemplate>
-                                            </GridViewColumn.CellTemplate>
-                                        </GridViewColumn>
-                                        <GridViewColumn Header="Input valid port" Width="150">
-                                            <GridViewColumn.CellTemplate>
-                                                <DataTemplate>
-                                                    <ComboBox Width="150" ItemsSource="{Binding ElementName=genView, Path=DataContext.DataInputs}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0" SelectedItem="{Binding ElementName=genView, Path=DataContext.SelectedDataIn.ValidIn, Mode=OneWayToSource}"/>
-                                                </DataTemplate>
-                                            </GridViewColumn.CellTemplate>
-                                        </GridViewColumn>
-                                        <GridViewColumn Header="Input pattern" Width="200">
-                                            <GridViewColumn.CellTemplate>
-                                                <DataTemplate>
-                                                    <TextBox Text="{Binding DataVector, Mode=TwoWay}" Width="200" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0"/>
-                                                </DataTemplate>
-                                            </GridViewColumn.CellTemplate>
-                                        </GridViewColumn>
+                                        <GridViewColumn Header="Clock sync" Width="100" DisplayMemberBinding="{Binding ClockSync}"/>
+                                        <GridViewColumn Header="Input valid port" Width="150" DisplayMemberBinding="{Binding ValidIn}"/>
+                                        <GridViewColumn Header="Input pattern" Width="200" DisplayMemberBinding="{Binding DataVector}"/>
                                         <GridViewColumn Header="Valid sequence" Width="200" DisplayMemberBinding="{Binding VldSeq}"/>
                                         <GridViewColumn Header="Output ports" Width="250" DisplayMemberBinding="{Binding DOs}"/>
-                                        <GridViewColumn Header="Output valid port" Width="150">
-                                            <GridViewColumn.CellTemplate>
-                                                <DataTemplate>
-                                                    <ComboBox Width="150" ItemsSource="{Binding ElementName=genView, Path=DataContext.Outputs}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0" SelectedItem="{Binding ElementName=genView, Path=DataContext.SelectedDataIn.ValidOut, Mode=OneWayToSource}"/>
-                                                </DataTemplate>
-                                            </GridViewColumn.CellTemplate>
-                                        </GridViewColumn>
+                                        <GridViewColumn Header="Output valid port" Width="150" DisplayMemberBinding="{Binding ValidOut}"/>
                                     </GridView>
                                 </ListView.View>
-                            </ListView>
+                            </ListView>                            
                         </StackPanel>
                     </Border>
+                    <StackPanel Orientation="Horizontal" Grid.Column="6" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,10,0,10">
+                        <Button x:Name="add" Content="Add" Click="add_Click"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Margin="0,0,10,0"/>
+                        <Button x:Name="remove" Content="Remove" Click="remove_Click"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="50"/>
+                    </StackPanel>
                 </DockPanel>
 
             </StackPanel>
@@ -185,6 +165,6 @@
         </StackPanel>
 
         <TextBlock x:Name="infoBlock" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="3" Grid.Column="0"/>
-        <Button x:Name="run" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Height="25" Width="70" Content="Generate" Click="run_Click"/>
+        <Button x:Name="run" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Right" Margin="0,0,120,0" VerticalAlignment="Center" Height="25" Width="70" Content="Generate" Click="run_Click"/>
     </Grid>
 </UserControl>

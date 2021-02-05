@@ -21,6 +21,9 @@ namespace testBenchGenerator.ViewModel
         private string seq;
         private PortViewModel validIn;
         private PortViewModel validOut;
+        private string addText;
+        private List<string> seqs;
+        private List<string> radixes;
 
         public ModuleFileViewModel ModuleFileVM
         {
@@ -33,15 +36,17 @@ namespace testBenchGenerator.ViewModel
             set { this.tcVM = value; OnPropertyChanged("TCVM"); }
         }
 
-        public List<string> Seqs = new List<string>()
+        public List<string> Seqs
         {
-            "1/1", "1/2", "1/4", "1/8", "1/16", "1/32", "1/64", "1/128", "1/256", "1/512"
-        };
+            get { return this.seqs; }
+            set { this.seqs = value; OnPropertyChanged("Seqs"); }
+        }
 
-        public List<string> Radixes = new List<string>()
+        public List<string> Radixes
         {
-            "Decimal", "Hexadecimal"
-        };
+            get { return this.radixes; }
+            set { this.radixes = value; OnPropertyChanged("Radixes"); }
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -119,8 +124,22 @@ namespace testBenchGenerator.ViewModel
             set { this.validOut = value; OnPropertyChanged("ValidOut"); }
         }
 
+        public string AddText
+        {
+            get { return this.addText; }
+            set { this.addText = value; OnPropertyChanged("AddText"); }
+        }
+
         public NewTCViewModel(ModuleFileViewModel moduleFileVM)
         {
+            this.Seqs = new List<string>()
+            {
+                "1/1", "1/2", "1/4", "1/8", "1/16", "1/32", "1/64", "1/128", "1/256", "1/512"
+            };
+            this.Radixes = new List<string>()
+            {
+                "Decimal", "Hexadecimal"
+            };
             this.moduleFileVM = moduleFileVM;
             this.Ins = new List<PortSelViewModel>();
             foreach (PortViewModel port in this.Inputs)
@@ -132,27 +151,86 @@ namespace testBenchGenerator.ViewModel
             {
                 this.Outs.Add(new PortSelViewModel(new PortSel(port.Port)));
             }
+            this.AddText = "Add";
+        }
+
+        public NewTCViewModel(ModuleFileViewModel moduleFileVM, TestCaseViewModel tcVM)
+        {
+            this.Seqs = new List<string>()
+            {
+                "1/1", "1/2", "1/4", "1/8", "1/16", "1/32", "1/64", "1/128", "1/256", "1/512"
+            };
+            this.Radixes = new List<string>()
+            {
+                "Decimal", "Hexadecimal"
+            };
+            this.moduleFileVM = moduleFileVM;
+            this.tcVM = tcVM;
+            this.Ins = new List<PortSelViewModel>();
+            foreach (PortViewModel port in this.Inputs)
+            {
+                PortSel ps = new PortSel(port.Port);
+                if (this.TCVM.DataIns.Contains(ps.Port))
+                    ps.IsSel = true;
+                this.Ins.Add(new PortSelViewModel(ps));
+            }
+            this.Outs = new List<PortSelViewModel>();
+            foreach (PortViewModel port in this.Outputs)
+            {
+                PortSel ps = new PortSel(port.Port);
+                if (this.TCVM.DataOuts.Contains(ps.Port))
+                    ps.IsSel = true;
+                this.Ins.Add(new PortSelViewModel(ps));
+            }
+            this.Clock = this.ModuleFileVM.Clocks.Where(c => c.Name == this.TCVM.ClockSync.Name).FirstOrDefault();
+            this.Seq = this.SVStringToSeq();
+            this.Loop = this.TCVM.Loop;
+            this.Radix = this.TCVM.Radix == Model.Radix.Decimal ? "Decimal" : "Hexadecimal";
+            this.ValidIn = this.ModuleFileVM.Ins.Where(p => p.Name == this.TCVM.ValidIn.Name).FirstOrDefault();
+            this.ValidOut = this.ModuleFileVM.Outputs.Where(p => p.Name == this.TCVM.ValidOut.Name).FirstOrDefault();
+            this.InputPath = this.TCVM.DataVector;
+
+            this.AddText = "Save";
         }
 
         public void Add()
         {
-            TestCaseViewModel tc = new TestCaseViewModel(new TestCase(), this.ModuleFileVM);
+            if (this.TCVM == null)
+            {
+                TestCaseViewModel tc = new TestCaseViewModel(new TestCase(), this.ModuleFileVM);
 
-            tc.ClockSync = this.Clock.Clock;
-            tc.DataVector = this.InputPath;
-            tc.DataIns = (from input in this.Ins
-                                          where input.IsSel
-                                          select input.Port).ToList<Port>();
-            tc.DataOuts = (from output in this.Outs
-                                           where output.IsSel
-                                           select output.Port).ToList<Port>();
-            tc.Loop = this.Loop;
-            tc.Radix = this.Radix == "Decimal" ? Model.Radix.Decimal : Model.Radix.Hexadecimal;
-            tc.ValidIn = this.ValidIn.Port;
-            tc.ValidOut = this.ValidOut.Port;
-            tc.VldSeq = this.SeqtoSVString();
+                tc.ClockSync = this.Clock.Clock;
+                tc.DataVector = this.InputPath;
+                tc.DataIns = (from input in this.Ins
+                              where input.IsSel
+                              select input.Port).ToList<Port>();
+                tc.DataOuts = (from output in this.Outs
+                               where output.IsSel
+                               select output.Port).ToList<Port>();
+                tc.Loop = this.Loop;
+                tc.Radix = this.Radix == "Decimal" ? Model.Radix.Decimal : Model.Radix.Hexadecimal;
+                tc.ValidIn = this.ValidIn.Port;
+                tc.ValidOut = this.ValidOut.Port;
+                tc.VldSeq = this.SeqtoSVString();
 
-            this.ModuleFileVM.TestCases.Add(tc);
+                this.ModuleFileVM.TestCases.Add(tc);
+            }
+            else
+            {
+                this.TCVM.ClockSync = this.Clock.Clock;
+                this.TCVM.DataVector = this.InputPath;
+                this.TCVM.DataIns = (from input in this.Ins
+                              where input.IsSel
+                              select input.Port).ToList<Port>();
+                this.TCVM.DataOuts = (from output in this.Outs
+                               where output.IsSel
+                               select output.Port).ToList<Port>();
+                this.TCVM.Loop = this.Loop;
+                this.TCVM.Radix = this.Radix == "Decimal" ? Model.Radix.Decimal : Model.Radix.Hexadecimal;
+                this.TCVM.ValidIn = this.ValidIn.Port;
+                this.TCVM.ValidOut = this.ValidOut.Port;
+                this.TCVM.VldSeq = this.SeqtoSVString();
+            }
         }
 
         public string SeqtoSVString()
@@ -179,6 +257,35 @@ namespace testBenchGenerator.ViewModel
                     return "1000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
                 case "1/512":
                     return "10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
+                default:
+                    return null;
+            }
+        }
+
+        public string SVStringToSeq()
+        {
+            switch(this.TCVM.VldSeq)
+            {
+                case "11111111":
+                    return "1/1";
+                case "10101010":
+                    return "1/2";
+                case "10001000":
+                    return "1/4";
+                case "10000000":
+                    return "1/8";
+                case "1000000000000000":
+                    return "1/16";
+                case "10000000000000000000000000000000":
+                    return "1/32";
+                case "1000000000000000000000000000000000000000000000000000000000000000":
+                    return "1/64";
+                case "10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000":
+                    return "1/128";
+                case "1000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000":
+                    return "1/256";
+                case "10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000":
+                    return "1/512";
                 default:
                     return null;
             }

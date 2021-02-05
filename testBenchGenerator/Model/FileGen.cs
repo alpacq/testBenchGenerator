@@ -340,6 +340,7 @@ namespace testBenchGenerator.Model
                     if (di.DataVector != null && di.DataIns.FirstOrDefault() != null)
                     {
                         this.lines.Add("\t\t\t" + di.DataIns.FirstOrDefault().Name + "_" + di.DataVector.Split('\\').LastOrDefault().Replace(".txt", "();"));
+                        this.lines.Add("\t\t\t" + this.ModuleFile.Name + "_" + di.DataOutVector.Split('\\').LastOrDefault().Replace(".txt", "();"));
                     }
                 }
                 this.lines.Add("\t\tjoin");
@@ -368,7 +369,7 @@ namespace testBenchGenerator.Model
                             this.lines.Add("\t\tinteger num_lines_" + name + " = " + linesCount + ";");
                             this.lines.Add("\t\tinteger num_vlds_" + name + " = 0;");
                         }
-                        this.lines.Add("\t\tinteger fid_out_" + name + " = $fopen(" + di.DataOutVector.Replace("\\", "/") + "\",\"w\");");
+                        this.lines.Add("\t\tinteger fid_out_" + name + " = $fopen(\"" + di.DataOutVector.Replace("\\", "/") + "\",\"w\");");
                         this.lines.Add("\t\tif(fid_out_" + name + " == 0) begin");
                         this.lines.Add("\t\t\t$display(\"Error opening file - could not open.\");");
                         this.lines.Add("\t\t\t$stop;");
