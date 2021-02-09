@@ -26,6 +26,12 @@ namespace testBenchGenerator.View
             InitializeComponent();
             this.viewModel = viewModel;
             this.DataContext = this.viewModel;
+            if (this.viewModel.Clock != null)
+                this.clkCB.SelectedIndex = this.viewModel.Clocks.FindIndex(c => c.Name == this.viewModel.Clock.Name);
+            if (this.viewModel.ValidIn != null)
+                this.vipCB.SelectedIndex = this.viewModel.Inputs.FindIndex(i => i.Name == this.viewModel.ValidIn.Name);
+            if (this.viewModel.ValidOut != null)
+                this.vopCB.SelectedIndex = this.viewModel.Outputs.FindIndex(i => i.Name == this.viewModel.ValidOut.Name);
         }
 
         private void add_Click(object sender, RoutedEventArgs e)
@@ -62,6 +68,11 @@ namespace testBenchGenerator.View
                 string filename = dlg.FileName;
                 this.viewModel.InputPath = filename;
             }
+        }
+
+        private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            this.viewModel.CheckIfCanSave();
         }
     }
 }

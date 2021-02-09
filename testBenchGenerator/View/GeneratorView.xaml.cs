@@ -26,6 +26,8 @@ namespace testBenchGenerator.View
         public GeneratorView()
         {
             InitializeComponent();
+            this.viewModel = new GeneratorViewModel(null);
+            this.DataContext = this.viewModel;
         }
 
         private void dut_Click(object sender, RoutedEventArgs e)
@@ -77,6 +79,14 @@ namespace testBenchGenerator.View
         {
             this.viewModel.TestCases.Remove(this.viewModel.SelectedTestCase);
             this.viewModel.SelectedTestCase = null;
+            this.datains.Items.Refresh();
+        }
+
+        private void datains_PreviewMouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            NewTCView newTCWindow = new NewTCView(new NewTCViewModel(this.viewModel.ModuleFile, this.viewModel.SelectedTestCase));
+            newTCWindow.ShowDialog();
+            this.viewModel.TestCases = ((NewTCViewModel)newTCWindow.DataContext).ModuleFileVM.TestCases;
             this.datains.Items.Refresh();
         }
     }

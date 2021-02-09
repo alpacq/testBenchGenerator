@@ -73,55 +73,55 @@ namespace testBenchGenerator.ViewModel
         public List<PortSelViewModel> Ins
         {
             get { return this.ins; }
-            set { this.ins = value; OnPropertyChanged("Ins"); }
+            set { this.ins = value; OnPropertyChanged("Ins"); OnPropertyChanged("CanSave"); }
         }
 
         public List<PortSelViewModel> Outs
         {
             get { return this.outs; }
-            set { this.outs = value; OnPropertyChanged("Outs"); }
+            set { this.outs = value; OnPropertyChanged("Outs"); OnPropertyChanged("CanSave"); }
         }
 
         public string InputPath
         {
             get { return this.inputPath; }
-            set { this.inputPath = value; OnPropertyChanged("InputPath"); }
+            set { this.inputPath = value; OnPropertyChanged("InputPath"); OnPropertyChanged("CanSave"); }
         }
 
         public bool Loop
         {
             get { return this.loop; }
-            set { this.loop = value; OnPropertyChanged("Loop"); }
+            set { this.loop = value; OnPropertyChanged("Loop"); OnPropertyChanged("CanSave"); }
         }
 
         public ClockViewModel Clock
         {
             get { return this.clock; }
-            set { this.clock = value; OnPropertyChanged("Clock"); }
+            set { this.clock = value; OnPropertyChanged("Clock"); OnPropertyChanged("CanSave"); }
         }
 
         public string Radix
         {
             get { return this.radix; }
-            set { this.radix = value; OnPropertyChanged("Radix"); }
+            set { this.radix = value; OnPropertyChanged("Radix"); OnPropertyChanged("CanSave"); }
         }
 
         public string Seq
         {
             get { return this.seq; }
-            set { this.seq = value; OnPropertyChanged("Seq"); }
+            set { this.seq = value; OnPropertyChanged("Seq"); OnPropertyChanged("CanSave"); }
         }
 
         public PortViewModel ValidIn
         {
             get { return this.validIn; }
-            set { this.validIn = value; OnPropertyChanged("ValidIn"); }
+            set { this.validIn = value; OnPropertyChanged("ValidIn"); OnPropertyChanged("CanSave"); }
         }
 
         public PortViewModel ValidOut
         {
             get { return this.validOut; }
-            set { this.validOut = value; OnPropertyChanged("ValidOut"); }
+            set { this.validOut = value; OnPropertyChanged("ValidOut"); OnPropertyChanged("CanSave"); }
         }
 
         public string AddText
@@ -130,6 +130,10 @@ namespace testBenchGenerator.ViewModel
             set { this.addText = value; OnPropertyChanged("AddText"); }
         }
 
+        public bool CanSave
+        {
+            get { return this.Clock != null && this.InputPath != null && this.Radix != null && this.Seq != null && this.Ins.Any(i => i.IsSel) && this.Outs.Any(i => i.IsSel) && this.ValidIn != null && this.ValidOut != null; }
+        }
         public NewTCViewModel(ModuleFileViewModel moduleFileVM)
         {
             this.Seqs = new List<string>()
@@ -180,7 +184,7 @@ namespace testBenchGenerator.ViewModel
                 PortSel ps = new PortSel(port.Port);
                 if (this.TCVM.DataOuts.Contains(ps.Port))
                     ps.IsSel = true;
-                this.Ins.Add(new PortSelViewModel(ps));
+                this.Outs.Add(new PortSelViewModel(ps));
             }
             this.Clock = this.ModuleFileVM.Clocks.Where(c => c.Name == this.TCVM.ClockSync.Name).FirstOrDefault();
             this.Seq = this.SVStringToSeq();
@@ -289,6 +293,11 @@ namespace testBenchGenerator.ViewModel
                 default:
                     return null;
             }
+        }
+
+        public void CheckIfCanSave()
+        {
+            OnPropertyChanged("CanSave");
         }
     }
 }

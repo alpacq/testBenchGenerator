@@ -22,53 +22,63 @@ namespace testBenchGenerator.ViewModel
         public ModuleFileViewModel ModuleFile
         {
             get { return this.moduleFile; }
-            set { this.moduleFile = value; }
+            set { this.moduleFile = value; this.OnPropertyChanged("CanAdd"); }
         }
 
         public List<PortViewModel> Inputs
         {
-            get { return this.ModuleFile.Ins; }
+            get { if (this.ModuleFile != null) return this.ModuleFile.Ins; else return null; }
             set { this.ModuleFile.Ins = value; this.OnPropertyChanged("Inputs"); }
         }
 
         public List<PortViewModel> Outputs
         {
-            get { return this.ModuleFile.Outputs; }
+            get { if (this.ModuleFile != null) return this.ModuleFile.Outputs; else return null; }
             set { this.ModuleFile.Outputs = value; this.OnPropertyChanged("Outputs"); }
         }
 
         public List<ParameterViewModel> Parameters
         {
-            get { return this.ModuleFile.Parameters; }
+            get { if (this.ModuleFile != null) return this.ModuleFile.Parameters; else return null; }
             set { this.ModuleFile.Parameters = value; this.OnPropertyChanged("Parameters"); }
         }
 
         public List<ClockViewModel> Clocks
         {
-            get { return this.ModuleFile.Clocks; }
+            get { if (this.ModuleFile != null) return this.ModuleFile.Clocks; else return null; }
             set { this.ModuleFile.Clocks = value; this.OnPropertyChanged("Clocks"); }
         }
 
         public List<ResetViewModel> Resets
         {
-            get { return this.ModuleFile.Resets; }
+            get { if (this.ModuleFile != null) return this.ModuleFile.Resets; else return null; }
             set { this.ModuleFile.Resets = value; this.OnPropertyChanged("Resets"); }
         }
 
         public List<TestCaseViewModel> TestCases
         {
-            get { return this.ModuleFile.TestCases; }
-            set { this.ModuleFile.TestCases = value; this.OnPropertyChanged("TestCases"); }
+            get { if (this.ModuleFile != null) return this.ModuleFile.TestCases; else return null; }
+            set { this.ModuleFile.TestCases = value; this.OnPropertyChanged("TestCases"); this.OnPropertyChanged("CanRemove"); }
         }
 
         public TestCaseViewModel SelectedTestCase
         {
             get { return this.selectedTC; }
-            set { this.selectedTC = value; this.OnPropertyChanged("SelectedTestCase"); }
+            set { this.selectedTC = value; this.OnPropertyChanged("SelectedTestCase"); this.OnPropertyChanged("CanRemove"); }
+        }
+
+        public bool CanAdd
+        {
+            get { return this.ModuleFile != null; }
+        }
+
+        public bool CanRemove
+        {
+            get { return this.TestCases != null && this.TestCases.Count > 0 && this.SelectedTestCase != null; }
         }
 
         public GeneratorViewModel(string modulePath)
-        {
+        {            
             if (modulePath != null && modulePath != String.Empty)
             {
                 this.ModuleFile = new ModuleFileViewModel(new ModuleFile(modulePath));
@@ -78,6 +88,8 @@ namespace testBenchGenerator.ViewModel
                 this.OnPropertyChanged("Outputs");
                 this.OnPropertyChanged("Parameters");
             }
+            this.OnPropertyChanged("CanAdd");
+            this.OnPropertyChanged("CanRemove");
         }
 
         public bool GenerateFile()
