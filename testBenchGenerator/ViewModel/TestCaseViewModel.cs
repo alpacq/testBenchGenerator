@@ -120,6 +120,12 @@ namespace testBenchGenerator.ViewModel
             set { this.TestCase.Radix = value; OnPropertyChanged("Radix"); }
         }
 
+        public int Order
+        {
+            get { return this.TestCase.Order; }
+            set { this.TestCase.Order = value; OnPropertyChanged("Order"); }
+        }
+
         public TestCaseViewModel(TestCase testCase) 
         {
             this.testCase = testCase;

@@ -6,36 +6,33 @@
              xmlns:local="clr-namespace:testBenchGenerator.View"
              xmlns:model="clr-namespace:testBenchGenerator.Model"
              mc:Ignorable="d" 
-             d:DesignHeight="700" d:DesignWidth="1440" Background="White" x:Name="genView">
+             Background="White" x:Name="genView" SizeChanged="genView_SizeChanged">
     <UserControl.Resources>
         <model:PolConverter x:Key="PolConverter"/>
     </UserControl.Resources>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition Height="500"/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*"/>
-            <ColumnDefinition Width="3*"/>
-        </Grid.ColumnDefinitions>
+    <Grid>        
 
-        <TextBlock Grid.Row="0" Grid.Column="0" Margin="100,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Text="Module under test source file"/>
+        <StackPanel Orientation="Vertical" Grid.Row="0" Grid.ColumnSpan="2" Margin="20,0" HorizontalAlignment="Stretch">
 
-        <StackPanel Orientation="Vertical" Grid.Row="1" Grid.ColumnSpan="2" Margin="20,0" HorizontalAlignment="Stretch">
-
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Stretch">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Stretch" x:Name="dutpanel">
+                <TextBlock Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Text="Module under test source file"/>
+                <StackPanel Orientation="Horizontal" Margin="20">
+                    <TextBox x:Name="dutFile" Width="300" Height="25" IsReadOnly="True" VerticalContentAlignment="Center"/>
+                    <Button x:Name="dut" Margin="10,0" Height="25" Width="35" Content="..." Click="dut_Click"/>
+                </StackPanel>
+            </StackPanel>
+            
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Stretch" x:Name="dutParams">
 
                 <DockPanel>
                     <Border DockPanel.Dock="Top" BorderThickness="1,1,0,0" BorderBrush="Black">
                         <StackPanel Orientation="Vertical">
-                            <TextBlock Text="Clocks" FontWeight="Bold" Margin="10,5,0,5"/>
-                            <ListView x:Name="clocks" VerticalAlignment="Stretch" ItemsSource="{Binding Clocks}" BorderThickness="0" Height="150">
+                            <TextBlock Text="Clocks" FontWeight="Bold" Margin="10,5,0,5" x:Name="clkpanel"/>
+                            <ListView x:Name="clocks" VerticalAlignment="Stretch" ItemsSource="{Binding Clocks}" BorderThickness="0" Height="Auto" >
                                 <ListView.View>
                                     <GridView>
-                                        <GridViewColumn Header="Name" Width="150" DisplayMemberBinding="{Binding Name}"/>
-                                        <GridViewColumn Header="Frequency (MHz)" Width="100">
+                                        <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}"/>
+                                        <GridViewColumn Header="Frequency (MHz)">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <TextBox Text="{Binding Frequency, Mode=TwoWay}" Width="100" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0"/>
@@ -53,11 +50,11 @@
                     <Border DockPanel.Dock="Top" BorderThickness="1,1,0,0" BorderBrush="Black">
                         <StackPanel Orientation="Vertical">
                             <TextBlock Text="Resets" FontWeight="Bold" Margin="10,5,0,5"/>
-                            <ListView x:Name="resets" VerticalAlignment="Stretch" ItemsSource="{Binding Resets}" BorderThickness="0">
+                            <ListView x:Name="resets" VerticalAlignment="Stretch" ItemsSource="{Binding Resets}" BorderThickness="0" Height="Auto" >
                                 <ListView.View>
                                     <GridView>
-                                        <GridViewColumn Header="Name" Width="150" DisplayMemberBinding="{Binding Name}"/>
-                                        <GridViewColumn Header="Polarization" Width="80">
+                                        <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}"/>
+                                        <GridViewColumn Header="Polarization">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <TextBox Text="{Binding Polarization, Converter={StaticResource PolConverter}, Mode=TwoWay}" Width="80" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0"/>
@@ -75,11 +72,11 @@
                     <Border DockPanel.Dock="Top" BorderThickness="1,1,0,0" BorderBrush="Black">
                         <StackPanel Orientation="Vertical">
                             <TextBlock Text="Parameters" FontWeight="Bold" Margin="10,5,0,5"/>
-                            <ListView x:Name="params" VerticalAlignment="Stretch" ItemsSource="{Binding Parameters}" BorderThickness="0">
+                            <ListView x:Name="paramss" VerticalAlignment="Stretch" ItemsSource="{Binding Parameters}" BorderThickness="0" Height="Auto" >
                                 <ListView.View>
                                     <GridView>
-                                        <GridViewColumn Header="Name" Width="150" DisplayMemberBinding="{Binding Name}"/>
-                                        <GridViewColumn Header="Value" Width="100">
+                                        <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}"/>
+                                        <GridViewColumn Header="Value">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <TextBox Text="{Binding Value, Mode=TwoWay}" Width="100" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0"/>
@@ -97,11 +94,11 @@
                     <Border DockPanel.Dock="Top" BorderThickness="1,1,0,0" BorderBrush="Black">
                         <StackPanel Orientation="Vertical">
                             <TextBlock Text="Inputs" FontWeight="Bold" Margin="10,5,0,5"/>
-                            <ListView x:Name="inputs" VerticalAlignment="Stretch" ItemsSource="{Binding Inputs}" BorderThickness="0" Height="150">
+                            <ListView x:Name="inputs" VerticalAlignment="Stretch" ItemsSource="{Binding Inputs}" BorderThickness="0" Height="Auto" >
                                 <ListView.View>
                                     <GridView>
-                                        <GridViewColumn Header="Name" Width="150" DisplayMemberBinding="{Binding Name}"/>
-                                        <GridViewColumn Header="Bitwidth" Width="100" DisplayMemberBinding="{Binding Bitwidth}"/>
+                                        <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}"/>
+                                        <GridViewColumn Header="Bitwidth" DisplayMemberBinding="{Binding Bitwidth}"/>
                                     </GridView>
                                 </ListView.View>
                             </ListView>
@@ -113,11 +110,11 @@
                     <Border DockPanel.Dock="Top" BorderThickness="1,1,1,0" BorderBrush="Black">
                         <StackPanel Orientation="Vertical">
                             <TextBlock Text="Outputs" FontWeight="Bold" Margin="10,5,0,5"/>
-                            <ListView x:Name="outputs" VerticalAlignment="Stretch" ItemsSource="{Binding Outputs}" BorderThickness="0" Height="150">
+                            <ListView x:Name="outputs" VerticalAlignment="Stretch" ItemsSource="{Binding Outputs}" BorderThickness="0" Height="Auto">
                                 <ListView.View>
                                     <GridView>
-                                        <GridViewColumn Header="Name" Width="150" DisplayMemberBinding="{Binding Name}"/>
-                                        <GridViewColumn Header="Bitwidth" Width="100" DisplayMemberBinding="{Binding Bitwidth}"/>
+                                        <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}"/>
+                                        <GridViewColumn Header="Bitwidth" DisplayMemberBinding="{Binding Bitwidth}"/>
                                     </GridView>
                                 </ListView.View>
                             </ListView>
@@ -131,86 +128,100 @@
 
                 <DockPanel>
                     <Border DockPanel.Dock="Top" BorderThickness="1" BorderBrush="Black">
-                        <StackPanel Orientation="Vertical">
-                            <TextBlock Text="Test Cases" FontWeight="Bold" Margin="10,5,0,5"/>
-                            <ListView x:Name="datains" VerticalAlignment="Stretch" ItemsSource="{Binding TestCases}" BorderThickness="0" SelectedItem="{Binding SelectedTestCase}" Height="250" PreviewMouseDoubleClick="datains_PreviewMouseDoubleClick">
-                                <!--<ListView.Resources>
-                                    <Style TargetType="ListViewItem">
-                                        <Setter Property="HorizontalContentAlignment" Value="Center" />
-                                    </Style>
-                                </ListView.Resources>-->
+                        <StackPanel Orientation="Vertical" VerticalAlignment="Stretch">
+                            <TextBlock Text="Test Cases" FontWeight="Bold" Margin="10,5,0,5" x:Name="tcpanel"/>
+                            <ListView x:Name="datains" VerticalAlignment="Stretch" ItemsSource="{Binding TestCases}" BorderThickness="0" SelectedItem="{Binding SelectedTestCase}" Height="Auto" PreviewMouseDoubleClick="datains_PreviewMouseDoubleClick">
                                 <ListView.View>
                                     <GridView>
-                                        <GridViewColumn Header="Clock sync" Width="100">
+                                        <GridViewColumn Header="No">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <TextBlock Margin="5,0" Text="{Binding ClockSync}" Width="100" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ToolTip="{Binding ClockSync}"/>
+                                                    <TextBlock Margin="5,0" Text="{Binding Order}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
-                                        <GridViewColumn Header="Input ports" Width="250">
+                                        <GridViewColumn Header="Clock sync">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <TextBlock Margin="5,0" Text="{Binding DIs}" Width="250" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ToolTip="{Binding DIs}"/>
+                                                    <TextBlock Text="{Binding ClockSync}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ToolTip="{Binding ClockSync}"/>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Header="Input ports">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding DIs}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ToolTip="{Binding DIs}"/>
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>                                        
-                                        <GridViewColumn Header="Input valid port" Width="150">
+                                        <GridViewColumn Header="Input valid port">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <TextBlock Margin="5,0" Text="{Binding ValidIn}" Width="150" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ToolTip="{Binding ValidIn}"/>
+                                                    <TextBlock Text="{Binding ValidIn}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ToolTip="{Binding ValidIn}"/>
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
-                                        <GridViewColumn Header="Input pattern" Width="200">
+                                        <GridViewColumn Header="Input pattern">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <TextBlock Margin="5,0" Text="{Binding DataVector}" Width="200" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ToolTip="{Binding DataVector}"/>
+                                                    <TextBlock Text="{Binding DataVector}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ToolTip="{Binding DataVector}"/>
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
-                                        <GridViewColumn Header="Valid sequence" Width="200">
+                                        <GridViewColumn Header="Valid sequence">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <TextBlock Margin="5,0" Text="{Binding VldSeq}" Width="200" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ToolTip="{Binding VldSeq}"/>
+                                                    <TextBlock Text="{Binding VldSeq}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ToolTip="{Binding VldSeq}"/>
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
-                                        <GridViewColumn Header="Output ports" Width="250">
+                                        <GridViewColumn Header="Output ports">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <TextBlock Margin="5,0" Text="{Binding DOs}" Width="250" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ToolTip="{Binding DOs}"/>
+                                                    <TextBlock Text="{Binding DOs}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ToolTip="{Binding DOs}"/>
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
-                                        <GridViewColumn Header="Output valid port" Width="150">
+                                        <GridViewColumn Header="Output valid port">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <TextBlock Margin="5,0" Text="{Binding ValidOut}" Width="150" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ToolTip="{Binding ValidOut}"/>
+                                                    <TextBlock Text="{Binding ValidOut}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ToolTip="{Binding ValidOut}"/>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Header="Radix">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding Radix}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ToolTip="{Binding Radix}"/>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Header="Loop">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <CheckBox Margin="5,0" IsChecked="{Binding Loop}"/>
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
                                     </GridView>
                                 </ListView.View>
-                            </ListView>                            
+                            </ListView>
+                            <StackPanel Orientation="Horizontal" Grid.Column="6" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,10,10,10" x:Name="btnspanel">
+                                <Button x:Name="add" Content="Add" Click="add_Click"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Margin="0,0,10,0" IsEnabled="{Binding CanAdd}"/>
+                                <Button x:Name="remove" Content="Remove" Click="remove_Click"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" IsEnabled="{Binding CanRemove}"/>
+                            </StackPanel>
                         </StackPanel>
-                    </Border>
-                    <StackPanel Orientation="Horizontal" Grid.Column="6" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,10,0,10">
-                        <Button x:Name="add" Content="Add" Click="add_Click"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Margin="0,0,10,0" IsEnabled="{Binding CanAdd}"/>
-                        <Button x:Name="remove" Content="Remove" Click="remove_Click"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" IsEnabled="{Binding CanRemove}"/>
-                    </StackPanel>
+                    </Border>                    
                 </DockPanel>
 
             </StackPanel>
+
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Stretch" HorizontalAlignment="Right" x:Name="genpanel" Margin="0,10,0,10">
+                <TextBlock x:Name="infoBlock" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="3" Grid.Column="0"/>
+                <Button x:Name="run" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Height="25" Width="70" Content="Generate" Click="run_Click"/>
+            </StackPanel>
                         
         </StackPanel>
-
-        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1" Margin="20">
-            <TextBox x:Name="dutFile" Width="300" Height="25" IsReadOnly="True" VerticalContentAlignment="Center"/>
-            <Button x:Name="dut" Margin="10,0" Height="25" Width="35" Content="..." Click="dut_Click"/>
-        </StackPanel>
-
-        <TextBlock x:Name="infoBlock" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="3" Grid.Column="0"/>
-        <Button x:Name="run" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Right" Margin="0,0,120,0" VerticalAlignment="Center" Height="25" Width="70" Content="Generate" Click="run_Click"/>
+        
     </Grid>
 </UserControl>

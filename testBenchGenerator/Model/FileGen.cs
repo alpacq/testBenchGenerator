@@ -117,6 +117,35 @@ namespace testBenchGenerator.Model
             }
         }
 
+        public string SeqtoSVString(string seq)
+        {
+            switch (seq)
+            {
+                case "1/1":
+                    return "11111111";
+                case "1/2":
+                    return "10101010";
+                case "1/4":
+                    return "10001000";
+                case "1/8":
+                    return "10000000";
+                case "1/16":
+                    return "1000000000000000";
+                case "1/32":
+                    return "10000000000000000000000000000000";
+                case "1/64":
+                    return "1000000000000000000000000000000000000000000000000000000000000000";
+                case "1/128":
+                    return "10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
+                case "1/256":
+                    return "1000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
+                case "1/512":
+                    return "10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
+                default:
+                    return null;
+            }
+        }
+
         #endregion
         #region lines create methods
 
@@ -211,7 +240,7 @@ namespace testBenchGenerator.Model
                 {
                     string name = tc.DataIns.FirstOrDefault().Name + "_" + tc.DataVector.Split('\\').LastOrDefault().Replace(".txt", "");
 
-                    int len = tc.VldSeq.Length;
+                    int len = this.SeqtoSVString(tc.VldSeq).Length;
 
                     string lineToAdd = "\tlogic\t";
                     for (int i = this.ModuleFile.BwLen; i > 0; i--)
@@ -227,7 +256,7 @@ namespace testBenchGenerator.Model
                         for (int i = this.ModuleFile.BwLen - ((len.ToString().Length + 4) / 4); i > 0; i--)
                             lineToAdd += "\t";
                     }
-                    this.lines.Add(lineToAdd + "\tvalid_" + name + "_seq = " + len + "'b" + tc.VldSeq + ";");
+                    this.lines.Add(lineToAdd + "\tvalid_" + name + "_seq = " + len + "'b" + this.SeqtoSVString(tc.VldSeq) + ";");
                     this.lines.Add(lineToAdd + "\tvalid_" + name + "_srl;");
                 }
             }
@@ -238,7 +267,7 @@ namespace testBenchGenerator.Model
                 {
                     string name = tc.DataIns.FirstOrDefault().Name + "_" + tc.DataVector.Split('\\').LastOrDefault().Replace(".txt", "");
 
-                    int len = tc.VldSeq.Length;
+                    int len = this.SeqtoSVString(tc.VldSeq).Length;
 
                     this.lines.Add("\tassign valid_" + name + "_pre = valid_" + name + "_srl[" + (len - 1) + "];");
                 }
@@ -493,7 +522,7 @@ namespace testBenchGenerator.Model
                     {
                         string name = di.DataIns.FirstOrDefault().Name + "_" + di.DataVector.Split('\\').LastOrDefault().Replace(".txt", "");
 
-                        int len = di.VldSeq.Length;
+                        int len = this.SeqtoSVString(di.VldSeq).Length;
 
                         this.lines.Add(always + di.ClockSync.Name + ") begin");
                         this.lines.Add("\t\tif(!test_" + name + "_in_progress) begin");

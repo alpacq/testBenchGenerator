@@ -27,7 +27,7 @@ namespace testBenchGenerator.View
         {
             InitializeComponent();
             this.viewModel = new GeneratorViewModel(null);
-            this.DataContext = this.viewModel;
+            this.DataContext = this.viewModel;            
         }
 
         private void dut_Click(object sender, RoutedEventArgs e)
@@ -88,6 +88,57 @@ namespace testBenchGenerator.View
             newTCWindow.ShowDialog();
             this.viewModel.TestCases = ((NewTCViewModel)newTCWindow.DataContext).ModuleFileVM.TestCases;
             this.datains.Items.Refresh();
+        }
+
+        private void genView_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            GridView gView = this.datains.View as GridView;
+            var workingWidth = this.ActualWidth - SystemParameters.VerticalScrollBarWidth - 50; // take into account vertical scrollbar
+            var wFrac = workingWidth / 26;
+            gView.Columns[0].Width = wFrac;     //order
+            gView.Columns[1].Width = wFrac * 2; //clk sync
+            gView.Columns[2].Width = wFrac * 5; //ins
+            gView.Columns[3].Width = wFrac * 2; //vld in
+            gView.Columns[4].Width = wFrac * 4; //dv
+            gView.Columns[5].Width = wFrac * 2; //seq
+            gView.Columns[6].Width = wFrac * 5; //outs
+            gView.Columns[7].Width = wFrac * 2; //vld out
+            gView.Columns[8].Width = wFrac * 2; //radix
+            gView.Columns[9].Width = wFrac;     //loop
+
+            this.infoBlock.Margin = new Thickness(wFrac, 0, wFrac, 0);
+            this.run.Margin = new Thickness(wFrac, 0, wFrac, 0);
+
+            workingWidth = this.ActualWidth - (5 * SystemParameters.VerticalScrollBarWidth) - 60; // take into account vertical scrollbar
+            wFrac = workingWidth / 24;
+            this.clocks.Width = wFrac * 5 + SystemParameters.VerticalScrollBarWidth;
+            gView = this.clocks.View as GridView;
+            gView.Columns[0].Width = wFrac * 3;
+            gView.Columns[1].Width = wFrac * 2;
+            this.resets.Width = wFrac * 5 + SystemParameters.VerticalScrollBarWidth;
+            gView = this.resets.View as GridView;
+            gView.Columns[0].Width = wFrac * 3;
+            gView.Columns[1].Width = wFrac * 2;
+            this.paramss.Width = wFrac * 4 + SystemParameters.VerticalScrollBarWidth;
+            gView = this.paramss.View as GridView;
+            gView.Columns[0].Width = wFrac * 3;
+            gView.Columns[1].Width = wFrac * 1;
+            this.inputs.Width = wFrac * 5 + SystemParameters.VerticalScrollBarWidth;
+            gView = this.inputs.View as GridView;
+            gView.Columns[0].Width = wFrac * 3;
+            gView.Columns[1].Width = wFrac * 2;
+            this.outputs.Width = wFrac * 5 + SystemParameters.VerticalScrollBarWidth;
+            gView = this.outputs.View as GridView;
+            gView.Columns[0].Width = wFrac * 3;
+            gView.Columns[1].Width = wFrac * 2;
+
+            var workingHeight = this.ActualHeight - this.dutpanel.ActualHeight - this.btnspanel.ActualHeight - this.genpanel.ActualHeight - this.clkpanel.ActualHeight - this.tcpanel.ActualHeight - 70;
+            this.clocks.Height = workingHeight * 1 / 3;
+            this.resets.Height = workingHeight * 1 / 3;
+            this.paramss.Height = workingHeight * 1 / 3;
+            this.inputs.Height = workingHeight * 1 / 3;
+            this.outputs.Height = workingHeight * 1 / 3;
+            this.datains.Height = workingHeight * 2 / 3;
         }
     }
 }

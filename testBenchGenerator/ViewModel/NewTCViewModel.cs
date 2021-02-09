@@ -187,7 +187,7 @@ namespace testBenchGenerator.ViewModel
                 this.Outs.Add(new PortSelViewModel(ps));
             }
             this.Clock = this.ModuleFileVM.Clocks.Where(c => c.Name == this.TCVM.ClockSync.Name).FirstOrDefault();
-            this.Seq = this.SVStringToSeq();
+            this.Seq = this.Seq;
             this.Loop = this.TCVM.Loop;
             this.Radix = this.TCVM.Radix == Model.Radix.Decimal ? "Decimal" : "Hexadecimal";
             this.ValidIn = this.ModuleFileVM.Ins.Where(p => p.Name == this.TCVM.ValidIn.Name).FirstOrDefault();
@@ -215,9 +215,22 @@ namespace testBenchGenerator.ViewModel
                 tc.Radix = this.Radix == "Decimal" ? Model.Radix.Decimal : Model.Radix.Hexadecimal;
                 tc.ValidIn = this.ValidIn.Port;
                 tc.ValidOut = this.ValidOut.Port;
-                tc.VldSeq = this.SeqtoSVString();
+                tc.VldSeq = this.Seq;
+                if (this.ModuleFileVM.TestCases.Count > 0 && this.ModuleFileVM.TestCases.Last().Loop)
+                {
+                    tc.Order = this.ModuleFileVM.TestCases.Last().Order;
+                    if (!this.Loop)
+                        foreach (TestCaseViewModel tcvm in this.ModuleFileVM.TestCases)
+                            if (tcvm.Loop)
+                                tcvm.Order += 1;
+                }
+                else
+                {
+                    tc.Order = this.ModuleFileVM.TestCases.Count + 1;
+                }
 
                 this.ModuleFileVM.TestCases.Add(tc);
+                this.ModuleFileVM.TestCases.OrderBy(t => t.Order);
             }
             else
             {
@@ -233,65 +246,7 @@ namespace testBenchGenerator.ViewModel
                 this.TCVM.Radix = this.Radix == "Decimal" ? Model.Radix.Decimal : Model.Radix.Hexadecimal;
                 this.TCVM.ValidIn = this.ValidIn.Port;
                 this.TCVM.ValidOut = this.ValidOut.Port;
-                this.TCVM.VldSeq = this.SeqtoSVString();
-            }
-        }
-
-        public string SeqtoSVString()
-        {
-            switch(this.Seq)
-            {
-                case "1/1":
-                    return "11111111";
-                case "1/2":
-                    return "10101010";
-                case "1/4":
-                    return "10001000";
-                case "1/8":
-                    return "10000000";
-                case "1/16":
-                    return "1000000000000000";
-                case "1/32":
-                    return "10000000000000000000000000000000";
-                case "1/64":
-                    return "1000000000000000000000000000000000000000000000000000000000000000";
-                case "1/128":
-                    return "10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
-                case "1/256":
-                    return "1000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
-                case "1/512":
-                    return "10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
-                default:
-                    return null;
-            }
-        }
-
-        public string SVStringToSeq()
-        {
-            switch(this.TCVM.VldSeq)
-            {
-                case "11111111":
-                    return "1/1";
-                case "10101010":
-                    return "1/2";
-                case "10001000":
-                    return "1/4";
-                case "10000000":
-                    return "1/8";
-                case "1000000000000000":
-                    return "1/16";
-                case "10000000000000000000000000000000":
-                    return "1/32";
-                case "1000000000000000000000000000000000000000000000000000000000000000":
-                    return "1/64";
-                case "10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000":
-                    return "1/128";
-                case "1000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000":
-                    return "1/256";
-                case "10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000":
-                    return "1/512";
-                default:
-                    return null;
+                this.TCVM.VldSeq = this.Seq;
             }
         }
 

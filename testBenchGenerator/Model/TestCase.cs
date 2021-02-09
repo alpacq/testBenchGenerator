@@ -18,6 +18,7 @@ namespace testBenchGenerator.Model
         private List<Port> dataOuts;
         private bool loop;
         private Radix radix;
+        private int order;
 
         public List<Port> DataIns
         {
@@ -77,6 +78,12 @@ namespace testBenchGenerator.Model
         {
             get { return this.radix; }
             set { this.radix = value; }
+        }
+
+        public int Order
+        {
+            get { return this.order; }
+            set { this.order = value; }
         }
 
         public TestCase()
