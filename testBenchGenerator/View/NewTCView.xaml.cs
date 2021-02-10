@@ -32,6 +32,7 @@ namespace testBenchGenerator.View
                 this.vipCB.SelectedIndex = this.viewModel.Inputs.FindIndex(i => i.Name == this.viewModel.ValidIn.Name);
             if (this.viewModel.ValidOut != null)
                 this.vopCB.SelectedIndex = this.viewModel.Outputs.FindIndex(i => i.Name == this.viewModel.ValidOut.Name);
+            this.CenterWindowOnScreen();
         }
 
         private void add_Click(object sender, RoutedEventArgs e)
@@ -73,6 +74,16 @@ namespace testBenchGenerator.View
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
             this.viewModel.CheckIfCanSave();
+        }
+
+        private void CenterWindowOnScreen()
+        {
+            double screenWidth = System.Windows.SystemParameters.PrimaryScreenWidth;
+            double screenHeight = System.Windows.SystemParameters.PrimaryScreenHeight;
+            double windowWidth = this.Width;
+            double windowHeight = this.Height;
+            this.Left = (screenWidth / 2) - (windowWidth / 2);
+            this.Top = (screenHeight / 2) - (windowHeight / 2);
         }
     }
 }

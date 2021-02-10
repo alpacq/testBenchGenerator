@@ -22,7 +22,7 @@ namespace testBenchGenerator.ViewModel
         public ModuleFileViewModel ModuleFile
         {
             get { return this.moduleFile; }
-            set { this.moduleFile = value; this.OnPropertyChanged("CanAdd"); }
+            set { this.moduleFile = value; this.OnPropertyChanged("CanAdd"); this.OnPropertyChanged("CanGenerate"); }
         }
 
         public List<PortViewModel> Inputs
@@ -77,6 +77,11 @@ namespace testBenchGenerator.ViewModel
             get { return this.TestCases != null && this.TestCases.Count > 0 && this.SelectedTestCase != null; }
         }
 
+        public bool CanGenerate
+        {
+            get { return this.ModuleFile != null; }
+        }
+
         public GeneratorViewModel(string modulePath)
         {            
             if (modulePath != null && modulePath != String.Empty)
@@ -90,6 +95,7 @@ namespace testBenchGenerator.ViewModel
             }
             this.OnPropertyChanged("CanAdd");
             this.OnPropertyChanged("CanRemove");
+            this.OnPropertyChanged("CanGenerate");
         }
 
         public bool GenerateFile()

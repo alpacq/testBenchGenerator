@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:co.v2="urn:schemas-microsoft-com:clickonce.v2">
+  <asmv1:assemblyIdentity name="testBenchGenerator.exe" version="1.0.0.1" publicKeyToken="f3afaa29b36b285d" language="en" processorArchitecture="msil" type="win32" />
+  <description asmv2:iconFile="ide.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
+  <application />
+  <entryPoint>
+    <assemblyIdentity name="testBenchGenerator" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
+    <commandLine file="testBenchGenerator.exe" parameters="" />
+  </entryPoint>
+  <trustInfo>
+    <security>
+      <applicationRequestMinimum>
+        <PermissionSet version="1" class="System.Security.NamedPermissionSet" Name="LocalIntranet" Description="Default rights given to applications on the local intranet" Unrestricted="true" ID="Custom" SameSite="site" />
+        <defaultAssemblyRequest permissionSetReference="Custom" />
+      </applicationRequestMinimum>
+      <requestedPrivileges xmlns="urn:schemas-microsoft-com:asm.v3">
+        <!-- UAC Manifest Options
+             If you want to change the Windows User Account Control level replace the 
+             requestedExecutionLevel node with one of the following.
+
+        <requestedExecutionLevel  level="asInvoker" uiAccess="false" />
+        <requestedExecutionLevel  level="requireAdministrator" uiAccess="false" />
+        <requestedExecutionLevel  level="highestAvailable" uiAccess="false" />
+
+            Specifying requestedExecutionLevel element will disable file and registry virtualization. 
+            Remove this element if your application requires this virtualization for backwards
+            compatibility.
+        -->
+        <requestedExecutionLevel level="asInvoker" uiAccess="false" />
+      </requestedPrivileges>
+    </security>
+  </trustInfo>
+  <dependency>
+    <dependentOS>
+      <osVersionInfo>
+        <os majorVersion="5" minorVersion="1" buildNumber="2600" servicePackMajor="0" />
+      </osVersionInfo>
+    </dependentOS>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="preRequisite" allowDelayedBinding="true">
+      <assemblyIdentity name="Microsoft.Windows.CommonLanguageRuntime" version="4.0.30319.0" />
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="LiveCharts.dll" size="152064">
+      <assemblyIdentity name="LiveCharts" version="0.9.7.0" publicKeyToken="0BC1F845D1EBB8DF" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>n8+Jg3tg9pwcUB5M+k0oYIh6/QuPMlgDNn55Wk47yco=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="LiveCharts.Wpf.dll" size="217600">
+      <assemblyIdentity name="LiveCharts.Wpf" version="0.9.7.0" publicKeyToken="0BC1F845D1EBB8DF" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>G9uxtcGlBlPlwmFh6bfAPtxRhyGm4Q6hgKhASdlnEGs=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="testBenchGenerator.exe" size="845248">
+      <assemblyIdentity name="testBenchGenerator" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>aLw+PiY+G2OGoLBPaGQKk/OF6X4L6Is+qF6ZG8Yg6B0=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <file name="ide.ico" size="67646">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>93BledVodjhqvrzG7NlmMWsnpy2gWifS+AvFoiDhSUo=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="testBenchGenerator.exe.config" size="189">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>R+Wg8QGvQVHX8T0ta/qbhH1bXkqY0fRnS3wBV3J0bN8=</dsig:DigestValue>
+    </hash>
+  </file>
+  <compatibility xmlns="urn:schemas-microsoft-com:compatibility.v1">
+    <application>
+      <!-- A list of the Windows versions that this application has been tested on
+           and is designed to work with. Uncomment the appropriate elements
+           and Windows will automatically select the most compatible environment. -->
+      <!-- Windows Vista -->
+      <!--<supportedOS Id="{e2011457-1546-43c5-a5fe-008deee3d3f0}" />-->
+      <!-- Windows 7 -->
+      <!--<supportedOS Id="{35138b9a-5d96-4fbd-8e2d-a2440225f93a}" />-->
+      <!-- Windows 8 -->
+      <!--<supportedOS Id="{4a2f28e3-53b9-4441-ba9c-d69d4a4a6e38}" />-->
+      <!-- Windows 8.1 -->
+      <!--<supportedOS Id="{1f676c76-80e1-4239-95bb-83d0f6d0da78}" />-->
+      <!-- Windows 10 -->
+      <!--<supportedOS Id="{8e0f7a12-bfb3-4fe8-b9a5-48fd50a15a9a}" />-->
+    </application>
+  </compatibility>
+<publisherIdentity name="CN=NSN-INTRA\krlam" issuerKeyHash="3f04e6ca60266b3f9cb607a078008939978f8545" /><Signature Id="StrongNameSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>OsCKwe8shSxI9I2Vqq0eBYLJC+SJlCja0fo5C7fGx9Q=</DigestValue></Reference></SignedInfo><SignatureValue>hpjFUvS1DpwSQkqWZL5LFurDKGs3Y3OKANXJDwSWyDlSMGTai4B8yFW96YvVNVNsqr421am6jte6BQ+yH8y8A97XcDwbTqcB6TjkSKcSMjBluxYAhVPJOExqFm0SKGw9AnhYNLnbvqL7ia0hwAJI69d0t9NezOojUR+dfebChko=</SignatureValue><KeyInfo Id="StrongNameKeyInfo"><KeyValue><RSAKeyValue><Modulus>rk8D5Z+pFZ9BxPP5oIVtsgxethqhN33iNv6zFKx7sm/D5zJQsdTmkw1LMrU+YxgaXGEF4BWi6ZU2ogWK8UXnkpBFw+zI2scLNv8evUmuW5ftu5MnLGFpjflHMimnKYjEyZ7uEl/hvjm6Zhuffh0qZ9oI/rXSxhnNZ24mkmeHwyU=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><msrel:RelData xmlns:msrel="http://schemas.microsoft.com/windows/rel/2005/reldata"><r:license xmlns:r="urn:mpeg:mpeg21:2003:01-REL-R-NS" xmlns:as="http://schemas.microsoft.com/windows/pki/2005/Authenticode"><r:grant><as:ManifestInformation Hash="d4c7c6b70b39fad1da289489e40bc982051eadaa958df4482c852cefc18ac03a" Description="" Url=""><as:assemblyIdentity name="testBenchGenerator.exe" version="1.0.0.1" publicKeyToken="f3afaa29b36b285d" language="en" processorArchitecture="msil" type="win32" /></as:ManifestInformation><as:SignedBy /><as:AuthenticodePublisher><as:X509SubjectName>CN=NSN-INTRA\krlam</as:X509SubjectName></as:AuthenticodePublisher></r:grant><r:issuer><Signature Id="AuthenticodeSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>ov2VA951LnTUiW/0189t8cALdh7r8u/nFSbJL6+SdWg=</DigestValue></Reference></SignedInfo><SignatureValue>RC5XCz6XBh6h78ZVMCvzEdR7SPIEUoRkq+AmTAAKUhYWVMtsYbWEzwB97Ne7ByY1fF6HdpiM3Evy0Vnud6+JrMmdTUjU7dHbWEWMzIiS468bvZjhydhQ6H9c0rbSQxmaFktbrWrsXgompjB1jHj4eRMBTi9ijOVrFY2TKlVuNzE=</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>rk8D5Z+pFZ9BxPP5oIVtsgxethqhN33iNv6zFKx7sm/D5zJQsdTmkw1LMrU+YxgaXGEF4BWi6ZU2ogWK8UXnkpBFw+zI2scLNv8evUmuW5ftu5MnLGFpjflHMimnKYjEyZ7uEl/hvjm6Zhuffh0qZ9oI/rXSxhnNZ24mkmeHwyU=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509Certificate>MIIB1TCCAT6gAwIBAgIQJldSLyaPQaNEzVozv1hppjANBgkqhkiG9w0BAQsFADApMScwJQYDVQQDHh4ATgBTAE4ALQBJAE4AVABSAEEAXABrAHIAbABhAG0wHhcNMjEwMjEwMTE1MjM2WhcNMjIwMjEwMTc1MjM2WjApMScwJQYDVQQDHh4ATgBTAE4ALQBJAE4AVABSAEEAXABrAHIAbABhAG0wgZ8wDQYJKoZIhvcNAQEBBQADgY0AMIGJAoGBAK5PA+WfqRWfQcTz+aCFbbIMXrYaoTd94jb+sxSse7Jvw+cyULHU5pMNSzK1PmMYGlxhBeAVoumVNqIFivFF55KQRcPsyNrHCzb/Hr1JrluX7buTJyxhaY35RzIppymIxMme7hJf4b45umYbn34dKmfaCP610sYZzWduJpJnh8MlAgMBAAEwDQYJKoZIhvcNAQELBQADgYEAjYrVYSbN79FnDezfg8d2p6VvgImJBQGTbFZPEz0lRJoxzsjFWZOmK6B6ZhG1VgEiSONYIQxA9uh5M/JJna9WbeawBUqo2mNilXm3mQR8lcqTNE3nrxgVrnexHQZZ9mZcWKaaAxP5Y0+F86/oIqH/LIfVaKjBYDDKvisqLjNaiMQ=</X509Certificate></X509Data></KeyInfo></Signature></r:issuer></r:license></msrel:RelData></KeyInfo></Signature></asmv1:assembly>

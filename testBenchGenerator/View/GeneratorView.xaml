@@ -10,8 +10,15 @@
     <UserControl.Resources>
         <model:PolConverter x:Key="PolConverter"/>
     </UserControl.Resources>
-    <Grid>        
-
+    <Grid MouseLeftButtonUp="datains_MouseLeftButtonUp" MouseMove="datains_MouseMove">
+        <Popup x:Name="popup1" IsHitTestVisible="False" Placement="RelativePoint" PlacementTarget="{Binding ElementName=genView}" AllowsTransparency="True">
+            <Border BorderThickness="2" BorderBrush="Black" Background="White" Opacity="0.75">
+                <StackPanel Orientation="Horizontal" Margin="4,3,8,3">
+                    <Image Source="/Resources/change.png" Width="25" Height="25" />
+                    <TextBlock FontWeight="Bold" VerticalAlignment="Center" Text="{Binding ElementName=genView, Path=DraggedItem.Description}" Margin="8,0,0,0" />
+                </StackPanel>
+            </Border>
+        </Popup>
         <StackPanel Orientation="Vertical" Grid.Row="0" Grid.ColumnSpan="2" Margin="20,0" HorizontalAlignment="Stretch">
 
             <StackPanel Orientation="Horizontal" VerticalAlignment="Stretch" x:Name="dutpanel">
@@ -28,14 +35,20 @@
                     <Border DockPanel.Dock="Top" BorderThickness="1,1,0,0" BorderBrush="Black">
                         <StackPanel Orientation="Vertical">
                             <TextBlock Text="Clocks" FontWeight="Bold" Margin="10,5,0,5" x:Name="clkpanel"/>
-                            <ListView x:Name="clocks" VerticalAlignment="Stretch" ItemsSource="{Binding Clocks}" BorderThickness="0" Height="Auto" >
+                            <ListView x:Name="clocks" VerticalAlignment="Stretch" ItemsSource="{Binding Clocks}" BorderThickness="0" Height="Auto" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                                 <ListView.View>
                                     <GridView>
-                                        <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}"/>
-                                        <GridViewColumn Header="Frequency (MHz)">
+                                        <GridViewColumn Header="Name">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <TextBox Text="{Binding Frequency, Mode=TwoWay}" Width="100" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0"/>
+                                                    <TextBlock Text="{Binding Name}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ToolTip="{Binding Name}"/>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Header="Freq. (MHz)">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBox Text="{Binding Frequency, Mode=TwoWay}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalAlignment="Stretch" BorderThickness="0" ToolTip="{Binding Frequency}"/>
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
@@ -50,14 +63,20 @@
                     <Border DockPanel.Dock="Top" BorderThickness="1,1,0,0" BorderBrush="Black">
                         <StackPanel Orientation="Vertical">
                             <TextBlock Text="Resets" FontWeight="Bold" Margin="10,5,0,5"/>
-                            <ListView x:Name="resets" VerticalAlignment="Stretch" ItemsSource="{Binding Resets}" BorderThickness="0" Height="Auto" >
+                            <ListView x:Name="resets" VerticalAlignment="Stretch" ItemsSource="{Binding Resets}" BorderThickness="0" Height="Auto" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                                 <ListView.View>
                                     <GridView>
-                                        <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}"/>
+                                        <GridViewColumn Header="Name">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding Name}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ToolTip="{Binding Name}"/>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
                                         <GridViewColumn Header="Polarization">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <TextBox Text="{Binding Polarization, Converter={StaticResource PolConverter}, Mode=TwoWay}" Width="80" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0"/>
+                                                    <TextBox Text="{Binding Polarization, Converter={StaticResource PolConverter}, Mode=TwoWay}" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0" ToolTip="{Binding Polarization, Converter={StaticResource PolConverter}}"/>
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
@@ -72,14 +91,20 @@
                     <Border DockPanel.Dock="Top" BorderThickness="1,1,0,0" BorderBrush="Black">
                         <StackPanel Orientation="Vertical">
                             <TextBlock Text="Parameters" FontWeight="Bold" Margin="10,5,0,5"/>
-                            <ListView x:Name="paramss" VerticalAlignment="Stretch" ItemsSource="{Binding Parameters}" BorderThickness="0" Height="Auto" >
+                            <ListView x:Name="paramss" VerticalAlignment="Stretch" ItemsSource="{Binding Parameters}" BorderThickness="0" Height="Auto" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                                 <ListView.View>
                                     <GridView>
-                                        <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}"/>
+                                        <GridViewColumn Header="Name">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding Name}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ToolTip="{Binding Name}"/>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
                                         <GridViewColumn Header="Value">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <TextBox Text="{Binding Value, Mode=TwoWay}" Width="100" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0"/>
+                                                    <TextBox Text="{Binding Value, Mode=TwoWay}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0" ToolTip="{Binding Value}"/>
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
@@ -94,11 +119,23 @@
                     <Border DockPanel.Dock="Top" BorderThickness="1,1,0,0" BorderBrush="Black">
                         <StackPanel Orientation="Vertical">
                             <TextBlock Text="Inputs" FontWeight="Bold" Margin="10,5,0,5"/>
-                            <ListView x:Name="inputs" VerticalAlignment="Stretch" ItemsSource="{Binding Inputs}" BorderThickness="0" Height="Auto" >
+                            <ListView x:Name="inputs" VerticalAlignment="Stretch" ItemsSource="{Binding Inputs}" BorderThickness="0" Height="Auto" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                                 <ListView.View>
                                     <GridView>
-                                        <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}"/>
-                                        <GridViewColumn Header="Bitwidth" DisplayMemberBinding="{Binding Bitwidth}"/>
+                                        <GridViewColumn Header="Name">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding Name}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ToolTip="{Binding Name}"/>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Header="Bitwidth">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding Bitwidth}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ToolTip="{Binding Bitwidth}"/>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
                                     </GridView>
                                 </ListView.View>
                             </ListView>
@@ -110,11 +147,28 @@
                     <Border DockPanel.Dock="Top" BorderThickness="1,1,1,0" BorderBrush="Black">
                         <StackPanel Orientation="Vertical">
                             <TextBlock Text="Outputs" FontWeight="Bold" Margin="10,5,0,5"/>
-                            <ListView x:Name="outputs" VerticalAlignment="Stretch" ItemsSource="{Binding Outputs}" BorderThickness="0" Height="Auto">
+                            <ListView x:Name="outputs" VerticalAlignment="Stretch" ItemsSource="{Binding Outputs}" BorderThickness="0" Height="Auto" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                                <ListView.ItemContainerStyle>
+                                    <Style TargetType="ListViewItem">
+                                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                    </Style>
+                                </ListView.ItemContainerStyle>
                                 <ListView.View>
                                     <GridView>
-                                        <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}"/>
-                                        <GridViewColumn Header="Bitwidth" DisplayMemberBinding="{Binding Bitwidth}"/>
+                                        <GridViewColumn Header="Name">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding Name}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ToolTip="{Binding Name}"/>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Header="Bitwidth">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding Bitwidth}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ToolTip="{Binding Bitwidth}"/>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
                                     </GridView>
                                 </ListView.View>
                             </ListView>
@@ -130,13 +184,14 @@
                     <Border DockPanel.Dock="Top" BorderThickness="1" BorderBrush="Black">
                         <StackPanel Orientation="Vertical" VerticalAlignment="Stretch">
                             <TextBlock Text="Test Cases" FontWeight="Bold" Margin="10,5,0,5" x:Name="tcpanel"/>
-                            <ListView x:Name="datains" VerticalAlignment="Stretch" ItemsSource="{Binding TestCases}" BorderThickness="0" SelectedItem="{Binding SelectedTestCase}" Height="Auto" PreviewMouseDoubleClick="datains_PreviewMouseDoubleClick">
+                            <ListView x:Name="datains" VerticalAlignment="Stretch" ItemsSource="{Binding TestCases}" BorderThickness="0" SelectedItem="{Binding SelectedTestCase}" Height="Auto" 
+                                      PreviewMouseDoubleClick="datains_PreviewMouseDoubleClick" PreviewMouseLeftButtonDown="datains_PreviewMouseLeftButtonDown">
                                 <ListView.View>
                                     <GridView>
                                         <GridViewColumn Header="No">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <TextBlock Margin="5,0" Text="{Binding Order}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                                                    <TextBlock Margin="5,0" Text="{Binding Order}" HorizontalAlignment="Center" VerticalAlignment="Stretch"/>
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
@@ -199,7 +254,7 @@
                                         <GridViewColumn Header="Loop">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <CheckBox Margin="5,0" IsChecked="{Binding Loop}"/>
+                                                    <CheckBox Margin="5,0" IsChecked="{Binding Loop}" HorizontalAlignment="Center"/>
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
@@ -218,7 +273,7 @@
 
             <StackPanel Orientation="Horizontal" VerticalAlignment="Stretch" HorizontalAlignment="Right" x:Name="genpanel" Margin="0,10,0,10">
                 <TextBlock x:Name="infoBlock" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="3" Grid.Column="0"/>
-                <Button x:Name="run" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Height="25" Width="70" Content="Generate" Click="run_Click"/>
+                <Button x:Name="run" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Height="25" Width="70" Content="Generate" IsEnabled="{Binding CanGenerate}" Click="run_Click"/>
             </StackPanel>
                         
         </StackPanel>

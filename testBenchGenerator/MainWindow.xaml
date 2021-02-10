@@ -7,17 +7,17 @@
         xmlns:tbg="clr-namespace:testBenchGenerator"
         xmlns:v="clr-namespace:testBenchGenerator.View"
         mc:Ignorable="d"
-        Title="Testbench Generator" WindowStartupLocation="CenterScreen" Icon="icon2.png" SizeChanged="Window_SizeChanged">
+        Title="Testbench Generator" WindowStartupLocation="CenterScreen" Icon="ide.ico" SizeChanged="Window_SizeChanged">
     <Grid>
-        <TabControl Grid.Row="1" x:Name="tab" SelectionChanged="tab_SelectionChanged">
-            <TabItem Header="Generator">
+        <!--<TabControl Grid.Row="1" x:Name="tab" SelectionChanged="tab_SelectionChanged">
+            <TabItem Header="Generator">-->
                 <v:GeneratorView x:Name="genView" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-            </TabItem>
+            <!--</TabItem>
 
             <TabItem Header="Analyzer">
                 <v:AnalyzerView x:Name="anView" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
             </TabItem>
-        </TabControl>        
+        </TabControl>   -->     
 
     </Grid>
 </Window>

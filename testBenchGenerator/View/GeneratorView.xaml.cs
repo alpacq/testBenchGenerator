@@ -23,6 +23,26 @@ namespace testBenchGenerator.View
     public partial class GeneratorView : UserControl
     {
         private GeneratorViewModel viewModel;
+        public bool IsDragging { get; set; }
+        #region DraggedItem
+
+        /// <summary>
+        /// DraggedItem Dependency Property
+        /// </summary>
+        public static readonly DependencyProperty DraggedItemProperty =
+            DependencyProperty.Register("DraggedItem", typeof(TestCaseViewModel), typeof(GeneratorView));
+
+        /// <summary>
+        /// Gets or sets the DraggedItem property.  This dependency property 
+        /// indicates ....
+        /// </summary>
+        public TestCaseViewModel DraggedItem
+        {
+            get { return (TestCaseViewModel)GetValue(DraggedItemProperty); }
+            set { SetValue(DraggedItemProperty, value); }
+        }
+
+        #endregion
         public GeneratorView()
         {
             InitializeComponent();
@@ -93,7 +113,7 @@ namespace testBenchGenerator.View
         private void genView_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             GridView gView = this.datains.View as GridView;
-            var workingWidth = this.ActualWidth - SystemParameters.VerticalScrollBarWidth - 50; // take into account vertical scrollbar
+            var workingWidth = this.ActualWidth - SystemParameters.VerticalScrollBarWidth - 45; // take into account vertical scrollbar
             var wFrac = workingWidth / 26;
             gView.Columns[0].Width = wFrac;     //order
             gView.Columns[1].Width = wFrac * 2; //clk sync
@@ -111,26 +131,26 @@ namespace testBenchGenerator.View
 
             workingWidth = this.ActualWidth - (5 * SystemParameters.VerticalScrollBarWidth) - 60; // take into account vertical scrollbar
             wFrac = workingWidth / 24;
-            this.clocks.Width = wFrac * 5 + SystemParameters.VerticalScrollBarWidth;
+            this.clocks.Width = wFrac * 4 + SystemParameters.VerticalScrollBarWidth;
             gView = this.clocks.View as GridView;
             gView.Columns[0].Width = wFrac * 3;
-            gView.Columns[1].Width = wFrac * 2;
-            this.resets.Width = wFrac * 5 + SystemParameters.VerticalScrollBarWidth;
+            gView.Columns[1].Width = wFrac * 1;
+            this.resets.Width = wFrac * 4 + SystemParameters.VerticalScrollBarWidth;
             gView = this.resets.View as GridView;
             gView.Columns[0].Width = wFrac * 3;
-            gView.Columns[1].Width = wFrac * 2;
+            gView.Columns[1].Width = wFrac * 1;
             this.paramss.Width = wFrac * 4 + SystemParameters.VerticalScrollBarWidth;
             gView = this.paramss.View as GridView;
             gView.Columns[0].Width = wFrac * 3;
             gView.Columns[1].Width = wFrac * 1;
-            this.inputs.Width = wFrac * 5 + SystemParameters.VerticalScrollBarWidth;
+            this.inputs.Width = wFrac * 6 + SystemParameters.VerticalScrollBarWidth;
             gView = this.inputs.View as GridView;
             gView.Columns[0].Width = wFrac * 3;
-            gView.Columns[1].Width = wFrac * 2;
-            this.outputs.Width = wFrac * 5 + SystemParameters.VerticalScrollBarWidth;
+            gView.Columns[1].Width = wFrac * 3;
+            this.outputs.Width = wFrac * 6 + SystemParameters.VerticalScrollBarWidth;
             gView = this.outputs.View as GridView;
             gView.Columns[0].Width = wFrac * 3;
-            gView.Columns[1].Width = wFrac * 2;
+            gView.Columns[1].Width = wFrac * 3;
 
             var workingHeight = this.ActualHeight - this.dutpanel.ActualHeight - this.btnspanel.ActualHeight - this.genpanel.ActualHeight - this.clkpanel.ActualHeight - this.tcpanel.ActualHeight - 70;
             this.clocks.Height = workingHeight * 1 / 3;
@@ -139,6 +159,93 @@ namespace testBenchGenerator.View
             this.inputs.Height = workingHeight * 1 / 3;
             this.outputs.Height = workingHeight * 1 / 3;
             this.datains.Height = workingHeight * 2 / 3;
+        }
+
+        private void datains_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            var row = UIHelpers.TryFindFromPoint<ListViewItem>((UIElement)sender,
+                                                    e.GetPosition(this.datains));
+            if (row == null) return;
+            if (((TestCaseViewModel)(row.Content)).Loop)
+                return;
+            //set flag that indicates we're capturing mouse movements
+            this.IsDragging = true;
+            this.DraggedItem = (TestCaseViewModel)row.Content;
+        }
+
+        private void datains_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (!this.IsDragging)
+            {
+                this.ResetDragDrop();
+                return;
+            }
+
+            var row = UIHelpers.TryFindFromPoint<ListViewItem>((UIElement)sender,
+                                                    e.GetPosition(this));
+            if (row == null)
+            {
+                this.ResetDragDrop();
+                return;
+            }
+            //get the target item
+            TestCaseViewModel targetItem = (TestCaseViewModel)(row.Content);
+
+            if (!ReferenceEquals(this.DraggedItem, targetItem))
+            {
+                var prevOrder = this.DraggedItem.Order;
+                var nextOrder = targetItem.Order;
+                
+                foreach (TestCaseViewModel tc in this.viewModel.TestCases)
+                {
+                    if (tc != this.DraggedItem)
+                    {
+                        if (nextOrder < prevOrder)
+                        {
+                            if (tc.Order >= nextOrder && tc.Order < prevOrder)
+                            {
+                                tc.Order += 1;
+                            }
+                        }
+                        else if (nextOrder > prevOrder)
+                        {
+                            if (tc.Order > prevOrder && tc.Order <= nextOrder)
+                            {
+                                tc.Order -= 1;
+                            }
+                        }
+                    }
+                }
+
+                this.DraggedItem.Order = nextOrder;
+                this.viewModel.TestCases = this.viewModel.TestCases.OrderBy(t => t.Order).ToList<TestCaseViewModel>();
+                this.datains.Items.Refresh();
+            }
+
+            //reset
+            this.ResetDragDrop();
+        }
+
+        private void datains_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (!this.IsDragging || e.LeftButton != MouseButtonState.Pressed) return;
+
+            //display the popup if it hasn't been opened yet
+            if (!this.popup1.IsOpen)
+            {
+                //make sure the popup is visible
+                this.popup1.IsOpen = true;
+            }
+
+            Size popupSize = new Size(this.popup1.ActualWidth, this.popup1.ActualHeight);
+            this.popup1.PlacementRectangle = new Rect(e.GetPosition(this), popupSize);
+        }
+
+        private void ResetDragDrop()
+        {
+            this.IsDragging = false;
+            this.popup1.IsOpen = false;
+            this.datains.SelectedItem = null;
         }
     }
 }

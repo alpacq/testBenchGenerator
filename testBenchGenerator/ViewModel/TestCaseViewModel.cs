@@ -126,6 +126,11 @@ namespace testBenchGenerator.ViewModel
             set { this.TestCase.Order = value; OnPropertyChanged("Order"); }
         }
 
+        public string Description
+        {
+            get { return "@" + this.ClockSync.Name + " | " + this.DIs + " | " + this.DataVector.Split('\\').LastOrDefault().Replace(".txt", "") + " | " + this.DOs; }
+        }
+
         public TestCaseViewModel(TestCase testCase) 
         {
             this.testCase = testCase;

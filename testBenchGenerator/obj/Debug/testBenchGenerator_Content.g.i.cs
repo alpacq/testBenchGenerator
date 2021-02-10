@@ -8,6 +8,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("icon2.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("ide.ico")]
 
 

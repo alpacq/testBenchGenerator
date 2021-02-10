@@ -187,7 +187,7 @@ namespace testBenchGenerator.ViewModel
                 this.Outs.Add(new PortSelViewModel(ps));
             }
             this.Clock = this.ModuleFileVM.Clocks.Where(c => c.Name == this.TCVM.ClockSync.Name).FirstOrDefault();
-            this.Seq = this.Seq;
+            this.Seq = this.TCVM.VldSeq;
             this.Loop = this.TCVM.Loop;
             this.Radix = this.TCVM.Radix == Model.Radix.Decimal ? "Decimal" : "Hexadecimal";
             this.ValidIn = this.ModuleFileVM.Ins.Where(p => p.Name == this.TCVM.ValidIn.Name).FirstOrDefault();
@@ -230,7 +230,7 @@ namespace testBenchGenerator.ViewModel
                 }
 
                 this.ModuleFileVM.TestCases.Add(tc);
-                this.ModuleFileVM.TestCases.OrderBy(t => t.Order);
+                this.ModuleFileVM.TestCases = this.ModuleFileVM.TestCases.OrderBy(t => t.Order).ToList<TestCaseViewModel>();
             }
             else
             {
