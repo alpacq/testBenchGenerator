@@ -9,7 +9,6 @@ C:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\bin\Release\LiveC
 C:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\bin\Release\LiveCharts.xml
 C:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\bin\Release\LiveCharts.Wpf.pdb
 C:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\bin\Release\LiveCharts.Wpf.xml
-C:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\obj\Release\testBenchGenerator.csprojAssemblyReference.cache
 C:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\obj\Release\MainWindow.g.cs
 C:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\obj\Release\View\AnalyzerView.g.cs
 C:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\obj\Release\View\GeneratorView.g.cs
@@ -63,3 +62,5 @@ C:\Users\krzys\Documents\Archiwum\Projekty\testBenchGenerator\testBenchGenerator
 C:\Users\krzys\Documents\Archiwum\Projekty\testBenchGenerator\testBenchGenerator\obj\Release\testBenchGenerator.csproj.CopyComplete
 C:\Users\krzys\Documents\Archiwum\Projekty\testBenchGenerator\testBenchGenerator\obj\Release\testBenchGenerator.exe
 C:\Users\krzys\Documents\Archiwum\Projekty\testBenchGenerator\testBenchGenerator\obj\Release\testBenchGenerator.pdb
+C:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\obj\Release\testBenchGenerator.csproj.CoreCompileInputs.cache
+C:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\obj\Release\testBenchGenerator.csprojAssemblyReference.cache

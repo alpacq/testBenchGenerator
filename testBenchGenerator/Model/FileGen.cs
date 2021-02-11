@@ -92,7 +92,7 @@ namespace testBenchGenerator.Model
                 if (inp == di.DataIns.LastOrDefault())
                 {
                     this.formatIn += "\\n";
-                    this.dis += ");";
+                    this.dis += "));";
                 }
                 else
                 {
@@ -370,6 +370,12 @@ namespace testBenchGenerator.Model
                     {
                         this.lines.Add("\t\t\t" + di.DataIns.FirstOrDefault().Name + "_" + di.DataVector.Split('\\').LastOrDefault().Replace(".txt", "();"));
                         this.lines.Add("\t\t\t" + this.ModuleFile.Name + "_" + di.DataOutVector.Split('\\').LastOrDefault().Replace(".txt", "();"));
+                        if (!di.Loop)
+                        {
+                            this.lines.Add("\t\tjoin");
+                            this.lines.Add("\t\tfork");
+                        }
+                        
                     }
                 }
                 this.lines.Add("\t\tjoin");
@@ -388,17 +394,17 @@ namespace testBenchGenerator.Model
                 {
                     if (di.DataVector != null)
                     {
-                        string name = this.ModuleFile.Name + "_" + di.DataOutVector.Split('\\').LastOrDefault().Replace(".txt", "");
+                        string name = this.ModuleFile.Name + "_" + di.DataVector.Split('\\').LastOrDefault().Replace(".txt", "_out");
 
                         this.lines.Add(task + name + "();");
 
                         if(!di.Loop)
                         {
                             int linesCount = File.ReadAllLines(di.DataVector).Length;
-                            this.lines.Add("\t\tinteger num_lines_" + name + " = " + linesCount + ";");
-                            this.lines.Add("\t\tinteger num_vlds_" + name + " = 0;");
+                            this.lines.Add("\t\tautomatic integer num_lines_" + name + " = " + linesCount + ";");
+                            this.lines.Add("\t\tautomatic integer num_vlds_" + name + " = 0;");
                         }
-                        this.lines.Add("\t\tinteger fid_out_" + name + " = $fopen(\"" + di.DataOutVector.Replace("\\", "/") + "\",\"w\");");
+                        this.lines.Add("\t\tautomatic integer fid_out_" + name + " = $fopen(\"" + di.DataOutVector.Replace("\\", "/") + "\",\"w\");");
                         this.lines.Add("\t\tif(fid_out_" + name + " == 0) begin");
                         this.lines.Add("\t\t\t$display(\"Error opening file - could not open.\");");
                         this.lines.Add("\t\t\t$stop;");
@@ -410,15 +416,15 @@ namespace testBenchGenerator.Model
                         if (di.Loop)
                         {
                             this.lines.Add(forever);
-                            this.lines.Add("\t\t\t@posedge(" + di.ClockSync.Name + ");");
+                            this.lines.Add("\t\t\t@(posedge " + di.ClockSync.Name + ");");
                             this.lines.Add("\t\t\tif(" + di.ValidOut.Name + ") begin");                            
                             this.lines.Add("\t\t\t\t$fdisplay(fid_out_" + name + ", \"" + this.formatOut + "\", " + this.dos);
                             this.lines.Add("\t\t" + end);
                         }
                         else
                         {
-                            this.lines.Add("\t\twhile(num_vlds_" + name + " != num_lines_" + name + ");");
-                            this.lines.Add("\t\t\t@posedge(" + di.ClockSync.Name + ");");
+                            this.lines.Add("\t\twhile(num_vlds_" + name + " != num_lines_" + name + ") begin");
+                            this.lines.Add("\t\t\t@(posedge " + di.ClockSync.Name + ");");
                             this.lines.Add("\t\t\tif(" + di.ValidOut.Name + ") begin");
                             this.lines.Add("\t\t\t\t$fdisplay(fid_out_" + name + ", \"" + this.formatOut + "\", " + this.dos);
                             this.lines.Add("\t\t\t\tnum_vlds_" + name + " <= num_vlds_" + name + " + 1;");
@@ -445,11 +451,11 @@ namespace testBenchGenerator.Model
                     if (di.DataVector != null && di.DataIns.FirstOrDefault() != null)
                     {
                         string name = di.DataIns.FirstOrDefault().Name + "_" + di.DataVector.Split('\\').LastOrDefault().Replace(".txt", "");
-
+                                      
                         this.lines.Add(task + name + "();");
 
                         this.lines.Add("\t\tstring line_" + name + ";");
-                        this.lines.Add("\t\tinteger fid_" + name + " = $fopen(\"" + di.DataVector.Replace("\\", "/") + "\",\"r\");");
+                        this.lines.Add("\t\tautomatic integer fid_" + name + " = $fopen(\"" + di.DataVector.Replace("\\", "/") + "\",\"r\");");
                         this.lines.Add("\t\tif(fid_" + name + " == 0) begin");
                         this.lines.Add("\t\t\t$display(\"Error opening file - could not open.\");");
                         this.lines.Add("\t\t\t$stop;");
@@ -463,8 +469,8 @@ namespace testBenchGenerator.Model
                         if (di.Loop)
                         {
                             this.lines.Add(forever);
-                            this.lines.Add("\t\t\t@posedge(" + di.ClockSync.Name + ");");
-                            this.lines.Add("\t\t\tif(" + di.ValidIn.Name + "_pre) begin");
+                            this.lines.Add("\t\t\t@(posedge " + di.ClockSync.Name + ");");
+                            this.lines.Add("\t\t\tif(valid_" + name + "_pre) begin");
                             this.lines.Add("\t\t\t\tif($feof(fid_" + name + ")) begin");
                             this.lines.Add("\t\t\t\t\t$fclose(fid_" + name + ");");
                             this.lines.Add("\t\t\t\t\tfid_" + name + " = $fopen(\"" + di.DataVector.Replace("\\", "/") + "\",\"r\");");
@@ -475,34 +481,34 @@ namespace testBenchGenerator.Model
                             this.lines.Add("\t\t\t\t\t\t$display(\"File " + di.DataVector.Replace("\\", "/") + " opened successfully.\");");
                             this.lines.Add("\t\t\t\t" + end);
                             this.lines.Add("\t\t\t" + end + " else if($fgets(line_" + name + ", fid_" + name + ")) begin");
-                                this.lines.Add("\t\t\t\tvoid'($sscanf(line_" + name + ", \"" + this.formatIn + "\", " + this.dis);
+                            this.lines.Add("\t\t\t\t\tvoid'($sscanf(line_" + name + ", \"" + this.formatIn + "\", " + this.dis);
+                            this.lines.Add("\t\t\t" + end);
                             this.lines.Add("\t\t" + end + " else begin");
                             foreach(Port inp in di.DataIns)
-                                this.lines.Add("\t\t\t" + inp.Name + " <= '0;");
+                                this.lines.Add("\t\t\t\t" + inp.Name + " <= '0;");
                             this.lines.Add("\t\t" + end);
+                            this.lines.Add("\t" + end);
                         }
                         else
                         {
-                            this.lines.Add("\t\t\twhile(!$feof(fid_" + name + ")) begin");
-                            this.lines.Add("\t\t\t\t@posedge(" + di.ClockSync.Name + ");");
-                            this.lines.Add("\t\t\t\tif(" + di.ValidIn.Name + "_pre) begin");
-                            this.lines.Add("\t\t\t\t\tif($fgets(line_" + name + ", fid_" + name + ")) begin");
-                            this.lines.Add("\t\t\t\t\t\tvoid'($sscanf(line_" + name + ", \"" + this.formatIn + "\", " + this.dis);
-                            this.lines.Add("\t\t\t\t" + end + " else begin");
-                            foreach (Port inp in di.DataIns)
-                                this.lines.Add("\t\t\t\t\t\t" + inp.Name + " <= '0;");
-                            this.lines.Add("\t\t\t\t" + end);
+                            this.lines.Add("\t\twhile(!$feof(fid_" + name + ")) begin");
+                            this.lines.Add("\t\t\t@(posedge " + di.ClockSync.Name + ");");
+                            this.lines.Add("\t\t\tif(valid_" + name + "_pre) begin");
+                            this.lines.Add("\t\t\t\tif($fgets(line_" + name + ", fid_" + name + ")) begin");
+                            this.lines.Add("\t\t\t\t\tvoid'($sscanf(line_" + name + ", \"" + this.formatIn + "\", " + this.dis);
                             this.lines.Add("\t\t\t" + end + " else begin");
                             foreach (Port inp in di.DataIns)
                                 this.lines.Add("\t\t\t\t\t" + inp.Name + " <= '0;");
                             this.lines.Add("\t\t\t" + end);
+                            this.lines.Add("\t\t" + end + " else begin");
+                            foreach (Port inp in di.DataIns)
+                                this.lines.Add("\t\t\t\t" + inp.Name + " <= '0;");
                             this.lines.Add("\t\t" + end);
-                            this.lines.Add("\t\t\ttest_" + name + "_in_progress <= 1'b0;");
-                            this.lines.Add("\t\t\t$fclose(fid_" + name + ");");
-                        }                                        
-                        
-                        this.lines.Add("\t" + end);
-                                               
+                            this.lines.Add("\t" + end);
+                            this.lines.Add("\t\ttest_" + name + "_in_progress <= 1'b0;");
+                            this.lines.Add("\t\t$fclose(fid_" + name + ");");
+                        }                                   
+                                                                       
                         this.lines.Add(endtask + " : " + name);
                         this.lines.Add("");
                     }
