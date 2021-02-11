@@ -426,7 +426,7 @@ namespace testBenchGenerator.Model
                         }
                         else
                         {
-                            this.lines.Add("\t\twhile(num_vlds_" + name + " != num_vlds_" + name.Replace("_out","") + ") begin");
+                            this.lines.Add("\t\twhile(num_vlds_" + name + " < num_vlds_" + name.Replace("_out","") + ") begin");
                             this.lines.Add("\t\t\t@(posedge " + di.ClockSync.Name + ");");
                             this.lines.Add("\t\t\tif(" + di.ValidOut.Name + ") begin");
                             this.lines.Add("\t\t\t\t$fdisplay(fid_out_" + name + ", \"" + this.formatOut + "\", " + this.dos);
