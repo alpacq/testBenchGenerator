@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\App.xaml
-4685294135
+5-765631900
 
-31-1894773780
-15-1730197139
-MainWindow.xaml;View\AnalyzerView.xaml;View\GeneratorView.xaml;View\NewTCView.xaml;
+38-575776700
+20-1813172110
+MainWindow.xaml;View\AnalyzerView.xaml;View\FIRView.xaml;View\GeneratorView.xaml;View\NewTCView.xaml;
 
 False
 

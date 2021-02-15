@@ -1,7 +1,6 @@
 C:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\bin\Debug\testBenchGenerator.exe.config
 C:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\bin\Debug\testBenchGenerator.exe
 C:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\bin\Debug\testBenchGenerator.pdb
-C:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\obj\Debug\testBenchGenerator.csprojAssemblyReference.cache
 C:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\obj\Debug\MainWindow.g.cs
 C:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\obj\Debug\App.g.cs
 C:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\obj\Debug\testBenchGenerator_MarkupCompile.cache
@@ -57,3 +56,9 @@ C:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\bin\Debug\testBen
 C:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\obj\Debug\testBenchGenerator.TrustInfo.xml
 C:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\obj\Debug\testBenchGenerator.exe.manifest
 C:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\obj\Debug\testBenchGenerator.application
+C:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\obj\Debug\View\FIRView.g.cs
+C:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\obj\Debug\View\FIRView.baml
+C:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\obj\Debug\testBenchGenerator.FIRDesignerWinForms.frmMain.resources
+C:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\obj\Debug\testBenchGenerator.csproj.CoreCompileInputs.cache
+C:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\obj\Debug\testBenchGenerator.csprojAssemblyReference.cache
+C:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\obj\Debug\App.baml
