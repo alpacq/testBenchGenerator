@@ -396,5 +396,14 @@ namespace testBenchGenerator.Model
             this.ComputeRespBode();
             this.ComputeWindowDFT();
         }
+
+        public void UpdateWindow()
+        {
+            this.ComputeTimeVector();
+            this.ComputeWindow();
+
+            this.ComputeFrequencyVector();
+            this.ComputeWindowDFT();
+        }
     }
 }

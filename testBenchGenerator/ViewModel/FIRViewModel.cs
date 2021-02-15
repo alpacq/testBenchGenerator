@@ -4,6 +4,8 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OxyPlot;
+using OxyPlot.Series;
 using testBenchGenerator.Model;
 
 namespace testBenchGenerator.ViewModel
@@ -12,6 +14,11 @@ namespace testBenchGenerator.ViewModel
     {
         private FIR fir;
         private string problemToolTip;
+        private PlotModel firRespModel;
+        private PlotModel firChartModel;
+        private PlotModel winRespModel;
+        private PlotModel winChartModel;
+        private string plotType;
 
         public FIR FIR
         {
@@ -74,7 +81,7 @@ namespace testBenchGenerator.ViewModel
         public List<double> TimeVector
         {
             get { return this.FIR.TimeVector; }
-            set { this.FIR.TimeVector = value; OnPropertyChanged("TimeVector"); }
+            set { this.FIR.TimeVector = value; OnPropertyChanged("TimeVector"); OnPropertyChanged("LastTime"); }
         }
 
         public List<double> ImpulseResponse
@@ -110,7 +117,7 @@ namespace testBenchGenerator.ViewModel
         public List<double> FrequencyVectorHz
         {
             get { return this.FIR.FrequencyVectorHz; }
-            set { this.FIR.FrequencyVectorHz = value; OnPropertyChanged("FrequencyVectorHz"); }
+            set { this.FIR.FrequencyVectorHz = value; OnPropertyChanged("FrequencyVectorHz"); OnPropertyChanged("NyquistFrequency"); }
         }
 
         public List<double> ImpRespMag
@@ -131,12 +138,46 @@ namespace testBenchGenerator.ViewModel
             set { this.FIR.WinMag = value; OnPropertyChanged("WinMag"); }
         }
 
+        public string PlotType
+        {
+            get { return this.plotType; }
+            set { this.plotType = value; OnPropertyChanged("PlotType"); }
+        }
+
+        //public PlotModel FIRRespModel
+        //{
+        //    get { return this.firRespModel; }
+        //    set { this.firRespModel = value; OnPropertyChanged("FIRRespModel"); }
+        //}
+        //public PlotModel FIRChartModel
+        //{
+        //    get { return this.firChartModel; }
+        //    set { this.firChartModel = value; OnPropertyChanged("FIRChartModel"); }
+        //}
+        //public PlotModel WinRespModel
+        //{
+        //    get { return this.winRespModel; }
+        //    set { this.winRespModel = value; OnPropertyChanged("WinRespModel"); }
+        //}
+        //public PlotModel WinChartModel
+        //{
+        //    get { return this.winChartModel; }
+        //    set { this.winChartModel = value; OnPropertyChanged("WinChartModel"); }
+        //}
+
+        public IList<DataPoint> WinRespPoints { get; private set; }
+        public IList<DataPoint> WinChartPoints { get; private set; }
+
+        public IList<DataPoint> FIRRespPoints { get; private set; }
+
+        public IList<DataPoint> FIRChartPoints { get; private set; }
+
         public string Coeffs
         {
             get 
             {
                 string coeffs = String.Empty;
-                foreach (double coeff in this.WindowedImpulseResponse) coeffs += (coeff + ", ");
+                foreach (double coeff in this.WindowedImpulseResponse) coeffs += (coeff.ToString("f3") + ", ");
                 if(coeffs.Length > 2)
                     coeffs = coeffs.Remove(coeffs.Length - 2);
                 return coeffs;
@@ -149,6 +190,11 @@ namespace testBenchGenerator.ViewModel
             {
                 bool toRet = true;
                 string ptt = String.Empty;
+                if(this.Length < 1)
+                {
+                    ptt += "Filter length must be greater than zero.\n";
+                    toRet = false;
+                }
                 if (this.Ts < 0.0)
                 {
                     ptt += "Sampling frequency cannot be negative.\n";
@@ -206,9 +252,28 @@ namespace testBenchGenerator.ViewModel
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
+        public double NyquistFrequency
+        {
+            get { return this.FrequencyVectorHz != null ? this.FrequencyVectorHz.LastOrDefault() : 0.0; }
+        }
+
+        public double LastTime
+        {
+            get { return this.TimeVector != null ? this.TimeVector.LastOrDefault() : 0.0; }
+        }
+
         public FIRViewModel(FIR fir)
         {
             this.fir = fir;
+            this.WinRespPoints = new List<DataPoint>();
+            this.WinChartPoints = new List<DataPoint>();
+            this.FIRRespPoints = new List<DataPoint>();
+            this.FIRChartPoints = new List<DataPoint>();
+            OnPropertyChanged("WinChartPoints");
+            OnPropertyChanged("WinRespPoints");
+            OnPropertyChanged("FIRRespPoints");
+            OnPropertyChanged("FIRChartPoints");
+            OnPropertyChanged("WinRespPoints");
             OnPropertyChanged("CanUpdateN"); 
             OnPropertyChanged("CanUpdate");
         }
@@ -217,6 +282,56 @@ namespace testBenchGenerator.ViewModel
         {
             if(this.CanUpdate)
                 this.FIR.Update();
+            this.WinRespPoints = new List<DataPoint>();
+            this.WinChartPoints = new List<DataPoint>();
+            this.FIRRespPoints = new List<DataPoint>();
+            this.FIRChartPoints = new List<DataPoint>();
+            for (int i = 0; i < this.Window.Count; i++)
+                this.WinRespPoints.Add(new DataPoint(this.TimeVector[i], this.Window[i]));
+            for (int i = 0; i < this.WinMag.Count; i++)
+                this.WinChartPoints.Add(new DataPoint(this.FrequencyVectorHz[i], this.WinMag[i]));
+            for (int i = 0; i < this.WinRespMag.Count; i++)
+                this.FIRChartPoints.Add(new DataPoint(this.FrequencyVectorHz[i], this.WinRespMag[i]));
+            if (this.PlotType == "Impulse")
+                for (int i = 0; i < this.WindowedImpulseResponse.Count; i++)
+                    this.FIRRespPoints.Add(new DataPoint(this.TimeVector[i], this.WindowedImpulseResponse[i]));
+            else
+                for (int i = 0; i < this.WindowedStepResponse.Count; i++)
+                    this.FIRRespPoints.Add(new DataPoint(this.TimeVector[i], this.WindowedStepResponse[i]));
+            //this.WinRespModel = new PlotModel() { Title = "Window Function in Time Domain" };
+            //this.WinChartModel = new PlotModel() { Title = "Window Function Frequency Response" };
+            //this.FIRRespModel = new PlotModel() { Title = "Filter Response in Time Domain" };
+            //this.FIRChartModel = new PlotModel() { Title = "Filter Frequency Response" };
+            //this.WinRespModel.Series.Add(new LineSeries() { ItemsSource = this.WinRespPoints });
+            //this.WinChartModel.Series.Add(new LineSeries() { ItemsSource = this.WinChartPoints });
+            //this.FIRRespModel.Series.Add(new LineSeries() { ItemsSource = this.FIRRespPoints });
+            //this.FIRChartModel.Series.Add(new LineSeries() { ItemsSource = this.FIRChartPoints });
+            OnPropertyChanged("WinChartPoints");
+            OnPropertyChanged("WinRespPoints");
+            OnPropertyChanged("FIRRespPoints");
+            OnPropertyChanged("FIRChartPoints");
+            OnPropertyChanged("WinRespPoints");
+            OnPropertyChanged("Coeffs");
+        }
+
+        public void UpdateWindow()
+        {
+            if (this.Fs > 0 && this.Length > 0)
+            {
+                this.FIR.UpdateWindow();
+                this.WinRespPoints = new List<DataPoint>();
+                this.WinChartPoints = new List<DataPoint>();
+                for (int i = 0; i < this.Window.Count; i++)
+                    this.WinRespPoints.Add(new DataPoint(this.TimeVector[i], this.Window[i]));
+                for (int i = 0; i < this.WinMag.Count; i++)
+                    this.WinChartPoints.Add(new DataPoint(this.FrequencyVectorHz[i], this.WinMag[i]));
+                OnPropertyChanged("WinChartPoints");
+                OnPropertyChanged("WinRespPoints");
+                //this.WinRespModel = new PlotModel() { Title = "Window Function in Time Domain" };
+                //this.WinChartModel = new PlotModel() { Title = "Window Function Frequency Response" };
+                //this.WinRespModel.Series.Add(new LineSeries() { ItemsSource = this.WinRespPoints });
+                //this.WinChartModel.Series.Add(new LineSeries() { ItemsSource = this.WinChartPoints });
+            }
         }
     }
 }

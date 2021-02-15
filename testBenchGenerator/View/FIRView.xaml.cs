@@ -33,7 +33,7 @@ namespace testBenchGenerator.View
 
         private void design_Click(object sender, RoutedEventArgs e)
         {
-
+            this.viewModel.Update();
         }
 
         private void export_Click(object sender, RoutedEventArgs e)
@@ -43,17 +43,13 @@ namespace testBenchGenerator.View
 
         private void wt_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            this.viewModel.WinType = (WindowType)Convert.ToInt32(this.wt.SelectedIndex);
+            this.viewModel.UpdateWindow();
         }
 
         private void ft_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
-        }
-
-        private void pt_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
+            this.viewModel.FiltType = (FilterType)Convert.ToInt32(this.ft.SelectedIndex);
         }
     }
 }
