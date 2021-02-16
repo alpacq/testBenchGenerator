@@ -53,7 +53,6 @@ C:\Users\krzys\Documents\Archiwum\Projekty\testBenchGenerator\testBenchGenerator
 C:\Users\krzys\Documents\Archiwum\Projekty\testBenchGenerator\testBenchGenerator\obj\Debug\View\NewTCView.g.cs
 C:\Users\krzys\Documents\Archiwum\Projekty\testBenchGenerator\testBenchGenerator\obj\Debug\View\FIRView.baml
 C:\Users\krzys\Documents\Archiwum\Projekty\testBenchGenerator\testBenchGenerator\obj\Debug\View\NewTCView.baml
-C:\Users\krzys\Documents\Archiwum\Projekty\testBenchGenerator\testBenchGenerator\obj\Debug\testBenchGenerator.FIRDesignerWinForms.frmMain.resources
 C:\Users\krzys\Documents\Archiwum\Projekty\testBenchGenerator\testBenchGenerator\obj\Debug\testBenchGenerator.csproj.CoreCompileInputs.cache
 C:\Users\krzys\Documents\Archiwum\Projekty\testBenchGenerator\testBenchGenerator\obj\Debug\testBenchGenerator.TrustInfo.xml
 C:\Users\krzys\Documents\Archiwum\Projekty\testBenchGenerator\testBenchGenerator\obj\Debug\testBenchGenerator.exe.manifest

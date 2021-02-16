@@ -249,6 +249,7 @@ namespace testBenchGenerator.ViewModel
             OnPropertyChanged("FIRRespPoints");
             OnPropertyChanged("FIRChartPoints");
             OnPropertyChanged("WinRespPoints");
+            OnPropertyChanged("PlotType");
             OnPropertyChanged("CanUpdateN"); 
             OnPropertyChanged("CanUpdate");
         }

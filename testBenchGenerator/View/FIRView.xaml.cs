@@ -28,11 +28,22 @@ namespace testBenchGenerator.View
             InitializeComponent();
             this.viewModel = new FIRViewModel(new FIR());
             this.DataContext = this.viewModel;
+            this.wt.SelectedIndex = 0;
+            this.ft.SelectedIndex = 0;
+            this.pt.SelectedIndex = 0;
+            this.viewModel.WinType = (WindowType)Convert.ToInt32(this.wt.SelectedIndex);
+            this.viewModel.UpdateWindow();
+            this.winResp.ResetAllAxes();
+            this.winChart.ResetAllAxes();
         }
 
         private void design_Click(object sender, RoutedEventArgs e)
         {
             this.viewModel.Update();
+            this.firChart.ResetAllAxes();
+            this.firResp.ResetAllAxes();
+            this.winResp.ResetAllAxes();
+            this.winChart.ResetAllAxes();
         }
 
         private void export_Click(object sender, RoutedEventArgs e)
@@ -66,6 +77,8 @@ namespace testBenchGenerator.View
         {
             this.viewModel.WinType = (WindowType)Convert.ToInt32(this.wt.SelectedIndex);
             this.viewModel.UpdateWindow();
+            this.winResp.ResetAllAxes();
+            this.winChart.ResetAllAxes();
         }
 
         private void ft_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -177,6 +190,11 @@ namespace testBenchGenerator.View
         private void hf_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             this.hf.SelectAll();
+        }
+
+        private void pt_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            this.viewModel.PlotType = this.pt.SelectedItem.ToString();
         }
     }
 }

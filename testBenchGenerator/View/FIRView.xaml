@@ -121,7 +121,7 @@
                     <ComboBoxItem Content="Bandpass filter (BPF)"/>
                     <ComboBoxItem Content="Bandstop filter (BSF)"/>
                 </ComboBox>
-                <ComboBox x:Name="pt" Grid.Row="7" Grid.Column="1" Margin="10,0" VerticalAlignment="Center" HorizontalAlignment="Stretch" SelectedItem="{Binding PlotType}">
+                <ComboBox x:Name="pt" Grid.Row="7" Grid.Column="1" Margin="10,0" VerticalAlignment="Center" HorizontalAlignment="Stretch" SelectionChanged="pt_SelectionChanged">
                     <ComboBoxItem Content="Impulse"/>
                     <ComboBoxItem Content="Step"/>
                 </ComboBox>
