@@ -180,7 +180,7 @@ namespace testBenchGenerator.Model
                     switch (this.FiltType)
                     {
                         case FilterType.LowPass:
-                            this.ImpulseResponse.Add(2.0 * this.LowFreq);
+                            this.ImpulseResponse.Add(2.0 * this.HighFreq);
                             break;
                         case FilterType.HighPass:
                             this.ImpulseResponse.Add(1.0 / this.Ts - 2.0 * this.LowFreq);

@@ -35,12 +35,6 @@ C:\Users\krzys\Documents\Archiwum\Projekty\testBenchGenerator\testBenchGenerator
 C:\Users\krzys\Documents\Archiwum\Projekty\testBenchGenerator\testBenchGenerator\obj\Debug\testBenchGenerator.csproj.GenerateResource.cache
 C:\Users\krzys\Documents\Archiwum\Projekty\testBenchGenerator\testBenchGenerator\obj\Debug\testBenchGenerator.exe
 C:\Users\krzys\Documents\Archiwum\Projekty\testBenchGenerator\testBenchGenerator\obj\Debug\testBenchGenerator.pdb
-C:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\bin\Debug\LiveCharts.dll
-C:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\bin\Debug\LiveCharts.Wpf.dll
-C:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\bin\Debug\LiveCharts.pdb
-C:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\bin\Debug\LiveCharts.xml
-C:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\bin\Debug\LiveCharts.Wpf.pdb
-C:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\bin\Debug\LiveCharts.Wpf.xml
 C:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\obj\Debug\testBenchGenerator.csproj.CopyComplete
 C:\Users\krzys\Documents\Archiwum\Projekty\testBenchGenerator\testBenchGenerator\obj\Debug\testBenchGenerator.csproj.CopyComplete
 C:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\obj\Debug\View\NewTCView.g.cs
@@ -52,10 +46,7 @@ C:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\obj\Debug\testBen
 C:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\obj\Debug\testBenchGenerator.application
 C:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\obj\Debug\View\FIRView.g.cs
 C:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\obj\Debug\View\FIRView.baml
-C:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\obj\Debug\testBenchGenerator.FIRDesignerWinForms.frmMain.resources
 C:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\obj\Debug\testBenchGenerator.csproj.CoreCompileInputs.cache
-C:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\obj\Debug\testBenchGenerator.csprojAssemblyReference.cache
-C:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\obj\Debug\App.baml
 C:\Users\krzys\Documents\Archiwum\Projekty\testBenchGenerator\testBenchGenerator\bin\Debug\testBenchGenerator.exe.manifest
 C:\Users\krzys\Documents\Archiwum\Projekty\testBenchGenerator\testBenchGenerator\bin\Debug\testBenchGenerator.application
 C:\Users\krzys\Documents\Archiwum\Projekty\testBenchGenerator\testBenchGenerator\obj\Debug\View\FIRView.g.cs
@@ -71,3 +62,7 @@ C:\Users\krzys\Documents\Archiwum\Projekty\testBenchGenerator\testBenchGenerator
 C:\Users\krzys\Documents\Archiwum\Projekty\testBenchGenerator\testBenchGenerator\bin\Debug\OxyPlot.Wpf.dll
 C:\Users\krzys\Documents\Archiwum\Projekty\testBenchGenerator\testBenchGenerator\bin\Debug\OxyPlot.xml
 C:\Users\krzys\Documents\Archiwum\Projekty\testBenchGenerator\testBenchGenerator\bin\Debug\OxyPlot.Wpf.xml
+C:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\bin\Debug\OxyPlot.dll
+C:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\bin\Debug\OxyPlot.Wpf.dll
+C:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\bin\Debug\OxyPlot.xml
+C:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\bin\Debug\OxyPlot.Wpf.xml

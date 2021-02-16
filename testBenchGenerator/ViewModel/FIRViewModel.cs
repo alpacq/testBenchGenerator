@@ -14,10 +14,6 @@ namespace testBenchGenerator.ViewModel
     {
         private FIR fir;
         private string problemToolTip;
-        private PlotModel firRespModel;
-        private PlotModel firChartModel;
-        private PlotModel winRespModel;
-        private PlotModel winChartModel;
         private string plotType;
 
         public FIR FIR
@@ -144,27 +140,6 @@ namespace testBenchGenerator.ViewModel
             set { this.plotType = value; OnPropertyChanged("PlotType"); }
         }
 
-        //public PlotModel FIRRespModel
-        //{
-        //    get { return this.firRespModel; }
-        //    set { this.firRespModel = value; OnPropertyChanged("FIRRespModel"); }
-        //}
-        //public PlotModel FIRChartModel
-        //{
-        //    get { return this.firChartModel; }
-        //    set { this.firChartModel = value; OnPropertyChanged("FIRChartModel"); }
-        //}
-        //public PlotModel WinRespModel
-        //{
-        //    get { return this.winRespModel; }
-        //    set { this.winRespModel = value; OnPropertyChanged("WinRespModel"); }
-        //}
-        //public PlotModel WinChartModel
-        //{
-        //    get { return this.winChartModel; }
-        //    set { this.winChartModel = value; OnPropertyChanged("WinChartModel"); }
-        //}
-
         public IList<DataPoint> WinRespPoints { get; private set; }
         public IList<DataPoint> WinChartPoints { get; private set; }
 
@@ -177,7 +152,7 @@ namespace testBenchGenerator.ViewModel
             get 
             {
                 string coeffs = String.Empty;
-                foreach (double coeff in this.WindowedImpulseResponse) coeffs += (coeff.ToString("f3") + ", ");
+                foreach (double coeff in this.WindowedImpulseResponse) coeffs += (coeff.ToString("f8") + ", ");
                 if(coeffs.Length > 2)
                     coeffs = coeffs.Remove(coeffs.Length - 2);
                 return coeffs;
@@ -298,20 +273,13 @@ namespace testBenchGenerator.ViewModel
             else
                 for (int i = 0; i < this.WindowedStepResponse.Count; i++)
                     this.FIRRespPoints.Add(new DataPoint(this.TimeVector[i], this.WindowedStepResponse[i]));
-            //this.WinRespModel = new PlotModel() { Title = "Window Function in Time Domain" };
-            //this.WinChartModel = new PlotModel() { Title = "Window Function Frequency Response" };
-            //this.FIRRespModel = new PlotModel() { Title = "Filter Response in Time Domain" };
-            //this.FIRChartModel = new PlotModel() { Title = "Filter Frequency Response" };
-            //this.WinRespModel.Series.Add(new LineSeries() { ItemsSource = this.WinRespPoints });
-            //this.WinChartModel.Series.Add(new LineSeries() { ItemsSource = this.WinChartPoints });
-            //this.FIRRespModel.Series.Add(new LineSeries() { ItemsSource = this.FIRRespPoints });
-            //this.FIRChartModel.Series.Add(new LineSeries() { ItemsSource = this.FIRChartPoints });
             OnPropertyChanged("WinChartPoints");
             OnPropertyChanged("WinRespPoints");
             OnPropertyChanged("FIRRespPoints");
             OnPropertyChanged("FIRChartPoints");
             OnPropertyChanged("WinRespPoints");
             OnPropertyChanged("Coeffs");
+            OnPropertyChanged("CanExport");
         }
 
         public void UpdateWindow()
@@ -327,10 +295,6 @@ namespace testBenchGenerator.ViewModel
                     this.WinChartPoints.Add(new DataPoint(this.FrequencyVectorHz[i], this.WinMag[i]));
                 OnPropertyChanged("WinChartPoints");
                 OnPropertyChanged("WinRespPoints");
-                //this.WinRespModel = new PlotModel() { Title = "Window Function in Time Domain" };
-                //this.WinChartModel = new PlotModel() { Title = "Window Function Frequency Response" };
-                //this.WinRespModel.Series.Add(new LineSeries() { ItemsSource = this.WinRespPoints });
-                //this.WinChartModel.Series.Add(new LineSeries() { ItemsSource = this.WinChartPoints });
             }
         }
     }

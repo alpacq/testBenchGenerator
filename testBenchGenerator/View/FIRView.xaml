@@ -21,15 +21,23 @@
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
-            <oxy:Plot x:Name="firResp" Grid.Row="0" Margin="10,10,10,5" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="White" Title="Filter Response in Time Domain">
+            <oxy:Plot x:Name="firResp" Grid.Row="0" Margin="10,10,10,5" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" TitleFontSize="14" Background="White" Title="Filter Response in Time Domain" BorderThickness="1">
                 <oxy:Plot.Series>
                     <oxy:LineSeries ItemsSource="{Binding FIRRespPoints}"/>
                 </oxy:Plot.Series>
+                <oxy:Plot.Axes>
+                    <oxy:LinearAxis Title="Time" Position="Bottom" Unit="s" LabelFormatter="ValueAxisLabelFormatter"/>
+                    <oxy:LinearAxis Position="Left" LabelFormatter="ValueAxisLabelFormatter"/>
+                </oxy:Plot.Axes>
             </oxy:Plot>
-            <oxy:Plot x:Name="firChart" Grid.Row="1" Margin="10,5,10,10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="White" Title="Filter Frequency Response">
+            <oxy:Plot x:Name="firChart" Grid.Row="1" Margin="10,5,10,10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" TitleFontSize="14" Background="White" Title="Filter Frequency Response" BorderThickness="1">
                 <oxy:Plot.Series>
-                    <oxy:LineSeries ItemsSource="{Binding FIRChartPoints}"/>
+                    <oxy:LineSeries ItemsSource="{Binding FIRChartPoints}" Color="Navy"/>
                 </oxy:Plot.Series>
+                <oxy:Plot.Axes>
+                    <oxy:LinearAxis Title="Frequency" Position="Bottom" Unit="Hz" LabelFormatter="ValueAxisLabelFormatter"/>
+                    <oxy:LinearAxis Position="Left" LabelFormatter="ValueAxisLabelFormatter"/>
+                </oxy:Plot.Axes>
             </oxy:Plot>
         </Grid>
 
@@ -44,15 +52,23 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <oxy:Plot x:Name="winResp" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="10,10,5,10" Title="Window Function in Time Domain">
+                <oxy:Plot x:Name="winResp" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" TitleFontSize="12" Margin="10,10,5,10" Title="Window Function in Time Domain" BorderThickness="1">
                     <oxy:Plot.Series>
-                        <oxy:LineSeries ItemsSource="{Binding WinRespPoints}"/>
+                        <oxy:LineSeries ItemsSource="{Binding WinRespPoints}" Color="Yellow"/>
                     </oxy:Plot.Series>
+                    <oxy:Plot.Axes>
+                        <oxy:LinearAxis Title="Time" Position="Bottom" Unit="s" LabelFormatter="ValueAxisLabelFormatter"/>
+                        <oxy:LinearAxis Position="Left" LabelFormatter="ValueAxisLabelFormatter"/>
+                    </oxy:Plot.Axes>
                 </oxy:Plot>
-                <oxy:Plot x:Name="winChart" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5,10,10,10" Title="Window Function Frequency Response">
+                <oxy:Plot x:Name="winChart" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" TitleFontSize="12" Margin="5,10,10,10" Title="Window Function Frequency Response" BorderThickness="1">
                     <oxy:Plot.Series>
-                        <oxy:LineSeries ItemsSource="{Binding WinChartPoints}"/>
+                        <oxy:LineSeries ItemsSource="{Binding WinChartPoints}" Color="DarkRed"/>
                     </oxy:Plot.Series>
+                    <oxy:Plot.Axes>
+                        <oxy:LinearAxis Title="Frequency" Position="Bottom" Unit="Hz" LabelFormatter="ValueAxisLabelFormatter"/>
+                        <oxy:LinearAxis Position="Left" LabelFormatter="ValueAxisLabelFormatter"/>
+                    </oxy:Plot.Axes>
                 </oxy:Plot>
             </Grid>
 
@@ -81,11 +97,11 @@
                 <TextBlock Text="Filter type" Grid.Row="6" Grid.Column="0" Margin="10,0" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                 <TextBlock Text="Response plot" Grid.Row="7" Grid.Column="0" Margin="10,0" VerticalAlignment="Center" HorizontalAlignment="Left"/>
 
-                <TextBox x:Name="fs" Grid.Row="0" Grid.Column="1" Margin="10,0" Text="{Binding Fs}" HorizontalContentAlignment="Right" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
-                <TextBox x:Name="len" Grid.Row="1" Grid.Column="1" Margin="10,0" Text="{Binding Length}" HorizontalContentAlignment="Right" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
-                <TextBox x:Name="ss" Grid.Row="2" Grid.Column="1" Margin="10,0" Text="{Binding ShiftSamples}" HorizontalContentAlignment="Right" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
-                <TextBox x:Name="lf" Grid.Row="3" Grid.Column="1" Margin="10,0" Text="{Binding LowFreq}" HorizontalContentAlignment="Right" VerticalAlignment="Center" HorizontalAlignment="Stretch" IsEnabled="{Binding IsLFEnabled}"/>
-                <TextBox x:Name="hf" Grid.Row="4" Grid.Column="1" Margin="10,0" Text="{Binding HighFreq}" HorizontalContentAlignment="Right" VerticalAlignment="Center" HorizontalAlignment="Stretch" IsEnabled="{Binding IsHFEnabled}"/>
+                <TextBox x:Name="fs" Grid.Row="0" Grid.Column="1" Margin="10,0" Text="{Binding Fs}" HorizontalContentAlignment="Right" VerticalAlignment="Center" HorizontalAlignment="Stretch" GotFocus="fs_GotFocus" PreviewMouseLeftButtonUp="fs_PreviewMouseLeftButtonUp"/>
+                <TextBox x:Name="len" Grid.Row="1" Grid.Column="1" Margin="10,0" Text="{Binding Length}" HorizontalContentAlignment="Right" VerticalAlignment="Center" HorizontalAlignment="Stretch" GotFocus="len_GotFocus" PreviewMouseLeftButtonUp="len_PreviewMouseLeftButtonUp"/>
+                <TextBox x:Name="ss" Grid.Row="2" Grid.Column="1" Margin="10,0" Text="{Binding ShiftSamples}" HorizontalContentAlignment="Right" VerticalAlignment="Center" HorizontalAlignment="Stretch" GotFocus="ss_GotFocus" PreviewMouseLeftButtonUp="ss_PreviewMouseLeftButtonUp"/>
+                <TextBox x:Name="lf" Grid.Row="3" Grid.Column="1" Margin="10,0" Text="{Binding LowFreq}" HorizontalContentAlignment="Right" VerticalAlignment="Center" HorizontalAlignment="Stretch" IsEnabled="{Binding IsLFEnabled}" GotFocus="lf_GotFocus" PreviewMouseLeftButtonUp="lf_PreviewMouseLeftButtonUp"/>
+                <TextBox x:Name="hf" Grid.Row="4" Grid.Column="1" Margin="10,0" Text="{Binding HighFreq}" HorizontalContentAlignment="Right" VerticalAlignment="Center" HorizontalAlignment="Stretch" IsEnabled="{Binding IsHFEnabled}" GotFocus="hf_GotFocus" PreviewMouseLeftButtonUp="hf_PreviewMouseLeftButtonUp"/>
                 <ComboBox x:Name="wt" Grid.Row="5" Grid.Column="1" Margin="10,0" VerticalAlignment="Center" HorizontalAlignment="Stretch" SelectionChanged="wt_SelectionChanged">
                     <ComboBoxItem Content="Rectangular"/>
                     <ComboBoxItem Content="Triangular"/>
@@ -114,7 +130,7 @@
 
         </Grid>
 
-        <Grid Grid.Row="1" Grid.Column="1">
+        <Grid Grid.Row="1" Grid.ColumnSpan="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="100"/>
                 <ColumnDefinition/>
