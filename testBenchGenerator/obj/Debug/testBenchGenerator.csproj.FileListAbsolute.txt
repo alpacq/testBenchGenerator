@@ -65,3 +65,4 @@ C:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\bin\Debug\OxyPlot
 C:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\bin\Debug\OxyPlot.Wpf.dll
 C:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\bin\Debug\OxyPlot.xml
 C:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\bin\Debug\OxyPlot.Wpf.xml
+C:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\obj\Debug\testBenchGenerator.csprojAssemblyReference.cache

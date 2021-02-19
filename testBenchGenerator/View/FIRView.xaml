@@ -26,7 +26,7 @@
                     <oxy:LineSeries ItemsSource="{Binding FIRRespPoints}"/>
                 </oxy:Plot.Series>
                 <oxy:Plot.Axes>
-                    <oxy:LinearAxis Title="Time" Position="Bottom" Unit="s" LabelFormatter="ValueAxisLabelFormatter"/>
+                    <oxy:LinearAxis Title="Time" Position="Bottom" Unit="s" LabelFormatter="ValueAxisLabelFormatters"/>
                     <oxy:LinearAxis Position="Left" LabelFormatter="ValueAxisLabelFormatter"/>
                 </oxy:Plot.Axes>
             </oxy:Plot>
@@ -35,7 +35,7 @@
                     <oxy:LineSeries ItemsSource="{Binding FIRChartPoints}" Color="Navy"/>
                 </oxy:Plot.Series>
                 <oxy:Plot.Axes>
-                    <oxy:LinearAxis Title="Frequency" Position="Bottom" Unit="Hz" LabelFormatter="ValueAxisLabelFormatter"/>
+                    <oxy:LinearAxis Title="Frequency" Position="Bottom" Unit="Hz" LabelFormatter="ValueAxisLabelFormatterHz"/>
                     <oxy:LinearAxis Position="Left" LabelFormatter="ValueAxisLabelFormatter"/>
                 </oxy:Plot.Axes>
             </oxy:Plot>
@@ -57,7 +57,7 @@
                         <oxy:LineSeries ItemsSource="{Binding WinRespPoints}" Color="Yellow"/>
                     </oxy:Plot.Series>
                     <oxy:Plot.Axes>
-                        <oxy:LinearAxis Title="Time" Position="Bottom" Unit="s" LabelFormatter="ValueAxisLabelFormatter"/>
+                        <oxy:LinearAxis Title="Time" Position="Bottom" Unit="s" LabelFormatter="ValueAxisLabelFormatters"/>
                         <oxy:LinearAxis Position="Left" LabelFormatter="ValueAxisLabelFormatter"/>
                     </oxy:Plot.Axes>
                 </oxy:Plot>
@@ -66,7 +66,7 @@
                         <oxy:LineSeries ItemsSource="{Binding WinChartPoints}" Color="DarkRed"/>
                     </oxy:Plot.Series>
                     <oxy:Plot.Axes>
-                        <oxy:LinearAxis Title="Frequency" Position="Bottom" Unit="Hz" LabelFormatter="ValueAxisLabelFormatter"/>
+                        <oxy:LinearAxis Title="Frequency" Position="Bottom" Unit="Hz" LabelFormatter="ValueAxisLabelFormatterHz"/>
                         <oxy:LinearAxis Position="Left" LabelFormatter="ValueAxisLabelFormatter"/>
                     </oxy:Plot.Axes>
                 </oxy:Plot>
