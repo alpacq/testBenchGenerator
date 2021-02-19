@@ -4,9 +4,262 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:testBenchGenerator.View"
+             xmlns:oxy="http://oxyplot.org/wpf"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-            
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Grid.Column="0" Text="Designer" FontWeight="Bold" Margin="10"/>
+        <TextBlock Grid.Row="0" Grid.Column="1" Text="Analyzer" FontWeight="Bold" Margin="10"/>
+
+        <Rectangle Grid.Row="0" Grid.Column="0" Stroke="Black" Fill="Transparent"/>
+        <Rectangle Grid.Row="0" Grid.Column="1" Stroke="Black" Fill="Transparent"/>
+        <Rectangle Grid.Row="1" Grid.Column="0" Stroke="Black" Fill="Transparent"/>
+        <Rectangle Grid.Row="1" Grid.Column="1" Stroke="Black" Fill="Transparent"/>
+
+        <!--WFD PART-->
+
+        <Grid Grid.Column="0" Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="2*"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="3*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <oxy:Plot x:Name="wfdI" Grid.Row="0" Grid.Column="0" Margin="10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" TitleFontSize="12" Background="White" Title="I" BorderThickness="1">
+                    <oxy:Plot.Series>
+                        <oxy:LineSeries ItemsSource="{Binding WFDIPoints}"/>
+                    </oxy:Plot.Series>
+                    <oxy:Plot.Axes>
+                        <oxy:LinearAxis Title="Time" Position="Bottom" Unit="s" LabelFormatter="ValueAxisLabelFormatters"/>
+                        <oxy:LinearAxis Position="Left" LabelFormatter="ValueAxisLabelFormatter"/>
+                    </oxy:Plot.Axes>
+                </oxy:Plot>
+                <oxy:Plot x:Name="wfdQ" Grid.Row="1" Grid.Column="0" Margin="10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" TitleFontSize="12" Background="White" Title="Q" BorderThickness="1">
+                    <oxy:Plot.Series>
+                        <oxy:LineSeries ItemsSource="{Binding WFDQPoints}"/>
+                    </oxy:Plot.Series>
+                    <oxy:Plot.Axes>
+                        <oxy:LinearAxis Title="Time" Position="Bottom" Unit="s" LabelFormatter="ValueAxisLabelFormatters"/>
+                        <oxy:LinearAxis Position="Left" LabelFormatter="ValueAxisLabelFormatter"/>
+                    </oxy:Plot.Axes>
+                </oxy:Plot>
+
+                <oxy:Plot x:Name="wfdF" Grid.RowSpan="2" Grid.Column="1" Margin="10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" TitleFontSize="12" Background="White" Title="Fourier plot" BorderThickness="1">
+                    <oxy:Plot.Series>
+                        <oxy:LineSeries ItemsSource="{Binding WFDFPoints}"/>
+                    </oxy:Plot.Series>
+                    <oxy:Plot.Axes>
+                        <oxy:LinearAxis Title="Frequency" Position="Bottom" Unit="Hz" LabelFormatter="ValueAxisLabelFormatterHz"/>
+                        <oxy:LinearAxis Position="Left" LabelFormatter="ValueAxisLabelFormatter"/>
+                    </oxy:Plot.Axes>
+                </oxy:Plot>
+
+            </Grid>
+
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Waveform type" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Sampling frequency [Hz]" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="Gain" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock Grid.Row="3" Grid.Column="0" Text="Length [s]" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock Grid.Row="4" Grid.Column="0" Text="Frequency [Hz]" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock Grid.Row="5" Grid.Column="0" Text="Phase offset" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+
+                <TextBlock Grid.Row="0" Grid.Column="2" Text="Modulation" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock Grid.Row="1" Grid.Column="2" Text="Fs offset" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock Grid.Row="2" Grid.Column="2" Text="Oversampling" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock Grid.Row="3" Grid.Column="2" Text="OFDM N" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock Grid.Row="4" Grid.Column="2" Text="FFT size" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock Grid.Row="5" Grid.Column="2" Text="Distance" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock Grid.Row="6" Grid.Column="2" Text="Seed" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock Grid.Row="7" Grid.Column="2" Text="CP length" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock Grid.Row="8" Grid.Column="2" Text="Number of symbols" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+
+                <ComboBox Grid.Row="0" Grid.Column="1" SelectedItem="{Binding WFDType}" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="10,0">
+                    <ComboBoxItem Content="Sine"/>
+                    <ComboBoxItem Content="Ramp"/>
+                    <ComboBoxItem Content="OFDM"/>
+                    <ComboBoxItem Content="Constant"/>
+                </ComboBox>
+                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding WFDFs}" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="10,0"/>
+                <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding WFDGain}" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="10,0"/>
+                <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding WFDLength}" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="10,0"/>
+                <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding WFDFreq}" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="10,0"/>
+                <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding WFDPhoff}" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="10,0"/>
+
+                <ComboBox Grid.Row="0" Grid.Column="3" SelectedItem="{Binding WFDMod}" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="10,0">
+                    <ComboBoxItem Content="QPSK"/>
+                    <ComboBoxItem Content="16QAM"/>
+                    <ComboBoxItem Content="64QAM"/>
+                </ComboBox>
+                <TextBox Grid.Row="1" Grid.Column="3" Text="{Binding WFDFsoff}" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="10,0"/>
+                <TextBox Grid.Row="2" Grid.Column="3" Text="{Binding WFDOS}" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="10,0"/>
+                <TextBox Grid.Row="3" Grid.Column="3" Text="{Binding WFDOFDMN}" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="10,0"/>
+                <TextBox Grid.Row="4" Grid.Column="3" Text="{Binding WFDFFTLength}" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="10,0"/>
+                <TextBox Grid.Row="5" Grid.Column="3" Text="{Binding WFDDistance}" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="10,0"/>
+                <TextBox Grid.Row="6" Grid.Column="3" Text="{Binding WFDSeed}" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="10,0"/>
+                <TextBox Grid.Row="7" Grid.Column="3" Text="{Binding WFDCPLength}" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="10,0"/>
+                <TextBox Grid.Row="8" Grid.Column="3" Text="{Binding WFDNSymbols}" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="10,0"/>
+
+                <Button x:Name="export" Content="Export" Width="80" Grid.Row="9" Grid.ColumnSpan="4" VerticalAlignment="Center" HorizontalAlignment="Center" Click="export_Click" IsEnabled="{Binding CanExport}"/>
+
+            </Grid>
+
+        </Grid>
+
+        <!--WFA PART-->
+
+        <Grid Grid.Column="1" Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="2*"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="3*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <oxy:Plot x:Name="wfaI" Grid.Row="0" Grid.Column="0" Margin="10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" TitleFontSize="12" Background="White" Title="I" BorderThickness="1">
+                    <oxy:Plot.Series>
+                        <oxy:LineSeries ItemsSource="{Binding WFAIPoints}"/>
+                    </oxy:Plot.Series>
+                    <oxy:Plot.Axes>
+                        <oxy:LinearAxis Title="Time" Position="Bottom" Unit="s" LabelFormatter="ValueAxisLabelFormatters"/>
+                        <oxy:LinearAxis Position="Left" LabelFormatter="ValueAxisLabelFormatter"/>
+                    </oxy:Plot.Axes>
+                </oxy:Plot>
+                <oxy:Plot x:Name="wfaQ" Grid.Row="1" Grid.Column="0" Margin="10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" TitleFontSize="12" Background="White" Title="Q" BorderThickness="1">
+                    <oxy:Plot.Series>
+                        <oxy:LineSeries ItemsSource="{Binding WFAQPoints}"/>
+                    </oxy:Plot.Series>
+                    <oxy:Plot.Axes>
+                        <oxy:LinearAxis Title="Time" Position="Bottom" Unit="s" LabelFormatter="ValueAxisLabelFormatters"/>
+                        <oxy:LinearAxis Position="Left" LabelFormatter="ValueAxisLabelFormatter"/>
+                    </oxy:Plot.Axes>
+                </oxy:Plot>
+
+                <oxy:Plot x:Name="wfaF" Grid.RowSpan="2" Grid.Column="1" Margin="10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" TitleFontSize="12" Background="White" Title="Fourier plot" BorderThickness="1">
+                    <oxy:Plot.Series>
+                        <oxy:LineSeries ItemsSource="{Binding WFAFPoints}"/>
+                    </oxy:Plot.Series>
+                    <oxy:Plot.Axes>
+                        <oxy:LinearAxis Title="Frequency" Position="Bottom" Unit="Hz" LabelFormatter="ValueAxisLabelFormatterHz"/>
+                        <oxy:LinearAxis Position="Left" LabelFormatter="ValueAxisLabelFormatter"/>
+                    </oxy:Plot.Axes>
+                </oxy:Plot>
+
+            </Grid>
+
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Waveform type" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Sampling frequency [Hz]" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="Gain" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock Grid.Row="3" Grid.Column="0" Text="FFT size" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock Grid.Row="4" Grid.Column="0" Text="Input magnitude" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock Grid.Row="5" Grid.Column="0" Text="Number of symbols" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock Grid.Row="6" Grid.Column="0" Text="Bitwidth" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock Grid.Row="7" Grid.Column="0" Text="Oversampling" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock Grid.Row="8" Grid.Column="0" Text="Lines to ignore" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+
+                <TextBlock Grid.Row="0" Grid.Column="2" Text="Estimated frequency [Hz]" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock Grid.Row="1" Grid.Column="2" Text="RMS [dBFs]" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock Grid.Row="2" Grid.Column="2" Text="RMS error [dBFs]" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock Grid.Row="3" Grid.Column="2" Text="RMS error [lsbs]" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock Grid.Row="4" Grid.Column="2" Text="RMS error [dBc]" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock Grid.Row="5" Grid.Column="2" Text="Phase RMS error [deg]" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock Grid.Row="6" Grid.Column="2" Text="Gain error [dB]" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock Grid.Row="7" Grid.Column="2" Text="DC bias real [dBFs]" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock Grid.Row="8" Grid.Column="2" Text="DC bias imag [dBFs]" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+
+                <ComboBox Grid.Row="0" Grid.Column="1" SelectedItem="{Binding WFAType}" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="10,0">
+                    <ComboBoxItem Content="Sine"/>
+                    <ComboBoxItem Content="OFDM"/>
+                </ComboBox>
+                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding WFAFs}" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="10,0"/>
+                <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding WFAGain}" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="10,0"/>
+                <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding WFAFFTLength}" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="10,0"/>
+                <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding WFAInputMag}" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="10,0"/>
+                <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding WFANSymbols}" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="10,0"/>
+                <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding WFABitwidth}" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="10,0"/>
+                <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding WFAOS}" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="10,0"/>
+                <TextBox Grid.Row="8" Grid.Column="1" Text="{Binding WFALinesIgnore}" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="10,0"/>
+
+                <TextBox Grid.Row="0" Grid.Column="3" Text="{Binding WFAFreq}" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="10,0"/>
+                <TextBox Grid.Row="1" Grid.Column="3" Text="{Binding WFARMS}" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="10,0"/>
+                <TextBox Grid.Row="2" Grid.Column="3" Text="{Binding WFARMSEFs}" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="10,0"/>
+                <TextBox Grid.Row="3" Grid.Column="3" Text="{Binding WFARMSElsb}" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="10,0"/>
+                <TextBox Grid.Row="4" Grid.Column="3" Text="{Binding WFARMSEc}" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="10,0"/>
+                <TextBox Grid.Row="5" Grid.Column="3" Text="{Binding WFAPRMSE}" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="10,0"/>
+                <TextBox Grid.Row="6" Grid.Column="3" Text="{Binding WFAGainE}" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="10,0"/>
+                <TextBox Grid.Row="7" Grid.Column="3" Text="{Binding WFADCReal}" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="10,0"/>
+                <TextBox Grid.Row="8" Grid.Column="3" Text="{Binding WFADCImag}" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="10,0"/>
+
+                <Button x:Name="import" Content="Import" Width="80" Grid.Row="9" Grid.ColumnSpan="4" VerticalAlignment="Center" HorizontalAlignment="Center" Click="import_Click" IsEnabled="{Binding CanImport}"/>
+
+            </Grid>
+
+        </Grid>    
+
     </Grid>
 </UserControl>

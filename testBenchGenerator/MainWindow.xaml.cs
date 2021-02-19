@@ -34,8 +34,8 @@ namespace testBenchGenerator
 
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            this.Height = SystemParameters.PrimaryScreenHeight * 0.9;
-            this.Width = SystemParameters.PrimaryScreenWidth * 0.9;
+            this.Height = SystemParameters.PrimaryScreenHeight * 0.95;
+            this.Width = SystemParameters.PrimaryScreenWidth * 0.95;
             this.CenterWindowOnScreen();
         }
 

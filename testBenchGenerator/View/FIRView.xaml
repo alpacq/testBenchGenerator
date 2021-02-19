@@ -88,11 +88,11 @@
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Text="Sampling frequency (Hz)" Grid.Row="0" Grid.Column="0" Margin="10,0" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                <TextBlock Text="Sampling frequency [Hz]" Grid.Row="0" Grid.Column="0" Margin="10,0" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                 <TextBlock Text="Filter length" Grid.Row="1" Grid.Column="0" Margin="10,0" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                 <TextBlock Text="Shift samples" Grid.Row="2" Grid.Column="0" Margin="10,0" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-                <TextBlock Text="Cutoff frequency low (Hz)" Grid.Row="3" Grid.Column="0" Margin="10,0" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-                <TextBlock Text="Cutoff frequency high (Hz)" Grid.Row="4" Grid.Column="0" Margin="10,0" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                <TextBlock Text="Cutoff frequency low [Hz]" Grid.Row="3" Grid.Column="0" Margin="10,0" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                <TextBlock Text="Cutoff frequency high [Hz]" Grid.Row="4" Grid.Column="0" Margin="10,0" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                 <TextBlock Text="Window function" Grid.Row="5" Grid.Column="0" Margin="10,0" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                 <TextBlock Text="Filter type" Grid.Row="6" Grid.Column="0" Margin="10,0" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                 <TextBlock Text="Response plot" Grid.Row="7" Grid.Column="0" Margin="10,0" VerticalAlignment="Center" HorizontalAlignment="Left"/>
