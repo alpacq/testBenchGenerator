@@ -5,21 +5,23 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:testBenchGenerator"
         xmlns:tbg="clr-namespace:testBenchGenerator"
-        xmlns:v="clr-namespace:testBenchGenerator.View"
+        xmlns:vtbg="clr-namespace:testBenchGenerator.TestbenchGenerator.View"
+        xmlns:vfir="clr-namespace:testBenchGenerator.FIRDesigner.View"
+        xmlns:vwfda="clr-namespace:testBenchGenerator.WaveformDesignerAndAnalyzer.View"
         mc:Ignorable="d"
         Title="FPGA Developer Tools" WindowStartupLocation="CenterScreen" Icon="ide.ico" SizeChanged="Window_SizeChanged">
     <Grid>
         <TabControl Grid.Row="1" x:Name="tab" SelectionChanged="tab_SelectionChanged">
             <TabItem Header="FIR Designer">
-                <v:FIRView x:Name="firView" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                <vfir:FIRView x:Name="firView" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
             </TabItem>
             
             <TabItem Header="Testbench Generator">
-                <v:GeneratorView x:Name="genView" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                <vtbg:GeneratorView x:Name="genView" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
             </TabItem>
 
             <TabItem Header="Waveform designer &amp; analyzer">
-                <v:AnalyzerView x:Name="anView" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                <vwfda:AnalyzerView x:Name="anView" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
             </TabItem>
         </TabControl>        
 

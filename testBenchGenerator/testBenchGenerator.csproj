@@ -78,6 +78,9 @@
     <NoWin32Manifest>true</NoWin32Manifest>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MathNet.Numerics, Version=4.15.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MathNet.Numerics.4.15.0\lib\net461\MathNet.Numerics.dll</HintPath>
+    </Reference>
     <Reference Include="OxyPlot, Version=2.0.0.0, Culture=neutral, PublicKeyToken=638079a8f0bd61e9, processorArchitecture=MSIL">
       <HintPath>..\packages\OxyPlot.Core.2.0.0\lib\net45\OxyPlot.dll</HintPath>
     </Reference>
@@ -88,7 +91,9 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Printing" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Windows.Forms.DataVisualization.Design" />
@@ -111,44 +116,47 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Model\Clock.cs" />
-    <Compile Include="Model\FilterType.cs" />
-    <Compile Include="Model\FIR.cs" />
-    <Compile Include="Model\PolConverter.cs" />
-    <Compile Include="Model\PortSel.cs" />
-    <Compile Include="Model\TestCase.cs" />
-    <Compile Include="Model\FileGen.cs" />
-    <Compile Include="Model\Parameter.cs" />
-    <Compile Include="Model\Port.cs" />
-    <Compile Include="Model\InputFile.cs" />
-    <Compile Include="Model\Radix.cs" />
-    <Compile Include="Model\Reset.cs" />
-    <Compile Include="Model\WindowType.cs" />
-    <Compile Include="ViewModel\AnalyzerViewModel.cs" />
-    <Compile Include="ViewModel\ClockViewModel.cs" />
-    <Compile Include="ViewModel\FIRViewModel.cs" />
-    <Compile Include="ViewModel\NewTCViewModel.cs" />
-    <Compile Include="ViewModel\PortSelViewModel.cs" />
-    <Compile Include="ViewModel\TestCaseViewModel.cs" />
-    <Compile Include="ViewModel\GeneratorViewModel.cs" />
-    <Compile Include="ViewModel\InputFileViewModel.cs" />
-    <Compile Include="ViewModel\ModuleFileViewModel.cs" />
-    <Compile Include="ViewModel\ParameterViewModel.cs" />
-    <Compile Include="ViewModel\PortViewModel.cs" />
-    <Compile Include="ViewModel\ResetViewModel.cs" />
-    <Compile Include="View\AnalyzerView.xaml.cs">
+    <Compile Include="TestbenchGenerator\Model\Clock.cs" />
+    <Compile Include="FIRDesigner\Model\FilterType.cs" />
+    <Compile Include="FIRDesigner\Model\FIR.cs" />
+    <Compile Include="TestbenchGenerator\Model\PolConverter.cs" />
+    <Compile Include="TestbenchGenerator\Model\PortSel.cs" />
+    <Compile Include="TestbenchGenerator\Model\TestCase.cs" />
+    <Compile Include="TestbenchGenerator\Model\FileGen.cs" />
+    <Compile Include="TestbenchGenerator\Model\Parameter.cs" />
+    <Compile Include="TestbenchGenerator\Model\Port.cs" />
+    <Compile Include="TestbenchGenerator\Model\InputFile.cs" />
+    <Compile Include="TestbenchGenerator\Model\Radix.cs" />
+    <Compile Include="TestbenchGenerator\Model\Reset.cs" />
+    <Compile Include="FIRDesigner\Model\WindowType.cs" />
+    <Compile Include="WaveformDesignerAndAnalyzer\Model\WaveformAnalyzer.cs" />
+    <Compile Include="WaveformDesignerAndAnalyzer\Model\WaveformDesigner.cs" />
+    <Compile Include="WaveformDesignerAndAnalyzer\ViewModel\WaveformAnalyzerViewModel.cs" />
+    <Compile Include="TestbenchGenerator\ViewModel\ClockViewModel.cs" />
+    <Compile Include="FIRDesigner\ViewModel\FIRViewModel.cs" />
+    <Compile Include="TestbenchGenerator\ViewModel\NewTCViewModel.cs" />
+    <Compile Include="TestbenchGenerator\ViewModel\PortSelViewModel.cs" />
+    <Compile Include="TestbenchGenerator\ViewModel\TestCaseViewModel.cs" />
+    <Compile Include="TestbenchGenerator\ViewModel\GeneratorViewModel.cs" />
+    <Compile Include="TestbenchGenerator\ViewModel\InputFileViewModel.cs" />
+    <Compile Include="TestbenchGenerator\ViewModel\ModuleFileViewModel.cs" />
+    <Compile Include="TestbenchGenerator\ViewModel\ParameterViewModel.cs" />
+    <Compile Include="TestbenchGenerator\ViewModel\PortViewModel.cs" />
+    <Compile Include="TestbenchGenerator\ViewModel\ResetViewModel.cs" />
+    <Compile Include="WaveformDesignerAndAnalyzer\ViewModel\WaveformDesignerViewModel.cs" />
+    <Compile Include="WaveformDesignerAndAnalyzer\View\AnalyzerView.xaml.cs">
       <DependentUpon>AnalyzerView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\FIRView.xaml.cs">
+    <Compile Include="FIRDesigner\View\FIRView.xaml.cs">
       <DependentUpon>FIRView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\GeneratorView.xaml.cs">
+    <Compile Include="TestbenchGenerator\View\GeneratorView.xaml.cs">
       <DependentUpon>GeneratorView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\NewTCView.xaml.cs">
+    <Compile Include="TestbenchGenerator\View\NewTCView.xaml.cs">
       <DependentUpon>NewTCView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\UIHelpers.cs" />
+    <Compile Include="TestbenchGenerator\View\UIHelpers.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -161,25 +169,25 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="View\AnalyzerView.xaml">
+    <Page Include="WaveformDesignerAndAnalyzer\View\AnalyzerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\FIRView.xaml">
+    <Page Include="FIRDesigner\View\FIRView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\GeneratorView.xaml">
+    <Page Include="TestbenchGenerator\View\GeneratorView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\NewTCView.xaml">
+    <Page Include="TestbenchGenerator\View\NewTCView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\ModuleFile.cs" />
+    <Compile Include="TestbenchGenerator\Model\ModuleFile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -259,5 +267,6 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

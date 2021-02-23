@@ -1,0 +1,276 @@
+﻿<UserControl x:Class="testBenchGenerator.WaveformDesignerAndAnalyzer.View.AnalyzerView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:testBenchGenerator.WaveformDesignerAndAnalyzer.View"
+             xmlns:oxy="http://oxyplot.org/wpf"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Grid.Column="0" Text="Designer" FontWeight="Bold" Margin="10"/>
+        <TextBlock Grid.Row="0" Grid.Column="1" Text="Analyzer" FontWeight="Bold" Margin="10"/>
+
+        <Rectangle Grid.Row="0" Grid.Column="0" Stroke="Black" Fill="Transparent"/>
+        <Rectangle Grid.Row="0" Grid.Column="1" Stroke="Black" Fill="Transparent"/>
+        <Rectangle Grid.Row="1" Grid.Column="0" Stroke="Black" Fill="Transparent"/>
+        <Rectangle Grid.Row="1" Grid.Column="1" Stroke="Black" Fill="Transparent"/>
+
+        <!--WFD PART-->
+
+        <Grid Grid.Column="0" Grid.Row="1" x:Name="designer">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="2*"/>
+            </Grid.RowDefinitions>           
+
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="3*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>                
+
+                <oxy:Plot x:Name="wfdI" Grid.Row="0" Grid.Column="0" Margin="10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" TitleFontSize="12" Background="White" Title="I" BorderThickness="1">
+                    <oxy:Plot.Series>
+                        <oxy:LineSeries ItemsSource="{Binding IPoints}"/>
+                    </oxy:Plot.Series>
+                    <oxy:Plot.Axes>
+                        <oxy:LinearAxis Title="Time" Position="Bottom" Unit="s" LabelFormatter="ValueAxisLabelFormatters"/>
+                        <oxy:LinearAxis Position="Left" LabelFormatter="ValueAxisLabelFormatter"/>
+                    </oxy:Plot.Axes>
+                </oxy:Plot>
+                <oxy:Plot x:Name="wfdQ" Grid.Row="1" Grid.Column="0" Margin="10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" TitleFontSize="12" Background="White" Title="Q" BorderThickness="1">
+                    <oxy:Plot.Series>
+                        <oxy:LineSeries ItemsSource="{Binding QPoints}" Color="DarkRed"/>
+                    </oxy:Plot.Series>
+                    <oxy:Plot.Axes>
+                        <oxy:LinearAxis Title="Time" Position="Bottom" Unit="s" LabelFormatter="ValueAxisLabelFormatters"/>
+                        <oxy:LinearAxis Position="Left" LabelFormatter="ValueAxisLabelFormatter"/>
+                    </oxy:Plot.Axes>
+                </oxy:Plot>
+
+                <oxy:Plot x:Name="wfdF" Grid.RowSpan="2" Grid.Column="1" Margin="10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" TitleFontSize="12" Background="White" Title="Fourier plot" BorderThickness="1">
+                    <oxy:Plot.Series>
+                        <oxy:LineSeries ItemsSource="{Binding FPoints}" Color="DarkBlue"/>
+                    </oxy:Plot.Series>
+                    <oxy:Plot.Axes>
+                        <oxy:LinearAxis Title="Frequency" Position="Bottom" Unit="Hz" LabelFormatter="ValueAxisLabelFormatterHz"/>
+                        <oxy:LinearAxis Position="Left" LabelFormatter="ValueAxisLabelFormatter"/>
+                    </oxy:Plot.Axes>
+                </oxy:Plot>
+
+            </Grid>
+
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Waveform type" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Sampling frequency [Hz]" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="Gain" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock Grid.Row="3" Grid.Column="0" Text="Length [s]" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock Grid.Row="4" Grid.Column="0" Text="RMS [dBFs]" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock Grid.Row="5" Grid.Column="0" Text="Bitwidth" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock Grid.Row="6" Grid.Column="0" Text="Frequency [Hz]" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock Grid.Row="7" Grid.Column="0" Text="Phase offset" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+
+                <TextBlock Grid.Row="0" Grid.Column="2" Text="Modulation" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock Grid.Row="1" Grid.Column="2" Text="Fs offset" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock Grid.Row="2" Grid.Column="2" Text="Oversampling" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock Grid.Row="3" Grid.Column="2" Text="OFDM N" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock Grid.Row="4" Grid.Column="2" Text="FFT size" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock Grid.Row="5" Grid.Column="2" Text="Distance" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock Grid.Row="6" Grid.Column="2" Text="Seed" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock Grid.Row="7" Grid.Column="2" Text="Cyclix prefix length" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock Grid.Row="8" Grid.Column="2" Text="Number of symbols" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+
+                <ComboBox x:Name="desType" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="10,0" SelectionChanged="desType_SelectionChanged">
+                    <ComboBoxItem Content="Sine"/>
+                    <ComboBoxItem Content="Ramp"/>
+                    <ComboBoxItem Content="OFDM"/>
+                    <ComboBoxItem Content="Constant"/>
+                </ComboBox>
+                <TextBox x:Name="desFs" Grid.Row="1" Grid.Column="1" Text="{Binding Fs}" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Margin="10,0" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonUp="TextBox_PreviewMouseLeftButtonUp"/>
+                <TextBox x:Name="desGain" Grid.Row="2" Grid.Column="1" Text="{Binding Gain}" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Margin="10,0" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonUp="TextBox_PreviewMouseLeftButtonUp"/>
+                <TextBox x:Name="desLength" Grid.Row="3" Grid.Column="1" Text="{Binding Length}" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Margin="10,0" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonUp="TextBox_PreviewMouseLeftButtonUp"/>
+                <TextBox x:Name="desRMS" Grid.Row="4" Grid.Column="1" Text="{Binding RMS}" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Margin="10,0" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonUp="TextBox_PreviewMouseLeftButtonUp"/>
+                <TextBox x:Name="desBitwidth" Grid.Row="5" Grid.Column="1" Text="{Binding Bitwidth}" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Margin="10,0" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonUp="TextBox_PreviewMouseLeftButtonUp"/>
+                <TextBox x:Name="desFreq" Grid.Row="6" Grid.Column="1" Text="{Binding Freq}" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Margin="10,0" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonUp="TextBox_PreviewMouseLeftButtonUp"/>
+                <TextBox x:Name="desPhoff" Grid.Row="7" Grid.Column="1" Text="{Binding Phoff}" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Margin="10,0" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonUp="TextBox_PreviewMouseLeftButtonUp"/>
+
+                <ComboBox x:Name="modType" Grid.Row="0" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="10,0" SelectionChanged="modType_SelectionChanged">
+                    <ComboBoxItem Content="QPSK"/>
+                    <ComboBoxItem Content="16QAM"/>
+                    <ComboBoxItem Content="64QAM"/>
+                </ComboBox>
+                <TextBox x:Name="desFsoff" Grid.Row="1" Grid.Column="3" Text="{Binding Fsoff}" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Margin="10,0" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonUp="TextBox_PreviewMouseLeftButtonUp"/>
+                <TextBox x:Name="desOS" Grid.Row="2" Grid.Column="3" Text="{Binding OS}" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Margin="10,0" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonUp="TextBox_PreviewMouseLeftButtonUp"/>
+                <TextBox x:Name="desOFDMN" Grid.Row="3" Grid.Column="3" Text="{Binding OFDMN}" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Margin="10,0" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonUp="TextBox_PreviewMouseLeftButtonUp"/>
+                <TextBox x:Name="desFFTLength" Grid.Row="4" Grid.Column="3" Text="{Binding FFTLength}" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Margin="10,0" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonUp="TextBox_PreviewMouseLeftButtonUp"/>
+                <TextBox x:Name="desDistance" Grid.Row="5" Grid.Column="3" Text="{Binding Distance}" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Margin="10,0" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonUp="TextBox_PreviewMouseLeftButtonUp"/>
+                <TextBox x:Name="desSeed" Grid.Row="6" Grid.Column="3" Text="{Binding Seed}" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Margin="10,0" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonUp="TextBox_PreviewMouseLeftButtonUp"/>
+                <TextBox x:Name="desCPLength" Grid.Row="7" Grid.Column="3" Text="{Binding CPLength}" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Margin="10,0" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonUp="TextBox_PreviewMouseLeftButtonUp"/>
+                <TextBox x:Name="desNSymbols" Grid.Row="8" Grid.Column="3" Text="{Binding NSymbols}" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Margin="10,0" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonUp="TextBox_PreviewMouseLeftButtonUp"/>
+
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Grid.Row="9" Grid.ColumnSpan="4" HorizontalAlignment="Center">
+                    <Button x:Name="design" Margin="0,0,5,0" Content="Design" Width="80" Click="design_Click" IsEnabled="{Binding CanDesign}"/>
+                    <Button x:Name="export" Margin="5,0,0,0" Content="Export" Width="80" Click="export_Click" IsEnabled="{Binding CanExport}"/>
+                </StackPanel>
+                    
+            </Grid>
+
+            <TextBox Grid.RowSpan="2" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" x:Name="splashD" Text="Generating..." Background="LightBlue" Width="100" Height="30" BorderBrush="ForestGreen" BorderThickness="1"/>
+
+        </Grid>
+
+        <!--WFA PART-->
+
+        <Grid Grid.Column="1" Grid.Row="1" x:Name="analyzer">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="2*"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="3*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <oxy:Plot x:Name="wfaI" Grid.Row="0" Grid.Column="0" Margin="10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" TitleFontSize="12" Background="White" Title="I" BorderThickness="1">
+                    <oxy:Plot.Series>
+                        <oxy:LineSeries ItemsSource="{Binding IPoints}"/>
+                    </oxy:Plot.Series>
+                    <oxy:Plot.Axes>
+                        <oxy:LinearAxis Title="Time" Position="Bottom" Unit="s" LabelFormatter="ValueAxisLabelFormatters"/>
+                        <oxy:LinearAxis Position="Left" LabelFormatter="ValueAxisLabelFormatter"/>
+                    </oxy:Plot.Axes>
+                </oxy:Plot>
+                <oxy:Plot x:Name="wfaQ" Grid.Row="1" Grid.Column="0" Margin="10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" TitleFontSize="12" Background="White" Title="Q" BorderThickness="1">
+                    <oxy:Plot.Series>
+                        <oxy:LineSeries ItemsSource="{Binding QPoints}" Color="DarkRed"/>
+                    </oxy:Plot.Series>
+                    <oxy:Plot.Axes>
+                        <oxy:LinearAxis Title="Time" Position="Bottom" Unit="s" LabelFormatter="ValueAxisLabelFormatters"/>
+                        <oxy:LinearAxis Position="Left" LabelFormatter="ValueAxisLabelFormatter"/>
+                    </oxy:Plot.Axes>
+                </oxy:Plot>
+
+                <oxy:Plot x:Name="wfaF" Grid.RowSpan="2" Grid.Column="1" Margin="10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" TitleFontSize="12" Background="White" Title="Fourier plot" BorderThickness="1">
+                    <oxy:Plot.Series>
+                        <oxy:LineSeries ItemsSource="{Binding FPoints}" Color="DarkBlue"/>
+                    </oxy:Plot.Series>
+                    <oxy:Plot.Axes>
+                        <oxy:LinearAxis Title="Frequency" Position="Bottom" Unit="Hz" LabelFormatter="ValueAxisLabelFormatterHz"/>
+                        <oxy:LinearAxis Position="Left" LabelFormatter="ValueAxisLabelFormatter"/>
+                    </oxy:Plot.Axes>
+                </oxy:Plot>
+
+            </Grid>
+
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Waveform type" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Sampling frequency [Hz]" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="Gain" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock Grid.Row="3" Grid.Column="0" Text="FFT size" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock Grid.Row="4" Grid.Column="0" Text="Input magnitude" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock Grid.Row="5" Grid.Column="0" Text="Number of symbols" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock Grid.Row="6" Grid.Column="0" Text="Bitwidth" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock Grid.Row="7" Grid.Column="0" Text="Oversampling" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock Grid.Row="8" Grid.Column="0" Text="Lines to ignore" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+
+                <TextBlock Grid.Row="0" Grid.Column="2" Text="Estimated frequency [Hz]" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock Grid.Row="1" Grid.Column="2" Text="RMS [dBFs]" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock Grid.Row="2" Grid.Column="2" Text="RMS error [dBFs]" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock Grid.Row="3" Grid.Column="2" Text="RMS error [lsbs]" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock Grid.Row="4" Grid.Column="2" Text="RMS error [dBc]" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock Grid.Row="5" Grid.Column="2" Text="Phase RMS error [deg]" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock Grid.Row="6" Grid.Column="2" Text="Gain error [dB]" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock Grid.Row="7" Grid.Column="2" Text="DC bias real [dBFs]" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock Grid.Row="8" Grid.Column="2" Text="DC bias imag [dBFs]" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+
+                <ComboBox x:Name="anType" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="10,0" SelectionChanged="anType_SelectionChanged">
+                    <ComboBoxItem Content="Sine"/>
+                    <ComboBoxItem Content="OFDM"/>
+                </ComboBox>
+                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Fs}" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Margin="10,0" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonUp="TextBox_PreviewMouseLeftButtonUp"/>
+                <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Gain}" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Margin="10,0" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonUp="TextBox_PreviewMouseLeftButtonUp"/>
+                <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding FFTLength}" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Margin="10,0" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonUp="TextBox_PreviewMouseLeftButtonUp"/>
+                <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding InputMag}" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Margin="10,0" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonUp="TextBox_PreviewMouseLeftButtonUp"/>
+                <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding NSymbols}" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Margin="10,0" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonUp="TextBox_PreviewMouseLeftButtonUp"/>
+                <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding Bitwidth}" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Margin="10,0" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonUp="TextBox_PreviewMouseLeftButtonUp"/>
+                <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding OS}" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Margin="10,0" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonUp="TextBox_PreviewMouseLeftButtonUp"/>
+                <TextBox Grid.Row="8" Grid.Column="1" Text="{Binding LinesIgnore}" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Margin="10,0" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonUp="TextBox_PreviewMouseLeftButtonUp"/>
+
+                <TextBox Grid.Row="0" Grid.Column="3" Text="{Binding Freq}" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Margin="10,0" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonUp="TextBox_PreviewMouseLeftButtonUp"/>
+                <TextBox Grid.Row="1" Grid.Column="3" Text="{Binding RMS}" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Margin="10,0" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonUp="TextBox_PreviewMouseLeftButtonUp"/>
+                <TextBox Grid.Row="2" Grid.Column="3" Text="{Binding RMSEFs}" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Margin="10,0" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonUp="TextBox_PreviewMouseLeftButtonUp"/>
+                <TextBox Grid.Row="3" Grid.Column="3" Text="{Binding RMSElsb}" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Margin="10,0" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonUp="TextBox_PreviewMouseLeftButtonUp"/>
+                <TextBox Grid.Row="4" Grid.Column="3" Text="{Binding RMSEc}" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Margin="10,0" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonUp="TextBox_PreviewMouseLeftButtonUp"/>
+                <TextBox Grid.Row="5" Grid.Column="3" Text="{Binding PRMSE}" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Margin="10,0" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonUp="TextBox_PreviewMouseLeftButtonUp"/>
+                <TextBox Grid.Row="6" Grid.Column="3" Text="{Binding GainE}" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Margin="10,0" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonUp="TextBox_PreviewMouseLeftButtonUp"/>
+                <TextBox Grid.Row="7" Grid.Column="3" Text="{Binding DCReal}" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Margin="10,0" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonUp="TextBox_PreviewMouseLeftButtonUp"/>
+                <TextBox Grid.Row="8" Grid.Column="3" Text="{Binding DCImag}" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Margin="10,0" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonUp="TextBox_PreviewMouseLeftButtonUp"/>
+
+                <Button x:Name="import" Content="Import" Width="80" Grid.Row="9" Grid.ColumnSpan="4" VerticalAlignment="Center" HorizontalAlignment="Center" Click="import_Click" IsEnabled="{Binding CanImport}"/>
+
+            </Grid>
+
+            <TextBox Grid.RowSpan="2" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" x:Name="splashA" Text="Reading..." Background="LightBlue" Width="100" Height="30" BorderBrush="ForestGreen" BorderThickness="1"/>
+
+        </Grid>    
+
+    </Grid>
+</UserControl>
