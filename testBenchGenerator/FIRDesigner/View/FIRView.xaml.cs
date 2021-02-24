@@ -69,7 +69,7 @@ namespace testBenchGenerator.FIRDesigner.View
                 data[2] += "};";
 
                 System.IO.File.WriteAllLines(dlg.FileName, data);
-                MessageBox.Show("Coefficients written to file!", "Export Coefficients", MessageBoxButton.OK, MessageBoxImage.Information);
+                this.infoBlock.Text = DateTime.Now.ToLongTimeString() + "Coefficients exported successfully.";
             }
         }
 

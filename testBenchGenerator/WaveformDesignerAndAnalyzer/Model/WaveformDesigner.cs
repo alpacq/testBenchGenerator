@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Numerics;
+using testBenchGenerator.TestbenchGenerator.Model;
 
 namespace testBenchGenerator.WaveformDesignerAndAnalyzer.Model
 {
@@ -20,7 +21,8 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.Model
 
         private string type;
         private double fs;
-        private double gain;
+        private Radix radix;
+        private Delimiter delimiter;
         private double length;
         private double freq;
         private double phoff;
@@ -90,10 +92,16 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.Model
             set { this.fs = value; }
         }
 
-        public double Gain
+        public Radix Radix
         {
-            get { return this.gain; }
-            set { this.gain = value; }
+            get { return this.radix; }
+            set { this.radix = value; }
+        }
+
+        public Delimiter Delimiter
+        {
+            get { return this.delimiter; }
+            set { this.delimiter = value; }
         }
 
         public double Length
@@ -259,9 +267,14 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.Model
             this.ComputeFFT();
         }
 
+        public void CreateAndSaveFile(string path)
+        {
+            List<string> data = new List<string>();
+            System.IO.File.WriteAllLines(path, data);
+        }
+
         public WaveformDesigner()
         {
-            this.Gain = 1;
             this.Length = 0.001;
             this.OS = 1;
             this.Bitwidth = 16;

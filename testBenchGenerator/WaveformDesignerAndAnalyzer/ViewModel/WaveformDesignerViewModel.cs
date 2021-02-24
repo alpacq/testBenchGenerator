@@ -7,12 +7,28 @@ using System.Numerics;
 using testBenchGenerator.WaveformDesignerAndAnalyzer.Model;
 using System.ComponentModel;
 using OxyPlot;
+using testBenchGenerator.TestbenchGenerator.Model;
 
 namespace testBenchGenerator.WaveformDesignerAndAnalyzer.ViewModel
 {
     public class WaveformDesignerViewModel : INotifyPropertyChanged
     {
         private WaveformDesigner model;
+        private List<string> radixes;
+        private List<string> delimiters;
+
+        public List<string> Radixes
+        {
+            get { return this.radixes; }
+            set { this.radixes = value; OnPropertyChanged("Radixes"); }
+        }
+
+        public List<string> Delimiters
+        {
+            get { return this.delimiters; }
+            set { this.delimiters = value; OnPropertyChanged("Delimiters"); }
+        }
+
         public double[] TimeVector
         {
             get { return this.model.TimeVector; }
@@ -67,10 +83,16 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.ViewModel
             set { this.model.Fs = value; OnPropertyChanged("Fs"); OnPropertyChanged("CanDesign"); OnPropertyChanged("CanExport"); }
         }
 
-        public double Gain
+        public Radix Radix
         {
-            get { return this.model.Gain; }
-            set { this.model.Gain = value; OnPropertyChanged("Gain"); OnPropertyChanged("CanDesign"); OnPropertyChanged("CanExport"); }
+            get { return this.model.Radix; }
+            set { this.model.Radix = value; OnPropertyChanged("Radix"); OnPropertyChanged("CanDesign"); OnPropertyChanged("CanExport"); }
+        }
+
+        public Delimiter Delimiter
+        {
+            get { return this.model.Delimiter; }
+            set { this.model.Delimiter = value; OnPropertyChanged("Delimiter"); OnPropertyChanged("CanDesign"); OnPropertyChanged("CanExport"); }
         }
 
         public double Length
@@ -169,11 +191,11 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.ViewModel
                 {
                     if(this.Type.Contains("Sine") || this.Type.Contains("Ramp") || this.Type.Contains("Const"))
                     {
-                        return (this.Fs != 0 && this.Gain != 0 && this.Length != 0);
+                        return (this.Fs != 0 && this.Length != 0);
                     }
                     else if(this.Type.Contains("OFDM"))
                     {
-                        return (this.Fs != 0 && this.Gain != 0 && this.Length != 0 && this.FFTLength != 0 && this.CPLength != 0 && this.Distance != 0 && this.Modulation != null && this.Modulation != String.Empty && this.NSymbols != 0 && this.OFDMN != 0 && this.OS != 0);
+                        return (this.Fs != 0 && this.Length != 0 && this.FFTLength != 0 && this.CPLength != 0 && this.Distance != 0 && this.Modulation != null && this.Modulation != String.Empty && this.NSymbols != 0 && this.OFDMN != 0 && this.OS != 0);
                     }
                     else
                     {
@@ -215,6 +237,15 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.ViewModel
             this.IPoints = new List<DataPoint>();
             this.QPoints = new List<DataPoint>();
             this.FPoints = new List<DataPoint>();
+            this.Radixes = new List<string>()
+            {
+                "Decimal", "Hexadecimal"
+            };
+            this.Delimiters = new List<string>()
+            {
+                "' '","','"
+            };
+            OnPropertyChanged("Radixes");
             OnPropertyChanged("IPoints");
             OnPropertyChanged("QPoints");
             OnPropertyChanged("FPoints");
@@ -244,9 +275,9 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.ViewModel
             OnPropertyChanged("CanExport");
         }
 
-        public void Export()
+        public void Export(string path)
         {
-
+            this.model.CreateAndSaveFile(path);
         }
     }
 }

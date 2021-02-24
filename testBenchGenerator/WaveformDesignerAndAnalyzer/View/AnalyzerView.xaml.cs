@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using testBenchGenerator.TestbenchGenerator.Model;
 using testBenchGenerator.WaveformDesignerAndAnalyzer.Model;
 using testBenchGenerator.WaveformDesignerAndAnalyzer.ViewModel;
 
@@ -43,6 +44,8 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.View
             this.desType.SelectedIndex = 0;
             this.modType.SelectedIndex = 0;
             this.anType.SelectedIndex = 0;
+            this.desRadix.SelectedIndex = 0;
+            this.desDel.SelectedIndex = 0;
             this.wfdI.ResetAllAxes();
             this.wfdQ.ResetAllAxes();
             this.wfdF.ResetAllAxes();
@@ -56,6 +59,7 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.View
             this.wfaQ.ResetAllAxes();
             this.wfaF.ResetAllAxes();
             this.splashA.Visibility = Visibility.Hidden;
+            this.anInfoBlock.Text = DateTime.Now.ToLongTimeString() + " Waveform imported successfully.";
         }
 
         private void BwD_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -64,6 +68,7 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.View
             this.wfdQ.ResetAllAxes();
             this.wfdF.ResetAllAxes();
             this.splashD.Visibility = Visibility.Hidden;
+            this.desInfoBlock.Text = DateTime.Now.ToLongTimeString() + " Waveform designed.";
         }
 
         private void BwA_DoWork(object sender, DoWorkEventArgs e)
@@ -246,10 +251,24 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.View
 
         private void export_Click(object sender, RoutedEventArgs e)
         {
-            this.wfdVM.Export();
-            this.wfdI.ResetAllAxes();
-            this.wfdQ.ResetAllAxes();
-            this.wfdF.ResetAllAxes();
+            Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
+            dlg.Filter = "Text File|*.txt";
+            dlg.Title = "Export Waveform";
+            dlg.FileName = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + (this.wfdVM.Type.Contains("Sine") ? 
+                            ("sine_" + (this.wfdVM.Freq/1000000).ToString("f2").Replace(".", "p") + "_" + (this.wfdVM.Fs/1000000).ToString("f2").Replace(".","p") + "_" + this.wfdVM.RMS.ToString().Replace(".", "p") + "_" + (this.wfdVM.Length*1000).ToString() + "ms.txt") : 
+                            "waveform.txt");
+            dlg.ShowDialog();
+
+            if (dlg.FileName != "")
+            {
+                this.wfdVM.Export(dlg.FileName);
+                this.wfdI.ResetAllAxes();
+                this.wfdQ.ResetAllAxes();
+                this.wfdF.ResetAllAxes();
+
+                this.desInfoBlock.Text = DateTime.Now.ToLongTimeString() + " Waveform exported successfully.";
+            }
+            
         }
 
         private void import_Click(object sender, RoutedEventArgs e)
@@ -311,7 +330,8 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.View
             if(this.desType.SelectedItem.ToString().Contains("Sine"))
             {
                 this.desFs.IsEnabled = true;
-                this.desGain.IsEnabled = true;
+                this.desRadix.IsEnabled = true;
+                this.desDel.IsEnabled = true;
                 this.desLength.IsEnabled = true;
                 this.desRMS.IsEnabled = true;
                 this.desBitwidth.IsEnabled = true;
@@ -330,7 +350,8 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.View
             else if(this.desType.SelectedItem.ToString().Contains("OFDM"))
             {
                 this.desFs.IsEnabled = true;
-                this.desGain.IsEnabled = true;
+                this.desRadix.IsEnabled = true;
+                this.desDel.IsEnabled = true;
                 this.desLength.IsEnabled = true;
                 this.desRMS.IsEnabled = true;
                 this.desBitwidth.IsEnabled = true;
@@ -349,7 +370,8 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.View
             else
             {
                 this.desFs.IsEnabled = true;
-                this.desGain.IsEnabled = true;
+                this.desRadix.IsEnabled = true;
+                this.desDel.IsEnabled = true;
                 this.desLength.IsEnabled = true;
                 this.desRMS.IsEnabled = true;
                 this.desBitwidth.IsEnabled = true;
@@ -365,6 +387,16 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.View
                 this.desDistance.IsEnabled = false;
                 this.desSeed.IsEnabled = false;
             }
+        }
+
+        private void desRadix_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            this.wfdVM.Radix = (Radix)(this.desRadix.SelectedIndex);
+        }
+
+        private void desDel_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            this.wfdVM.Delimiter = (Delimiter)(this.desDel.SelectedIndex);
         }
     }
 }
