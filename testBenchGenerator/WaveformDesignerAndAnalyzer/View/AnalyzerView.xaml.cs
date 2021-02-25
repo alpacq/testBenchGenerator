@@ -46,6 +46,8 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.View
             this.anType.SelectedIndex = 0;
             this.desRadix.SelectedIndex = 0;
             this.desDel.SelectedIndex = 0;
+            this.anRadix.SelectedIndex = 0;
+            this.anDel.SelectedIndex = 0;
             this.wfdI.ResetAllAxes();
             this.wfdQ.ResetAllAxes();
             this.wfdF.ResetAllAxes();
@@ -254,8 +256,8 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.View
             Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
             dlg.Filter = "Text File|*.txt";
             dlg.Title = "Export Waveform";
-            dlg.FileName = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + (this.wfdVM.Type.Contains("Sine") ? 
-                            ("sine_" + (this.wfdVM.Freq/1000000).ToString("f2").Replace(".", "p") + "_" + (this.wfdVM.Fs/1000000).ToString("f2").Replace(".","p") + "_" + this.wfdVM.RMS.ToString().Replace(".", "p") + "_" + (this.wfdVM.Length*1000).ToString() + "ms.txt") : 
+            dlg.FileName = (this.wfdVM.Type.Contains("Sine") ? 
+                            ("sine_" + (this.wfdVM.Freq/1000000).ToString("f2").Replace(".", "p").Replace(",","p") + "_" + (this.wfdVM.Fs/1000000).ToString("f2").Replace(".","p").Replace(",", "p") + "_" + this.wfdVM.RMS.ToString().Replace(".", "p").Replace(",", "p") + "_" + (this.wfdVM.Length*1000).ToString().Replace(",", "p").Replace(".", "p") + "ms.txt") : 
                             "waveform.txt");
             dlg.ShowDialog();
 
@@ -316,6 +318,7 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.View
 
         private void anType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            this.wfaVM.Type = this.anType.SelectedItem.ToString();
             //TODO
         }
 
@@ -397,6 +400,16 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.View
         private void desDel_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             this.wfdVM.Delimiter = (Delimiter)(this.desDel.SelectedIndex);
+        }
+
+        private void anRadix_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            this.wfaVM.Radix = (Radix)(this.anRadix.SelectedIndex);
+        }
+
+        private void anDel_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            this.wfaVM.Delimiter = (Delimiter)(this.anDel.SelectedIndex);
         }
     }
 }

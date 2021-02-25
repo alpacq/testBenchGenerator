@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Numerics;
 using testBenchGenerator.TestbenchGenerator.Model;
+using System.Globalization;
 
 namespace testBenchGenerator.WaveformDesignerAndAnalyzer.Model
 {
@@ -270,6 +271,17 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.Model
         public void CreateAndSaveFile(string path)
         {
             List<string> data = new List<string>();
+            string rdx = this.Radix == Radix.Hexadecimal ? "x" : this.Radix == Radix.Decimal ? "d" : "f";
+            string del = this.Delimiter == Delimiter.Comma ? "," : " ";
+
+            for(int k = 0; k < this.I.Length; k++)
+            {
+                if(rdx == "F")
+                    data.Add(this.I[k].ToString(rdx, CultureInfo.InvariantCulture) + del + this.Q[k].ToString(rdx, CultureInfo.InvariantCulture));
+                else
+                    data.Add(Convert.ToInt32(Math.Truncate(this.I[k])).ToString(rdx, CultureInfo.InvariantCulture) + del + Convert.ToInt32(Math.Truncate(this.Q[k])).ToString(rdx, CultureInfo.InvariantCulture));
+            }
+
             System.IO.File.WriteAllLines(path, data);
         }
 

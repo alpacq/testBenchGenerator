@@ -115,7 +115,9 @@
         </Grid>     
         
         <StackPanel Orientation="Horizontal" Grid.Column="6" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,30,0">
-            <Button x:Name="add" Content="{Binding AddText}" Click="add_Click" HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Margin="0,0,10,0" IsEnabled="{Binding CanSave}"/>
+            <StackPanel ToolTip="{Binding ProblemToolTip}" ToolTipService.IsEnabled="{Binding CanSaveN}">
+                <Button x:Name="add" Content="{Binding AddText}" Click="add_Click" HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Margin="0,0,10,0" IsEnabled="{Binding CanSave}"/>
+            </StackPanel>
             <Button x:Name="cancel" Content="Cancel" Click="cancel_Click" HorizontalAlignment="Center" VerticalAlignment="Center" Width="50"/>
         </StackPanel>
 

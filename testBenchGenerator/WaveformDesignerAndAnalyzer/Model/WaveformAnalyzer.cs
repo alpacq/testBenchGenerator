@@ -4,6 +4,7 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
+using testBenchGenerator.TestbenchGenerator.Model;
 
 namespace testBenchGenerator.WaveformDesignerAndAnalyzer.Model
 {
@@ -14,6 +15,8 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.Model
         private double[] i;
         private double[] q;
         private Complex[] x;
+        private Radix radix;
+        private Delimiter delimiter;
         private string path;
         private int length;
         private double[] freqs;
@@ -21,20 +24,21 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.Model
 
         private string type;
         private double fs;
-        private double gain;
         private double freq;
-        private double phoff;
-        private string modulation;
-        private double fsoff;
         private double os;
-        private double ofdmn;
         private double fftLength;
-        private double distance;
-        private double seed;
-        private double cpLength;
         private double nSymbols;
         private int bitwidth;
         private double rms;
+        private double inputMag;
+        private double linesIgnore;
+        private double rmsEfs;
+        private double rmsElsbs;
+        private double rmsEc;
+        private double pRmsE;
+        private double gainE;
+        private double dcReal;
+        private double dcImag;
 
         public double[] Freqs
         {
@@ -46,6 +50,18 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.Model
         {
             get { return this.ofdm_time_sym; }
             set { this.ofdm_time_sym = value; }
+        }
+
+        public Radix Radix
+        {
+            get { return this.radix; }
+            set { this.radix = value; }
+        }
+
+        public Delimiter Delimiter
+        {
+            get { return this.delimiter; }
+            set { this.delimiter = value; }
         }
 
         public string Type
@@ -60,34 +76,10 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.Model
             set { this.fs = value; }
         }
 
-        public double Gain
-        {
-            get { return this.gain; }
-            set { this.gain = value; }
-        }
-
         public double Freq
         {
             get { return this.freq; }
             set { this.freq = value; }
-        }
-
-        public double Phoff
-        {
-            get { return this.phoff; }
-            set { this.phoff = value; }
-        }
-
-        public string Modulation
-        {
-            get { return this.modulation; }
-            set { this.modulation = value; }
-        }
-
-        public double Fsoff
-        {
-            get { return this.fsoff; }
-            set { this.fsoff = value; }
         }
 
         public double OS
@@ -96,34 +88,10 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.Model
             set { this.os = value; }
         }
 
-        public double OFDMN
-        {
-            get { return this.ofdmn; }
-            set { this.ofdmn = value; }
-        }
-
         public double FFTLength
         {
             get { return this.fftLength; }
             set { this.fftLength = value; }
-        }
-
-        public double Distance
-        {
-            get { return this.distance; }
-            set { this.distance = value; }
-        }
-
-        public double Seed
-        {
-            get { return this.seed; }
-            set { this.seed = value; }
-        }
-
-        public double CPLength
-        {
-            get { return this.cpLength; }
-            set { this.cpLength = value; }
         }
 
         public double NSymbols
@@ -148,6 +116,60 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.Model
         {
             get { return this.length; }
             set { this.length = value; }
+        }
+
+        public double InputMag
+        {
+            get { return this.inputMag; }
+            set { this.inputMag = value; }
+        }
+
+        public double LinesIgnore
+        {
+            get { return this.linesIgnore; }
+            set { this.linesIgnore = value; }
+        }
+
+        public double RMSEFs
+        {
+            get { return this.rmsEfs; }
+            set { this.rmsEfs = value; }
+        }
+
+        public double RMSElsbs
+        {
+            get { return this.rmsElsbs; }
+            set { this.rmsElsbs = value; }
+        }
+
+        public double RMSEc
+        {
+            get { return this.rmsEc; }
+            set { this.rmsEc = value; }
+        }
+
+        public double PRMSE
+        {
+            get { return this.pRmsE; }
+            set { this.pRmsE = value; }
+        }
+
+        public double GainE
+        {
+            get { return this.gainE; }
+            set { this.gainE = value; }
+        }
+
+        public double DCReal
+        {
+            get { return this.dcReal; }
+            set { this.dcReal = value; }
+        }
+
+        public double DCImag
+        {
+            get { return this.dcImag; }
+            set { this.dcImag = value; }
         }
 
         public double[] I

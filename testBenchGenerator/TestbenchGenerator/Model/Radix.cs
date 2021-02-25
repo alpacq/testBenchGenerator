@@ -8,7 +8,8 @@ namespace testBenchGenerator.TestbenchGenerator.Model
 {
     public enum Radix
     {
-        Hexadecimal,
-        Decimal
+        Decimal,
+        Hexadecimal,        
+        FloatingPoint
     }
 }

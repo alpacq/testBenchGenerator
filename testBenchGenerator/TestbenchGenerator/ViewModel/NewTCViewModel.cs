@@ -24,6 +24,7 @@ namespace testBenchGenerator.TestbenchGenerator.ViewModel
         private string addText;
         private List<string> seqs;
         private List<string> radixes;
+        private string problemToolTip;
 
         public ModuleFileViewModel ModuleFileVM
         {
@@ -73,55 +74,55 @@ namespace testBenchGenerator.TestbenchGenerator.ViewModel
         public List<PortSelViewModel> Ins
         {
             get { return this.ins; }
-            set { this.ins = value; OnPropertyChanged("Ins"); OnPropertyChanged("CanSave"); }
+            set { this.ins = value; OnPropertyChanged("Ins"); OnPropertyChanged("CanSave"); OnPropertyChanged("CanSaveN"); }
         }
 
         public List<PortSelViewModel> Outs
         {
             get { return this.outs; }
-            set { this.outs = value; OnPropertyChanged("Outs"); OnPropertyChanged("CanSave"); }
+            set { this.outs = value; OnPropertyChanged("Outs"); OnPropertyChanged("CanSave"); OnPropertyChanged("CanSaveN"); }
         }
 
         public string InputPath
         {
             get { return this.inputPath; }
-            set { this.inputPath = value; OnPropertyChanged("InputPath"); OnPropertyChanged("CanSave"); }
+            set { this.inputPath = value; OnPropertyChanged("InputPath"); OnPropertyChanged("CanSave"); OnPropertyChanged("CanSaveN"); }
         }
 
         public bool Loop
         {
             get { return this.loop; }
-            set { this.loop = value; OnPropertyChanged("Loop"); OnPropertyChanged("CanSave"); }
+            set { this.loop = value; OnPropertyChanged("Loop"); OnPropertyChanged("CanSave"); OnPropertyChanged("CanSaveN"); }
         }
 
         public ClockViewModel Clock
         {
             get { return this.clock; }
-            set { this.clock = value; OnPropertyChanged("Clock"); OnPropertyChanged("CanSave"); }
+            set { this.clock = value; OnPropertyChanged("Clock"); OnPropertyChanged("CanSave"); OnPropertyChanged("CanSaveN"); }
         }
 
         public string Radix
         {
             get { return this.radix; }
-            set { this.radix = value; OnPropertyChanged("Radix"); OnPropertyChanged("CanSave"); }
+            set { this.radix = value; OnPropertyChanged("Radix"); OnPropertyChanged("CanSave"); OnPropertyChanged("CanSaveN"); }
         }
 
         public string Seq
         {
             get { return this.seq; }
-            set { this.seq = value; OnPropertyChanged("Seq"); OnPropertyChanged("CanSave"); }
+            set { this.seq = value; OnPropertyChanged("Seq"); OnPropertyChanged("CanSave"); OnPropertyChanged("CanSaveN"); }
         }
 
         public PortViewModel ValidIn
         {
             get { return this.validIn; }
-            set { this.validIn = value; OnPropertyChanged("ValidIn"); OnPropertyChanged("CanSave"); }
+            set { this.validIn = value; OnPropertyChanged("ValidIn"); OnPropertyChanged("CanSave"); OnPropertyChanged("CanSaveN"); }
         }
 
         public PortViewModel ValidOut
         {
             get { return this.validOut; }
-            set { this.validOut = value; OnPropertyChanged("ValidOut"); OnPropertyChanged("CanSave"); }
+            set { this.validOut = value; OnPropertyChanged("ValidOut"); OnPropertyChanged("CanSave"); OnPropertyChanged("CanSaveN"); }
         }
 
         public string AddText
@@ -130,9 +131,68 @@ namespace testBenchGenerator.TestbenchGenerator.ViewModel
             set { this.addText = value; OnPropertyChanged("AddText"); }
         }
 
+        public string ProblemToolTip
+        {
+            get { return this.problemToolTip; }
+            set { this.problemToolTip = value; OnPropertyChanged("ProblemToolTip"); }
+        }
+
         public bool CanSave
         {
-            get { return this.Clock != null && this.InputPath != null && this.Radix != null && this.Seq != null && this.Ins.Any(i => i.IsSel) && this.Outs.Any(i => i.IsSel) && this.ValidIn != null && this.ValidOut != null; }
+            get 
+            {
+                bool toRet = true;
+                string ptt = String.Empty;
+                if(this.Clock == null)
+                {
+                    ptt += "Clock to synchronize always block is not selected.\n";
+                    toRet = false;
+                }
+                if(this.InputPath == null)
+                {
+                    ptt += "Data input file is not selected.\n";
+                    toRet = false;
+                }
+                if(this.Radix == null)
+                {
+                    ptt += "Data input file radix is not set.\n";
+                    toRet = false;
+                }
+                if(this.Seq == null)
+                {
+                    ptt += "Data input valid sequence is not selected.\n";
+                    toRet = false;
+                }
+                if(!this.Ins.Any(i => i.IsSel))
+                {
+                    ptt += "Data input ports are not selected.\n";
+                    toRet = false;
+                }
+                if(!this.Outs.Any(i => i.IsSel))
+                {
+                    ptt += "Data output ports are not selected\n";
+                    toRet = false;
+                }
+                if(this.ValidIn == null)
+                {
+                    ptt += "Valid input port is not selected.\n";
+                    toRet = false;
+                }
+                if(this.ValidOut == null)
+                {
+                    ptt += "Valid output port is not selected.\n";
+                    toRet = false;
+                }
+                if (ptt.EndsWith("\n"))
+                    ptt = ptt.Remove(ptt.Length - 2);
+                this.ProblemToolTip = ptt;
+                return toRet;
+            }
+        }
+
+        public bool CanSaveN
+        {
+            get { return !this.CanSave; }
         }
         public NewTCViewModel(ModuleFileViewModel moduleFileVM)
         {
@@ -142,7 +202,7 @@ namespace testBenchGenerator.TestbenchGenerator.ViewModel
             };
             this.Radixes = new List<string>()
             {
-                "Decimal", "Hexadecimal"
+                "Decimal", "Hexadecimal", "Floating Point"
             };
             this.moduleFileVM = moduleFileVM;
             this.Ins = new List<PortSelViewModel>();
@@ -166,7 +226,7 @@ namespace testBenchGenerator.TestbenchGenerator.ViewModel
             };
             this.Radixes = new List<string>()
             {
-                "Decimal", "Hexadecimal"
+                "Decimal", "Hexadecimal", "Floating Point"
             };
             this.moduleFileVM = moduleFileVM;
             this.tcVM = tcVM;
@@ -189,7 +249,7 @@ namespace testBenchGenerator.TestbenchGenerator.ViewModel
             this.Clock = this.ModuleFileVM.Clocks.Where(c => c.Name == this.TCVM.ClockSync.Name).FirstOrDefault();
             this.Seq = this.TCVM.VldSeq;
             this.Loop = this.TCVM.Loop;
-            this.Radix = this.TCVM.Radix == Model.Radix.Decimal ? "Decimal" : "Hexadecimal";
+            this.Radix = this.TCVM.Radix == Model.Radix.Decimal ? "Decimal" : this.TCVM.Radix == Model.Radix.Hexadecimal ? "Hexadecimal" : "Floating Point";
             this.ValidIn = this.ModuleFileVM.Ins.Where(p => p.Name == this.TCVM.ValidIn.Name).FirstOrDefault();
             this.ValidOut = this.ModuleFileVM.Outputs.Where(p => p.Name == this.TCVM.ValidOut.Name).FirstOrDefault();
             this.InputPath = this.TCVM.DataVector;
@@ -212,7 +272,7 @@ namespace testBenchGenerator.TestbenchGenerator.ViewModel
                                where output.IsSel
                                select output.Port).ToList<Port>();
                 tc.Loop = this.Loop;
-                tc.Radix = this.Radix == "Decimal" ? Model.Radix.Decimal : Model.Radix.Hexadecimal;
+                tc.Radix = this.Radix == "Decimal" ? Model.Radix.Decimal : this.Radix == "Hexadecimal" ? Model.Radix.Hexadecimal : Model.Radix.FloatingPoint;
                 tc.ValidIn = this.ValidIn.Port;
                 tc.ValidOut = this.ValidOut.Port;
                 tc.VldSeq = this.Seq;
@@ -252,7 +312,7 @@ namespace testBenchGenerator.TestbenchGenerator.ViewModel
 
         public void CheckIfCanSave()
         {
-            OnPropertyChanged("CanSave");
+            OnPropertyChanged("CanSave"); OnPropertyChanged("CanSaveN");
         }
     }
 }

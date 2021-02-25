@@ -262,8 +262,12 @@
                                 </ListView.View>
                             </ListView>
                             <StackPanel Orientation="Horizontal" Grid.Column="6" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,10,10,10" x:Name="btnspanel">
-                                <Button x:Name="add" Content="Add" Click="add_Click"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Margin="0,0,10,0" IsEnabled="{Binding CanAdd}"/>
-                                <Button x:Name="remove" Content="Remove" Click="remove_Click"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" IsEnabled="{Binding CanRemove}"/>
+                                <StackPanel ToolTip="{Binding ProblemAddToolTip}" ToolTipService.IsEnabled="{Binding CanAddN}">
+                                    <Button x:Name="add" Content="Add" Click="add_Click"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Margin="0,0,10,0" IsEnabled="{Binding CanAdd}"/>
+                                </StackPanel>
+                                <StackPanel ToolTip="{Binding ProblemRemoveToolTip}" ToolTipService.IsEnabled="{Binding CanRemoveN}">
+                                    <Button x:Name="remove" Content="Remove" Click="remove_Click"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" IsEnabled="{Binding CanRemove}"/>
+                                </StackPanel>
                             </StackPanel>
                         </StackPanel>
                     </Border>                    
@@ -273,9 +277,11 @@
 
             <StackPanel Orientation="Horizontal" VerticalAlignment="Stretch" HorizontalAlignment="Right" x:Name="genpanel" Margin="0,10,0,10">
                 <TextBlock x:Name="infoBlock" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="3" Grid.Column="0"/>
-                <Button x:Name="run" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Height="25" Width="70" Content="Generate" IsEnabled="{Binding CanGenerate}" Click="run_Click"/>
+                <StackPanel ToolTip="{Binding ProblemGenerateToolTip}" ToolTipService.IsEnabled="{Binding CanGenerateN}">
+                    <Button x:Name="run" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Height="25" Width="70" Content="Generate" IsEnabled="{Binding CanGenerate}" Click="run_Click"/>
+                </StackPanel>
             </StackPanel>
-                        
+
         </StackPanel>
         
     </Grid>

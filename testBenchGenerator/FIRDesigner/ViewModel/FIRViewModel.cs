@@ -14,6 +14,7 @@ namespace testBenchGenerator.FIRDesigner.ViewModel
     {
         private FIR fir;
         private string problemToolTip;
+        private string problemExportToolTip;
         private string plotType;
 
         public FIR FIR
@@ -24,49 +25,49 @@ namespace testBenchGenerator.FIRDesigner.ViewModel
         public double Fs
         {
             get { return this.FIR.Fs; }
-            set { this.FIR.Fs = value; OnPropertyChanged("Fs"); OnPropertyChanged("CanUpdateN"); OnPropertyChanged("CanUpdate"); OnPropertyChanged("CanExport"); }
+            set { this.FIR.Fs = value; OnPropertyChanged("Fs"); OnPropertyChanged("CanUpdateN"); OnPropertyChanged("CanUpdate"); OnPropertyChanged("CanExport"); OnPropertyChanged("CanExportN"); }
         }
 
         public int Length
         {
             get { return this.FIR.Length; }
-            set { this.FIR.Length = value; OnPropertyChanged("Length"); OnPropertyChanged("CanUpdateN"); OnPropertyChanged("CanUpdate"); OnPropertyChanged("CanExport"); }
+            set { this.FIR.Length = value; OnPropertyChanged("Length"); OnPropertyChanged("CanUpdateN"); OnPropertyChanged("CanUpdate"); OnPropertyChanged("CanExport"); OnPropertyChanged("CanExportN"); }
         }
 
         public int ShiftSamples
         {
             get { return this.FIR.ShiftSamples; }
-            set { this.FIR.ShiftSamples = value; OnPropertyChanged("ShiftSamples"); OnPropertyChanged("CanUpdateN"); OnPropertyChanged("CanUpdate"); OnPropertyChanged("CanExport"); }
+            set { this.FIR.ShiftSamples = value; OnPropertyChanged("ShiftSamples"); OnPropertyChanged("CanUpdateN"); OnPropertyChanged("CanUpdate"); OnPropertyChanged("CanExport"); OnPropertyChanged("CanExportN"); }
         }
 
         public double LowFreq
         {
             get { return this.FIR.LowFreq; }
-            set { this.FIR.LowFreq = value; OnPropertyChanged("LowFreq"); OnPropertyChanged("CanUpdateN"); OnPropertyChanged("CanUpdate"); OnPropertyChanged("CanExport"); }
+            set { this.FIR.LowFreq = value; OnPropertyChanged("LowFreq"); OnPropertyChanged("CanUpdateN"); OnPropertyChanged("CanUpdate"); OnPropertyChanged("CanExport"); OnPropertyChanged("CanExportN"); }
         }
 
         public double HighFreq
         {
             get { return this.FIR.HighFreq; }
-            set { this.FIR.HighFreq = value; OnPropertyChanged("HighFreq"); OnPropertyChanged("CanUpdateN"); OnPropertyChanged("CanUpdate"); OnPropertyChanged("CanExport"); }
+            set { this.FIR.HighFreq = value; OnPropertyChanged("HighFreq"); OnPropertyChanged("CanUpdateN"); OnPropertyChanged("CanUpdate"); OnPropertyChanged("CanExport"); OnPropertyChanged("CanExportN"); }
         }
 
         public int FreqSamples
         {
             get { return this.FIR.FreqSamples; }
-            set { this.FIR.FreqSamples = value; OnPropertyChanged("FreqSamples"); OnPropertyChanged("CanUpdateN"); OnPropertyChanged("CanUpdate"); OnPropertyChanged("CanExport"); }
+            set { this.FIR.FreqSamples = value; OnPropertyChanged("FreqSamples"); OnPropertyChanged("CanUpdateN"); OnPropertyChanged("CanUpdate"); OnPropertyChanged("CanExport"); OnPropertyChanged("CanExportN"); }
         }
 
         public WindowType WinType
         {
             get { return this.FIR.WinType; }
-            set { this.FIR.WinType = value; OnPropertyChanged("WinType"); OnPropertyChanged("CanUpdateN"); OnPropertyChanged("CanUpdate"); OnPropertyChanged("CanExport"); }
+            set { this.FIR.WinType = value; OnPropertyChanged("WinType"); OnPropertyChanged("CanUpdateN"); OnPropertyChanged("CanUpdate"); OnPropertyChanged("CanExport"); OnPropertyChanged("CanExportN"); }
         }
 
         public FilterType FiltType
         {
             get { return this.FIR.FiltType; }
-            set { this.FIR.FiltType = value; OnPropertyChanged("FiltType"); OnPropertyChanged("CanUpdateN"); OnPropertyChanged("CanUpdate"); OnPropertyChanged("CanExport"); OnPropertyChanged("IsLFEnabled"); OnPropertyChanged("IsHFEnabled"); }
+            set { this.FIR.FiltType = value; OnPropertyChanged("FiltType"); OnPropertyChanged("CanUpdateN"); OnPropertyChanged("CanUpdate"); OnPropertyChanged("CanExport"); OnPropertyChanged("CanExportN"); OnPropertyChanged("IsLFEnabled"); OnPropertyChanged("IsHFEnabled"); }
         }
 
         public double Ts
@@ -101,7 +102,7 @@ namespace testBenchGenerator.FIRDesigner.ViewModel
         public List<double> WindowedImpulseResponse
         {
             get { return this.FIR.WindowedImpulseResponse; }
-            set { this.FIR.WindowedImpulseResponse = value; OnPropertyChanged("WindowedImpulseResponse"); OnPropertyChanged("Coeffs"); OnPropertyChanged("CanUpdateN"); OnPropertyChanged("CanUpdate"); OnPropertyChanged("CanExport"); }
+            set { this.FIR.WindowedImpulseResponse = value; OnPropertyChanged("WindowedImpulseResponse"); OnPropertyChanged("Coeffs"); OnPropertyChanged("CanUpdateN"); OnPropertyChanged("CanUpdate"); OnPropertyChanged("CanExport"); OnPropertyChanged("CanExportN"); }
         }
 
         public List<double> WindowedStepResponse
@@ -201,7 +202,36 @@ namespace testBenchGenerator.FIRDesigner.ViewModel
 
         public bool CanExport
         {
-            get { return this.WindowedImpulseResponse != null && this.WindowedImpulseResponse.Count > 0 && !this.WindowedImpulseResponse.All(v => v == 0); }
+            get 
+            {
+                bool toRet = true;
+                string ptt = String.Empty;
+                ptt += this.ProblemToolTip;
+                if (ptt != null && ptt != String.Empty)
+                {
+                    ptt += "\n";
+                    toRet = false;
+                }
+                if(this.WindowedImpulseResponse == null || this.WindowedImpulseResponse.Count == 0)
+                {
+                    ptt += "Coefficients are not yet computed.\n";
+                    toRet = false;
+                }
+                if(this.WindowedImpulseResponse.All(v => v == 0))
+                {
+                    ptt += "All coefficients are equal to zero.\n";
+                    toRet = false;
+                }
+                if (ptt.EndsWith("\n"))
+                    ptt = ptt.Remove(ptt.Length - 2);
+                this.ProblemExportToolTip = ptt;
+                return toRet;
+            }
+        }
+
+        public bool CanExportN
+        {
+            get { return !this.CanExport; }
         }
 
         public bool IsLFEnabled
@@ -218,6 +248,12 @@ namespace testBenchGenerator.FIRDesigner.ViewModel
         {
             get { return this.problemToolTip; }
             set { this.problemToolTip = value; OnPropertyChanged("ProblemToolTip"); }
+        }
+
+        public string ProblemExportToolTip
+        {
+            get { return this.problemExportToolTip; }
+            set { this.problemExportToolTip = value; OnPropertyChanged("ProblemExportToolTip"); }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -280,7 +316,7 @@ namespace testBenchGenerator.FIRDesigner.ViewModel
             OnPropertyChanged("FIRChartPoints");
             OnPropertyChanged("WinRespPoints");
             OnPropertyChanged("Coeffs");
-            OnPropertyChanged("CanExport");
+            OnPropertyChanged("CanExport"); OnPropertyChanged("CanExportN");
         }
 
         public void UpdateWindow()

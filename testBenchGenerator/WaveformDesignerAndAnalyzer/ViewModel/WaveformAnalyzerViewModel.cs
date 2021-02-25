@@ -6,6 +6,7 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
+using testBenchGenerator.TestbenchGenerator.Model;
 using testBenchGenerator.WaveformDesignerAndAnalyzer.Model;
 
 namespace testBenchGenerator.WaveformDesignerAndAnalyzer.ViewModel
@@ -13,65 +14,73 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.ViewModel
     public class WaveformAnalyzerViewModel : INotifyPropertyChanged
     {
         private WaveformAnalyzer model;
+        private string problemToolTip;
+        private List<string> radixes;
+        private List<string> delimiters;
 
+        public List<string> Radixes
+        {
+            get { return this.radixes; }
+            set { this.radixes = value; OnPropertyChanged("Radixes"); }
+        }
+
+        public List<string> Delimiters
+        {
+            get { return this.delimiters; }
+            set { this.delimiters = value; OnPropertyChanged("Delimiters"); }
+        }
         public string Path
         {
             get { return this.model.Path; }
-            set { this.model.Path = value; OnPropertyChanged("Path"); }
+            set { this.model.Path = value; OnPropertyChanged("Path"); OnPropertyChanged("CanImport"); OnPropertyChanged("CanImportN"); }
         }
 
         public double[] I
         {
             get { return this.model.I; }
-            set { this.model.I = value; OnPropertyChanged("I"); }
+            set { this.model.I = value; OnPropertyChanged("I"); OnPropertyChanged("CanImport"); OnPropertyChanged("CanImportN"); }
         }
 
         public double[] Q
         {
             get { return this.model.Q; }
-            set { this.model.Q = value; OnPropertyChanged("Q"); }
+            set { this.model.Q = value; OnPropertyChanged("Q"); OnPropertyChanged("CanImport"); OnPropertyChanged("CanImportN"); }
         }
 
         public Complex[] X
         {
             get { return this.model.X; }
-            set { this.model.X = value; OnPropertyChanged("X"); }
+            set { this.model.X = value; OnPropertyChanged("X"); OnPropertyChanged("CanImport"); OnPropertyChanged("CanImportN"); }
         }
 
         public double[] Freqs
         {
             get { return this.model.Freqs; }
-            set { this.model.Freqs = value; OnPropertyChanged("IQOut"); }
+            set { this.model.Freqs = value; OnPropertyChanged("IQOut"); OnPropertyChanged("CanImport"); OnPropertyChanged("CanImportN"); }
         }
 
         public double[] OFDMTimeSym
         {
             get { return this.model.OFDMTimeSym; }
-            set { this.model.OFDMTimeSym = value; OnPropertyChanged("OFDMTimeSym"); }
+            set { this.model.OFDMTimeSym = value; OnPropertyChanged("OFDMTimeSym"); OnPropertyChanged("CanImport"); OnPropertyChanged("CanImportN"); }
         }
 
         public string Type
         {
             get { return this.model.Type; }
-            set { this.model.Type = value; OnPropertyChanged("Type"); }
+            set { this.model.Type = value; OnPropertyChanged("Type"); OnPropertyChanged("CanImport"); OnPropertyChanged("CanImportN"); }
         }
 
         public double Fs
         {
             get { return this.model.Fs; }
-            set { this.model.Fs = value; OnPropertyChanged("Fs"); }
-        }
-
-        public double Gain
-        {
-            get { return this.model.Gain; }
-            set { this.model.Gain = value; OnPropertyChanged("Gain"); }
+            set { this.model.Fs = value; OnPropertyChanged("Fs"); OnPropertyChanged("CanImport"); OnPropertyChanged("CanImportN"); }
         }
 
         public int Length
         {
             get { return this.model.Length; }
-            set { this.model.Length = value; OnPropertyChanged("Length"); }
+            set { this.model.Length = value; OnPropertyChanged("Length"); OnPropertyChanged("CanImport"); OnPropertyChanged("CanImportN"); }
         }
 
         public double Freq
@@ -80,70 +89,28 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.ViewModel
             set { this.model.Freq = value; OnPropertyChanged("Freq"); }
         }
 
-        public double Phoff
-        {
-            get { return this.model.Phoff; }
-            set { this.model.Phoff = value; OnPropertyChanged("Phoff"); }
-        }
-
-        public string Modulation
-        {
-            get { return this.model.Modulation; }
-            set { this.model.Modulation = value; OnPropertyChanged("Modulation"); }
-        }
-
-        public double Fsoff
-        {
-            get { return this.model.Fsoff; }
-            set { this.model.Fsoff = value; OnPropertyChanged("Fsoff"); }
-        }
-
         public double OS
         {
             get { return this.model.OS; }
-            set { this.model.OS = value; OnPropertyChanged("OS"); }
-        }
-
-        public double OFDMN
-        {
-            get { return this.model.OFDMN; }
-            set { this.model.OFDMN = value; OnPropertyChanged("OFDMN"); }
+            set { this.model.OS = value; OnPropertyChanged("OS"); OnPropertyChanged("CanImport"); OnPropertyChanged("CanImportN"); }
         }
 
         public double FFTLength
         {
             get { return this.model.FFTLength; }
-            set { this.model.FFTLength = value; OnPropertyChanged("FFTLength"); }
-        }
-
-        public double Distance
-        {
-            get { return this.model.Distance; }
-            set { this.model.Distance = value; OnPropertyChanged("Distance"); }
-        }
-
-        public double Seed
-        {
-            get { return this.model.Seed; }
-            set { this.model.Seed = value; OnPropertyChanged("Seed"); }
-        }
-
-        public double CPLength
-        {
-            get { return this.model.CPLength; }
-            set { this.model.CPLength = value; OnPropertyChanged("CPLength"); }
+            set { this.model.FFTLength = value; OnPropertyChanged("FFTLength"); OnPropertyChanged("CanImport"); OnPropertyChanged("CanImportN"); }
         }
 
         public double NSymbols
         {
             get { return this.model.NSymbols; }
-            set { this.model.NSymbols = value; OnPropertyChanged("NSymbols"); }
+            set { this.model.NSymbols = value; OnPropertyChanged("NSymbols"); OnPropertyChanged("CanImport"); OnPropertyChanged("CanImportN"); }
         }
 
         public int Bitwidth
         {
             get { return this.model.Bitwidth; }
-            set { this.model.Bitwidth = value; OnPropertyChanged("Bitwidth"); }
+            set { this.model.Bitwidth = value; OnPropertyChanged("Bitwidth"); OnPropertyChanged("CanImport"); OnPropertyChanged("CanImportN"); }
         }
 
         public double RMS
@@ -152,9 +119,122 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.ViewModel
             set { this.model.RMS = value; OnPropertyChanged("RMS"); }
         }
 
+        public double InputMag
+        {
+            get { return this.model.InputMag; }
+            set { this.model.InputMag = value; OnPropertyChanged("InputMag"); }
+        }
+
+        public double LinesIgnore
+        {
+            get { return this.model.LinesIgnore; }
+            set { this.model.LinesIgnore = value; OnPropertyChanged("LinesIgnore"); }
+        }
+
+        public double RMSEFs
+        {
+            get { return this.model.RMSEFs; }
+            set { this.model.RMSEFs = value; OnPropertyChanged("RMSEFs"); }
+        }
+
+        public double RMSElsbs
+        {
+            get { return this.model.RMSElsbs; }
+            set { this.model.RMSElsbs = value; OnPropertyChanged("RMSElsbs"); }
+        }
+
+        public double RMSEc
+        {
+            get { return this.model.RMSEc; }
+            set { this.model.RMSEc = value; OnPropertyChanged("RMSEc"); }
+        }
+
+        public double PRMSE
+        {
+            get { return this.model.PRMSE; }
+            set { this.model.PRMSE = value; OnPropertyChanged("PRMSE"); }
+        }
+
+        public double GainE
+        {
+            get { return this.model.GainE; }
+            set { this.model.GainE = value; OnPropertyChanged("GainE"); }
+        }
+
+        public double DCReal
+        {
+            get { return this.model.DCReal; }
+            set { this.model.DCReal = value; OnPropertyChanged("DCReal"); }
+        }
+
+        public double DCImag
+        {
+            get { return this.model.DCImag; }
+            set { this.model.DCImag = value; OnPropertyChanged("DCImag"); }
+        }
+
+        public Radix Radix
+        {
+            get { return this.model.Radix; }
+            set { this.model.Radix = value; OnPropertyChanged("Radix"); OnPropertyChanged("CanImport"); OnPropertyChanged("CanImportN"); }
+        }
+
+        public Delimiter Delimiter
+        {
+            get { return this.model.Delimiter; }
+            set { this.model.Delimiter = value; OnPropertyChanged("Delimiter"); OnPropertyChanged("CanImport"); OnPropertyChanged("CanImportN"); }
+        }
+
         public double NyquistFrequency
         {
             get { return this.Fs / 2; }
+        }
+
+        public string ProblemToolTip
+        {
+            get { return this.problemToolTip; }
+            set { this.problemToolTip = value; OnPropertyChanged("ProblemToolTip"); }
+        }
+
+        public bool CanImport
+        {
+            get
+            {
+                bool toRet = true;
+                string ptt = string.Empty;
+                if (this.Type == null || this.Type == String.Empty)
+                {
+                    ptt += "One of waveform types must be selected.\n";
+                    toRet = false;
+                }
+                else
+                {
+                    if (this.FFTLength <= 0)
+                    {
+                        ptt += "FFT length cannot be negative or equal to zero.\n";
+                        toRet = false;
+                    }
+                    if (this.Fs <= 0)
+                    {
+                        ptt += "Sampling frequency cannot be less or equal to zero.\n";
+                        toRet = false;
+                    }
+                    if (this.Bitwidth <= 0)
+                    {
+                        ptt += "Bitwidth cannot be negative or equal to zero.\n";
+                        toRet = false;
+                    }
+                }
+                if (ptt.EndsWith("\n"))
+                    ptt = ptt.Remove(ptt.Length - 2);
+                this.ProblemToolTip = ptt;
+                return toRet;
+            }
+        }
+
+        public bool CanImportN
+        {
+            get { return !this.CanImport; }
         }
 
         public IList<DataPoint> IPoints { get; private set; }
@@ -171,6 +251,16 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.ViewModel
             this.IPoints = new List<DataPoint>();
             this.QPoints = new List<DataPoint>();
             this.FPoints = new List<DataPoint>();
+            this.Radixes = new List<string>()
+            {
+                "Decimal", "Hexadecimal", "Floating Point"
+            };
+            this.Delimiters = new List<string>()
+            {
+                "' '","','"
+            };
+            OnPropertyChanged("Radixes");
+            OnPropertyChanged("Delimiters");
             OnPropertyChanged("IPoints");
             OnPropertyChanged("QPoints");
             OnPropertyChanged("FPoints");

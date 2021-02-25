@@ -12,6 +12,9 @@ namespace testBenchGenerator.TestbenchGenerator.ViewModel
     {
         private ModuleFileViewModel moduleFile;
         private TestCaseViewModel selectedTC;
+        private string problemAddToolTip;
+        private string problemRemoveToolTip;
+        private string problemGenerateToolTip;
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged(string name = null)
@@ -19,10 +22,28 @@ namespace testBenchGenerator.TestbenchGenerator.ViewModel
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
+        public string ProblemAddToolTip
+        {
+            get { return this.problemAddToolTip; }
+            set { this.problemAddToolTip = value; OnPropertyChanged("ProblemAddToolTip"); }
+        }
+
+        public string ProblemRemoveToolTip
+        {
+            get { return this.problemRemoveToolTip; }
+            set { this.problemRemoveToolTip = value; OnPropertyChanged("ProblemRemoveToolTip"); }
+        }
+
+        public string ProblemGenerateToolTip
+        {
+            get { return this.problemGenerateToolTip; }
+            set { this.problemGenerateToolTip = value; OnPropertyChanged("ProblemGenerateToolTip"); }
+        }
+
         public ModuleFileViewModel ModuleFile
         {
             get { return this.moduleFile; }
-            set { this.moduleFile = value; this.OnPropertyChanged("CanAdd"); this.OnPropertyChanged("CanGenerate"); }
+            set { this.moduleFile = value; this.OnPropertyChanged("CanAdd"); this.OnPropertyChanged("CanAddN"); this.OnPropertyChanged("CanGenerate"); this.OnPropertyChanged("CanGenerateN"); }
         }
 
         public List<PortViewModel> Inputs
@@ -58,28 +79,79 @@ namespace testBenchGenerator.TestbenchGenerator.ViewModel
         public List<TestCaseViewModel> TestCases
         {
             get { if (this.ModuleFile != null) return this.ModuleFile.TestCases; else return null; }
-            set { this.ModuleFile.TestCases = value; this.OnPropertyChanged("TestCases"); this.OnPropertyChanged("CanRemove"); }
+            set { this.ModuleFile.TestCases = value; this.OnPropertyChanged("TestCases"); this.OnPropertyChanged("CanRemove"); this.OnPropertyChanged("CanRemoveN"); }
         }
 
         public TestCaseViewModel SelectedTestCase
         {
             get { return this.selectedTC; }
-            set { this.selectedTC = value; this.OnPropertyChanged("SelectedTestCase"); this.OnPropertyChanged("CanRemove"); }
+            set { this.selectedTC = value; this.OnPropertyChanged("SelectedTestCase"); this.OnPropertyChanged("CanRemove"); this.OnPropertyChanged("CanRemoveN"); }
         }
 
         public bool CanAdd
         {
-            get { return this.ModuleFile != null; }
+            get 
+            { 
+                if(this.ModuleFile == null)
+                {
+                    this.ProblemAddToolTip = "No module under test source file loaded.";
+                    return false;
+                }
+                this.ProblemAddToolTip = string.Empty;
+                return true;
+            }
+        }
+
+        public bool CanAddN
+        {
+            get { return !this.CanAdd; }
         }
 
         public bool CanRemove
         {
-            get { return this.TestCases != null && this.TestCases.Count > 0 && this.SelectedTestCase != null; }
+            get 
+            {
+                string ptt = string.Empty;
+                bool toRet = true;
+                if(this.TestCases == null || this.TestCases.Count == 0)
+                {
+                    ptt += "There are no testcases added.\n";
+                    toRet = false;
+                }
+                if(this.SelectedTestCase == null)
+                {
+                    ptt += "No testcase is selected.\n";
+                    toRet = false;
+                }
+                if (ptt.EndsWith("\n"))
+                    ptt = ptt.Remove(ptt.Length - 2);
+                this.ProblemRemoveToolTip = ptt;
+                return toRet;
+            }
+        }
+
+        public bool CanRemoveN
+        {
+            get { return !this.CanRemove; }
         }
 
         public bool CanGenerate
         {
-            get { return this.ModuleFile != null; }
+            get
+            {
+                if (this.ModuleFile == null)
+                {
+                    this.ProblemGenerateToolTip = "No module under test source file loaded.";
+                    return false;
+                }
+                this.ProblemGenerateToolTip = string.Empty;
+                return true;
+            }
+        }
+
+        public bool CanGenerateN
+        {
+            get { return !this.CanGenerate; }
         }
 
         public GeneratorViewModel(string modulePath)
@@ -93,9 +165,9 @@ namespace testBenchGenerator.TestbenchGenerator.ViewModel
                 this.OnPropertyChanged("Outputs");
                 this.OnPropertyChanged("Parameters");
             }
-            this.OnPropertyChanged("CanAdd");
-            this.OnPropertyChanged("CanRemove");
-            this.OnPropertyChanged("CanGenerate");
+            this.OnPropertyChanged("CanAdd"); this.OnPropertyChanged("CanAddN");
+            this.OnPropertyChanged("CanRemove"); this.OnPropertyChanged("CanRemoveN");
+            this.OnPropertyChanged("CanGenerate"); this.OnPropertyChanged("CanGenerateN");
         }
 
         public bool GenerateFile()
