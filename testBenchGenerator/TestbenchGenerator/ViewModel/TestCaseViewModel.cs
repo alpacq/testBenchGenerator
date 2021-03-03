@@ -4,21 +4,15 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using testBenchGenerator.Common;
 using testBenchGenerator.TestbenchGenerator.Model;
 
 namespace testBenchGenerator.TestbenchGenerator.ViewModel
 {
-    public class TestCaseViewModel : INotifyPropertyChanged
+    public class TestCaseViewModel : ViewModelBase
     {
         private TestCase testCase;
         private ModuleFileViewModel module;
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected void OnPropertyChanged(string name = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
-        }
 
         public TestCase TestCase
         {

@@ -4,11 +4,12 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using testBenchGenerator.Common;
 using testBenchGenerator.TestbenchGenerator.Model;
 
 namespace testBenchGenerator.TestbenchGenerator.ViewModel
 {
-    public class NewTCViewModel : INotifyPropertyChanged
+    public class NewTCViewModel : ViewModelBase
     {
         private ModuleFileViewModel moduleFileVM;
         private TestCaseViewModel tcVM;
@@ -47,13 +48,6 @@ namespace testBenchGenerator.TestbenchGenerator.ViewModel
         {
             get { return this.radixes; }
             set { this.radixes = value; OnPropertyChanged("Radixes"); }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected void OnPropertyChanged(string name = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
         public List<ClockViewModel> Clocks
@@ -249,7 +243,7 @@ namespace testBenchGenerator.TestbenchGenerator.ViewModel
             this.Clock = this.ModuleFileVM.Clocks.Where(c => c.Name == this.TCVM.ClockSync.Name).FirstOrDefault();
             this.Seq = this.TCVM.VldSeq;
             this.Loop = this.TCVM.Loop;
-            this.Radix = this.TCVM.Radix == Model.Radix.Decimal ? "Decimal" : this.TCVM.Radix == Model.Radix.Hexadecimal ? "Hexadecimal" : "Floating Point";
+            this.Radix = this.TCVM.Radix == Common.Radix.Decimal ? "Decimal" : this.TCVM.Radix == Common.Radix.Hexadecimal ? "Hexadecimal" : "Floating Point";
             this.ValidIn = this.ModuleFileVM.Ins.Where(p => p.Name == this.TCVM.ValidIn.Name).FirstOrDefault();
             this.ValidOut = this.ModuleFileVM.Outputs.Where(p => p.Name == this.TCVM.ValidOut.Name).FirstOrDefault();
             this.InputPath = this.TCVM.DataVector;
@@ -272,7 +266,7 @@ namespace testBenchGenerator.TestbenchGenerator.ViewModel
                                where output.IsSel
                                select output.Port).ToList<Port>();
                 tc.Loop = this.Loop;
-                tc.Radix = this.Radix == "Decimal" ? Model.Radix.Decimal : this.Radix == "Hexadecimal" ? Model.Radix.Hexadecimal : Model.Radix.FloatingPoint;
+                tc.Radix = this.Radix == "Decimal" ? Common.Radix.Decimal : this.Radix == "Hexadecimal" ? Common.Radix.Hexadecimal : Common.Radix.FloatingPoint;
                 tc.ValidIn = this.ValidIn.Port;
                 tc.ValidOut = this.ValidOut.Port;
                 tc.VldSeq = this.Seq;
@@ -303,7 +297,7 @@ namespace testBenchGenerator.TestbenchGenerator.ViewModel
                                where output.IsSel
                                select output.Port).ToList<Port>();
                 this.TCVM.Loop = this.Loop;
-                this.TCVM.Radix = this.Radix == "Decimal" ? Model.Radix.Decimal : Model.Radix.Hexadecimal;
+                this.TCVM.Radix = this.Radix == "Decimal" ? Common.Radix.Decimal : this.Radix == "Hexadecimal" ? Common.Radix.Hexadecimal : Common.Radix.FloatingPoint;
                 this.TCVM.ValidIn = this.ValidIn.Port;
                 this.TCVM.ValidOut = this.ValidOut.Port;
                 this.TCVM.VldSeq = this.Seq;

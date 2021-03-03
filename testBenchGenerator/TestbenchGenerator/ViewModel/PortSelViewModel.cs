@@ -4,20 +4,14 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using testBenchGenerator.Common;
 using testBenchGenerator.TestbenchGenerator.Model;
 
 namespace testBenchGenerator.TestbenchGenerator.ViewModel
 {
-    public class PortSelViewModel : INotifyPropertyChanged
+    public class PortSelViewModel : ViewModelBase
     {
         private PortSel portSel;
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected void OnPropertyChanged(string name = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
-        }
 
         public string Name
         {

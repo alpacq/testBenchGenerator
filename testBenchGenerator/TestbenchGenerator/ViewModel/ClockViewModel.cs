@@ -8,7 +8,7 @@ using testBenchGenerator.TestbenchGenerator.Model;
 
 namespace testBenchGenerator.TestbenchGenerator.ViewModel
 {
-    public class ClockViewModel : PortViewModel, INotifyPropertyChanged
+    public class ClockViewModel : PortViewModel
     {
         private Clock clock;
 

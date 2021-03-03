@@ -6,11 +6,12 @@ using System.Text;
 using System.Threading.Tasks;
 using OxyPlot;
 using OxyPlot.Series;
+using testBenchGenerator.Common;
 using testBenchGenerator.FIRDesigner.Model;
 
 namespace testBenchGenerator.FIRDesigner.ViewModel
 {
-    public class FIRViewModel : INotifyPropertyChanged
+    public class FIRViewModel : ViewModelBase
     {
         private FIR fir;
         private string problemToolTip;
@@ -254,13 +255,6 @@ namespace testBenchGenerator.FIRDesigner.ViewModel
         {
             get { return this.problemExportToolTip; }
             set { this.problemExportToolTip = value; OnPropertyChanged("ProblemExportToolTip"); }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected void OnPropertyChanged(string name = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
         public double NyquistFrequency

@@ -13,7 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using testBenchGenerator.TestbenchGenerator.Model;
+using testBenchGenerator.Common;
 using testBenchGenerator.WaveformDesignerAndAnalyzer.Model;
 using testBenchGenerator.WaveformDesignerAndAnalyzer.ViewModel;
 
@@ -332,12 +332,6 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.View
             this.wfdVM.Type = this.desType.SelectedItem.ToString();
             if(this.desType.SelectedItem.ToString().Contains("Sine"))
             {
-                this.desFs.IsEnabled = true;
-                this.desRadix.IsEnabled = true;
-                this.desDel.IsEnabled = true;
-                this.desLength.IsEnabled = true;
-                this.desRMS.IsEnabled = true;
-                this.desBitwidth.IsEnabled = true;
                 this.desFreq.IsEnabled = true;
                 this.desPhoff.IsEnabled = true;
                 this.modType.IsEnabled = false;
@@ -348,16 +342,9 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.View
                 this.desNSymbols.IsEnabled = false;
                 this.desOS.IsEnabled = false;
                 this.desDistance.IsEnabled = false;
-                this.desSeed.IsEnabled = false;
             }
             else if(this.desType.SelectedItem.ToString().Contains("OFDM"))
             {
-                this.desFs.IsEnabled = true;
-                this.desRadix.IsEnabled = true;
-                this.desDel.IsEnabled = true;
-                this.desLength.IsEnabled = true;
-                this.desRMS.IsEnabled = true;
-                this.desBitwidth.IsEnabled = true;
                 this.desFreq.IsEnabled = false;
                 this.desPhoff.IsEnabled = true;
                 this.modType.IsEnabled = true;
@@ -368,16 +355,9 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.View
                 this.desNSymbols.IsEnabled = true;
                 this.desOS.IsEnabled = true;
                 this.desDistance.IsEnabled = true;
-                this.desSeed.IsEnabled = true;
             }
             else
             {
-                this.desFs.IsEnabled = true;
-                this.desRadix.IsEnabled = true;
-                this.desDel.IsEnabled = true;
-                this.desLength.IsEnabled = true;
-                this.desRMS.IsEnabled = true;
-                this.desBitwidth.IsEnabled = true;
                 this.desFreq.IsEnabled = false;
                 this.desPhoff.IsEnabled = false;
                 this.modType.IsEnabled = false;
@@ -388,7 +368,6 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.View
                 this.desNSymbols.IsEnabled = false;
                 this.desOS.IsEnabled = false;
                 this.desDistance.IsEnabled = false;
-                this.desSeed.IsEnabled = false;
             }
         }
 

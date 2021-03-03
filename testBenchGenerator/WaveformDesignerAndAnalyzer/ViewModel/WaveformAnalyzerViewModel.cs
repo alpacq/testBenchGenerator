@@ -6,12 +6,12 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
-using testBenchGenerator.TestbenchGenerator.Model;
+using testBenchGenerator.Common;
 using testBenchGenerator.WaveformDesignerAndAnalyzer.Model;
 
 namespace testBenchGenerator.WaveformDesignerAndAnalyzer.ViewModel
 {
-    public class WaveformAnalyzerViewModel : INotifyPropertyChanged
+    public class WaveformAnalyzerViewModel : ViewModelBase
     {
         private WaveformAnalyzer model;
         private string problemToolTip;
@@ -59,12 +59,6 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.ViewModel
             set { this.model.Freqs = value; OnPropertyChanged("IQOut"); OnPropertyChanged("CanImport"); OnPropertyChanged("CanImportN"); }
         }
 
-        public double[] OFDMTimeSym
-        {
-            get { return this.model.OFDMTimeSym; }
-            set { this.model.OFDMTimeSym = value; OnPropertyChanged("OFDMTimeSym"); OnPropertyChanged("CanImport"); OnPropertyChanged("CanImportN"); }
-        }
-
         public string Type
         {
             get { return this.model.Type; }
@@ -95,17 +89,18 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.ViewModel
             set { this.model.OS = value; OnPropertyChanged("OS"); OnPropertyChanged("CanImport"); OnPropertyChanged("CanImportN"); }
         }
 
-        public double FFTLength
+        public int FFTLength
         {
             get { return this.model.FFTLength; }
             set { this.model.FFTLength = value; OnPropertyChanged("FFTLength"); OnPropertyChanged("CanImport"); OnPropertyChanged("CanImportN"); }
         }
 
-        public double NSymbols
-        {
-            get { return this.model.NSymbols; }
-            set { this.model.NSymbols = value; OnPropertyChanged("NSymbols"); OnPropertyChanged("CanImport"); OnPropertyChanged("CanImportN"); }
-        }
+        //todo solve
+        //public double NSymbols
+        //{
+        //    get { return this.model.NSymbols; }
+        //    set { this.model.NSymbols = value; OnPropertyChanged("NSymbols"); OnPropertyChanged("CanImport"); OnPropertyChanged("CanImportN"); }
+        //}
 
         public int Bitwidth
         {
@@ -243,8 +238,6 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.ViewModel
 
         public IList<DataPoint> FPoints { get; private set; }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
         public WaveformAnalyzerViewModel(WaveformAnalyzer model)
         {
             this.model = model;
@@ -280,16 +273,11 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.ViewModel
             }
             for (int i = 0; i < this.Freqs.Length; i++)
             {
-                this.FPoints.Add(new DataPoint((this.NyquistFrequency * i / this.Freqs.Length), this.Freqs[i]));
+                this.FPoints.Add(new DataPoint((this.Fs * i / this.Freqs.Length), this.Freqs[i]));
             }
             OnPropertyChanged("IPoints");
             OnPropertyChanged("QPoints");
             OnPropertyChanged("FPoints");
-        }
-
-        protected void OnPropertyChanged(string name = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
     }
 }

@@ -107,11 +107,10 @@
 
                 <TextBlock Grid.Row="0" Grid.Column="2" Text="Modulation" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>                
                 <TextBlock Grid.Row="1" Grid.Column="2" Text="Oversampling" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
-                <TextBlock Grid.Row="2" Grid.Column="2" Text="OFDM N" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>                
+                <TextBlock Grid.Row="2" Grid.Column="2" Text="Number of OFDM carriers" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>                
                 <TextBlock Grid.Row="3" Grid.Column="2" Text="Distance" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
-                <TextBlock Grid.Row="4" Grid.Column="2" Text="Seed" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
-                <TextBlock Grid.Row="5" Grid.Column="2" Text="Cyclix prefix length" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
-                <TextBlock Grid.Row="6" Grid.Column="2" Text="Number of symbols" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock Grid.Row="4" Grid.Column="2" Text="Cyclix prefix length" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock Grid.Row="5" Grid.Column="2" Text="Number of symbols" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
                 <TextBlock Grid.Row="7" Grid.Column="2" Text="Radix" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
                 <TextBlock Grid.Row="8" Grid.Column="2" Text="Delimiter" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
 
@@ -138,9 +137,8 @@
                 <TextBox x:Name="desOS" Grid.Row="1" Grid.Column="3" Text="{Binding OS}" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Margin="10,0" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonUp="TextBox_PreviewMouseLeftButtonUp"/>
                 <TextBox x:Name="desOFDMN" Grid.Row="2" Grid.Column="3" Text="{Binding OFDMN}" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Margin="10,0" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonUp="TextBox_PreviewMouseLeftButtonUp"/>
                 <TextBox x:Name="desDistance" Grid.Row="3" Grid.Column="3" Text="{Binding Distance}" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Margin="10,0" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonUp="TextBox_PreviewMouseLeftButtonUp"/>
-                <TextBox x:Name="desSeed" Grid.Row="4" Grid.Column="3" Text="{Binding Seed}" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Margin="10,0" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonUp="TextBox_PreviewMouseLeftButtonUp"/>
-                <TextBox x:Name="desCPLength" Grid.Row="5" Grid.Column="3" Text="{Binding CPLength}" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Margin="10,0" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonUp="TextBox_PreviewMouseLeftButtonUp"/>
-                <TextBox x:Name="desNSymbols" Grid.Row="6" Grid.Column="3" Text="{Binding NSymbols}" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Margin="10,0" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonUp="TextBox_PreviewMouseLeftButtonUp"/>
+                 <TextBox x:Name="desCPLength" Grid.Row="4" Grid.Column="3" Text="{Binding CPLength}" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Margin="10,0" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonUp="TextBox_PreviewMouseLeftButtonUp"/>
+                <TextBox x:Name="desNSymbols" Grid.Row="5" Grid.Column="3" Text="{Binding NSymbols}" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Margin="10,0" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonUp="TextBox_PreviewMouseLeftButtonUp"/>
                 <ComboBox x:Name="desRadix" Grid.Row="7" Grid.Column="3" ItemsSource="{Binding Radixes}" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Margin="10,0" SelectionChanged="desRadix_SelectionChanged"/>
                 <ComboBox x:Name="desDel" Grid.Row="8" Grid.Column="3" ItemsSource="{Binding Delimiters}" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Margin="10,0" SelectionChanged="desDel_SelectionChanged"/>
 
@@ -249,7 +247,7 @@
                 <TextBlock Grid.Row="7" Grid.Column="2" Text="DC bias real [dBFs]" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
                 <TextBlock Grid.Row="8" Grid.Column="2" Text="DC bias imag [dBFs]" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
 
-                <ComboBox x:Name="anType" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="10,0" SelectionChanged="anType_SelectionChanged">
+                <ComboBox x:Name="anType" Grid.Row="0" Grid.Column="1" HorizontalContentAlignment="Right" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="10,0" SelectionChanged="anType_SelectionChanged">
                     <ComboBoxItem Content="Sine"/>
                     <ComboBoxItem Content="OFDM"/>
                 </ComboBox>

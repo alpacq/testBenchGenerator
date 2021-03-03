@@ -4,7 +4,7 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
-using testBenchGenerator.TestbenchGenerator.Model;
+using testBenchGenerator.Common;
 
 namespace testBenchGenerator.WaveformDesignerAndAnalyzer.Model
 {
@@ -12,24 +12,13 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.Model
     {
         #region variables and fields
         private string[] dutLines;
-        private double[] i;
-        private double[] q;
-        private Complex[] x;
         private Radix radix;
         private Delimiter delimiter;
         private string path;
-        private int length;
-        private double[] freqs;
-        private double[] ofdm_time_sym;
+        private Signal signal;
+        private Signal refSignal;
 
         private string type;
-        private double fs;
-        private double freq;
-        private double os;
-        private double fftLength;
-        private double nSymbols;
-        private int bitwidth;
-        private double rms;
         private double inputMag;
         private double linesIgnore;
         private double rmsEfs;
@@ -40,16 +29,22 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.Model
         private double dcReal;
         private double dcImag;
 
-        public double[] Freqs
+        public Signal Signal
         {
-            get { return this.freqs; }
-            set { this.freqs = value; }
+            get { return this.signal; }
+            set { this.signal = value; }
         }
 
-        public double[] OFDMTimeSym
+        public Signal RefSignal
         {
-            get { return this.ofdm_time_sym; }
-            set { this.ofdm_time_sym = value; }
+            get { return this.refSignal; }
+            set { this.refSignal = value; }
+        }
+
+        public double[] Freqs
+        {
+            get { return this.Signal.Freqs; }
+            set { this.Signal.Freqs = value; }
         }
 
         public Radix Radix
@@ -72,50 +67,51 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.Model
 
         public double Fs
         {
-            get { return this.fs; }
-            set { this.fs = value; }
+            get { return this.Signal.Fs; }
+            set { this.Signal.Fs = value; }
         }
 
         public double Freq
         {
-            get { return this.freq; }
-            set { this.freq = value; }
+            get { return (this.Signal as SineSignal).Freq; }
+            set { (this.Signal as SineSignal).Freq = value; }
         }
 
         public double OS
         {
-            get { return this.os; }
-            set { this.os = value; }
+            get { return this.Signal.OS; }
+            set { this.Signal.OS = value; }
         }
 
-        public double FFTLength
+        public int FFTLength
         {
-            get { return this.fftLength; }
-            set { this.fftLength = value; }
+            get { return this.Signal.FFTLength; }
+            set { this.Signal.FFTLength = value; }
         }
 
-        public double NSymbols
-        {
-            get { return this.nSymbols; }
-            set { this.nSymbols = value; }
-        }
+        //todo solve
+        //public double NSymbols
+        //{
+        //    get { return this.nSymbols; }
+        //    set { this.nSymbols = value; }
+        //}
 
         public int Bitwidth
         {
-            get { return this.bitwidth; }
-            set { this.bitwidth = value; }
+            get { return this.Signal.Bitwidth; }
+            set { this.Signal.Bitwidth = value; }
         }
 
         public double RMS
         {
-            get { return this.rms; }
-            set { this.rms = value; }
+            get { return this.Signal.RMS; }
+            set { this.Signal.RMS = value; }
         }
 
         public int Length
         {
-            get { return this.length; }
-            set { this.length = value; }
+            get { return this.Signal.Length; }
+            set { this.Signal.Length = value; }
         }
 
         public double InputMag
@@ -174,20 +170,20 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.Model
 
         public double[] I
         {
-            get { return this.i; }
-            set { this.i = value; }
+            get { return this.Signal.I; }
+            set { this.Signal.I = value; }
         }
 
         public double[] Q
         {
-            get { return this.q; }
-            set { this.q = value; }
+            get { return this.Signal.Q; }
+            set { this.Signal.Q = value; }
         }
 
         public Complex[] X
         {
-            get { return this.x; }
-            set { this.x = value; }
+            get { return this.Signal.X; }
+            set { this.Signal.X = value; }
         }
 
         public string Path
@@ -195,18 +191,62 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.Model
             get { return this.path; }
             set { this.path = value; }
         }
-        #endregion
-        private void ComputeFFT()
+        #endregion  
+
+        private double EstimateSineFrequency(double fsSig)
         {
             Complex[] data = this.X;
             MathNet.Numerics.IntegralTransforms.Fourier.Forward(data);
-            this.Freqs = new double[data.Length];
-            for (int i = 0; i < data.Length; i++)
-                this.Freqs[i] = data[i].Magnitude;
+
+            double freq = data.ToList().IndexOf(data.Max());
+
+            freq /= fsSig;
+
+            if (freq > fsSig / 2)
+                freq -= (fsSig / 2);
+
+            return freq;
+        }
+
+        private Complex[] ApplyGain(double[] iArray, double[] qArray, double rms)
+        {
+            Complex[] data = new Complex[iArray.Length];
+            double[] frequencies = new double[iArray.Length];
+            for (int k = 0; k < iArray.Length; k++)
+                frequencies[k] = Math.Sqrt(iArray[k] * iArray[k] + qArray[k] * qArray[k]);
+            double gain = 20 * Math.Log10(MathNet.Numerics.Statistics.Statistics.RootMeanSquare(frequencies)) - rms;
+            for (int k = 0; k < this.I.Length; k++)
+            {
+                iArray[k] *= Math.Pow(10, ((gain * (-1)) / 20));
+                iArray[k] *= Math.Pow(2, (this.Bitwidth - 1));
+                qArray[k] *= Math.Pow(10, ((gain * (-1)) / 20));
+                qArray[k] *= Math.Pow(2, (this.Bitwidth - 1));
+                data[k] = new Complex(iArray[k], qArray[k]);
+            }
+
+            return data;
+        }
+
+        private void UpdateRef()
+        {
+            this.RefSignal.Fs = this.Fs;
+            this.RefSignal.FFTLength = this.FFTLength;
+            this.RefSignal.Length = this.Length;
+            this.RefSignal.Bitwidth = this.Bitwidth;
+            this.RefSignal.RMS = this.Signal.ComputeSignalRMS();
         }
 
         public void ReadFile()
         {
+            if (this.Type.Contains("Sine"))
+            {
+                this.Signal = new SineSignal();
+                this.RefSignal = new SineSignal();
+            }
+            else if (this.Type.Contains("OFDM"))
+            {
+                this.RefSignal = new OFDMSignal();
+            }
             this.dutLines = System.IO.File.ReadAllLines(this.Path);
 
             this.Length = this.dutLines.Length;
@@ -217,21 +257,45 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.Model
 
             for(int k = 0; k < this.Length; k++)
             {
-                this.I[k] = Convert.ToInt32(this.dutLines[k].Split(' ').FirstOrDefault());
-                this.I[k] /= Math.Pow(2, (this.Bitwidth - 1));
-                this.Q[k] = Convert.ToInt32(this.dutLines[k].Split(' ').FirstOrDefault());
-                this.Q[k] /= Math.Pow(2, (this.Bitwidth - 1));
+                if(this.Radix == Radix.Decimal)
+                {
+                    this.I[k] = Convert.ToInt32(this.dutLines[k].Split(this.Delimiter == Delimiter.Comma ? ',' : ' ').FirstOrDefault());
+                    this.Q[k] = Convert.ToInt32(this.dutLines[k].Split(this.Delimiter == Delimiter.Comma ? ',' : ' ').LastOrDefault());
+                    this.I[k] /= Math.Pow(2, (this.Bitwidth - 1));
+                    this.Q[k] /= Math.Pow(2, (this.Bitwidth - 1));
+                }
+                else if(this.Radix == Radix.Hexadecimal)
+                {
+                    this.I[k] = int.Parse((this.dutLines[k].Split(this.Delimiter == Delimiter.Comma ? ',' : ' ').FirstOrDefault()), System.Globalization.NumberStyles.HexNumber);
+                    this.Q[k] = int.Parse((this.dutLines[k].Split(this.Delimiter == Delimiter.Comma ? ',' : ' ').LastOrDefault()), System.Globalization.NumberStyles.HexNumber);
+                    this.I[k] /= Math.Pow(2, (this.Bitwidth - 1));
+                    this.Q[k] /= Math.Pow(2, (this.Bitwidth - 1));
+                }
+                else
+                {
+                    this.I[k] = Convert.ToDouble(this.dutLines[k].Split(this.Delimiter == Delimiter.Comma ? ',' : ' ').FirstOrDefault());
+                    this.Q[k] = Convert.ToDouble(this.dutLines[k].Split(this.Delimiter == Delimiter.Comma ? ',' : ' ').LastOrDefault());
+                }
+                
                 this.X[k] = new Complex(this.I[k], this.Q[k]);
             }
 
-            this.ComputeFFT();
+            double fsSig = this.Fs * this.OS;
+
+            this.UpdateRef();
+            this.RefSignal.Create();
+
+            if (this.Type.Contains("Sine"))
+            {               
+                (this.RefSignal as SineSignal).Freq = this.EstimateSineFrequency(fsSig);
+                //todo estimate phoff;                
+            }
+
+            this.Signal.ComputeFFT();
         }
 
         public WaveformAnalyzer()
         {
-            this.Bitwidth = 16;
-            this.FFTLength = 512;
-            this.NSymbols = 1;
         }
     }
 }

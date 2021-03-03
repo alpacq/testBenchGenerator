@@ -8,7 +8,7 @@ using testBenchGenerator.TestbenchGenerator.Model;
 
 namespace testBenchGenerator.TestbenchGenerator.ViewModel
 {
-    public class ResetViewModel : PortViewModel, INotifyPropertyChanged
+    public class ResetViewModel : PortViewModel
     {
         private Reset reset;
 

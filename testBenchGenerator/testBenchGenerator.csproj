@@ -126,7 +126,7 @@
     <Compile Include="TestbenchGenerator\Model\Parameter.cs" />
     <Compile Include="TestbenchGenerator\Model\Port.cs" />
     <Compile Include="TestbenchGenerator\Model\InputFile.cs" />
-    <Compile Include="TestbenchGenerator\Model\Radix.cs" />
+    <Compile Include="Common\Radix.cs" />
     <Compile Include="TestbenchGenerator\Model\Reset.cs" />
     <Compile Include="FIRDesigner\Model\WindowType.cs" />
     <Compile Include="WaveformDesignerAndAnalyzer\Model\Delimiter.cs" />

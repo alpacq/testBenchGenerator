@@ -4,11 +4,12 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using testBenchGenerator.Common;
 using testBenchGenerator.TestbenchGenerator.Model;
 
 namespace testBenchGenerator.TestbenchGenerator.ViewModel
 {
-    public class PortViewModel : INotifyPropertyChanged
+    public class PortViewModel : ViewModelBase
     {
         private Port port;
 
@@ -27,13 +28,6 @@ namespace testBenchGenerator.TestbenchGenerator.ViewModel
         {
             get { return this.Port.Bitwidth; }
             set { this.Port.Bitwidth = value; OnPropertyChanged("Bitwidth"); }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected void OnPropertyChanged(string name = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
         public PortViewModel(Port port)
