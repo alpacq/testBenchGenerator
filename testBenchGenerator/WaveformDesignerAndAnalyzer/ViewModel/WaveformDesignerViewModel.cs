@@ -11,13 +11,18 @@ using testBenchGenerator.Common;
 
 namespace testBenchGenerator.WaveformDesignerAndAnalyzer.ViewModel
 {
-    public class WaveformDesignerViewModel : ViewModelBase
+    public class WaveformDesignerViewModel : WaveformProcessorViewModel
     {
         private WaveformDesigner model;
-        private List<string> radixes;
-        private List<string> delimiters;
+
         private string problemDesignToolTip;
         private string problemExportToolTip;
+
+        public override WaveformProcessor Model
+        {
+            get { return this.model; }
+            set { this.model = (WaveformDesigner)value; }
+        }
 
         public string ProblemDesignToolTip
         {
@@ -29,161 +34,76 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.ViewModel
         {
             get { return this.problemExportToolTip; }
             set { this.problemExportToolTip = value; OnPropertyChanged("ProblemExportToolTip"); }
-        }
-
-        public List<string> Radixes
-        {
-            get { return this.radixes; }
-            set { this.radixes = value; OnPropertyChanged("Radixes"); }
-        }
-
-        public List<string> Delimiters
-        {
-            get { return this.delimiters; }
-            set { this.delimiters = value; OnPropertyChanged("Delimiters"); }
-        }
-
-        public Signal Signal
-        {
-            get { return this.model.Signal; }
-            set { this.model.Signal = value; OnPropertyChanged("Signal"); OnPropertyChanged("CanDesign"); OnPropertyChanged("CanExport"); OnPropertyChanged("CanDesignN"); OnPropertyChanged("CanExportN"); }
-        }
-
-        public double[] TimeVector
-        {
-            get { return this.Signal.TimeVector; }
-            set { this.Signal.TimeVector = value; OnPropertyChanged("TimeVector"); OnPropertyChanged("CanDesign"); OnPropertyChanged("CanExport"); OnPropertyChanged("CanDesignN"); OnPropertyChanged("CanExportN"); }
-        }
-
-        public double[] I
-        {
-            get { return this.Signal.I; }
-            set { this.Signal.I = value; OnPropertyChanged("I"); OnPropertyChanged("CanDesign"); OnPropertyChanged("CanExport"); OnPropertyChanged("CanDesignN"); OnPropertyChanged("CanExportN"); }
-        }
-
-        public double[] Q
-        {
-            get { return this.Signal.Q; }
-            set { this.Signal.Q = value; OnPropertyChanged("Q"); OnPropertyChanged("CanDesign"); OnPropertyChanged("CanExport"); OnPropertyChanged("CanDesignN"); OnPropertyChanged("CanExportN"); }
-        }
-
-        public Complex[] X
-        {
-            get { return this.Signal.X; }
-            set { this.Signal.X = value; OnPropertyChanged("X"); OnPropertyChanged("CanDesign"); OnPropertyChanged("CanExport"); OnPropertyChanged("CanDesignN"); OnPropertyChanged("CanExportN"); }
-        }
-
-        public double[] Freqs
-        {
-            get { return this.Signal.Freqs; }
-            set { this.Signal.Freqs = value; OnPropertyChanged("IQOut"); OnPropertyChanged("CanDesign"); OnPropertyChanged("CanExport"); OnPropertyChanged("CanDesignN"); OnPropertyChanged("CanExportN"); }
-        }
-
-        public double Fs
-        {
-            get { return this.Signal.Fs; }
-            set { this.Signal.Fs = value; OnPropertyChanged("Fs"); OnPropertyChanged("CanDesign"); OnPropertyChanged("CanExport"); OnPropertyChanged("CanDesignN"); OnPropertyChanged("CanExportN"); }
-        }
-
-        public Radix Radix
-        {
-            get { return this.model.Radix; }
-            set { this.model.Radix = value; OnPropertyChanged("Radix"); OnPropertyChanged("CanDesign"); OnPropertyChanged("CanExport"); OnPropertyChanged("CanDesignN"); OnPropertyChanged("CanExportN"); }
-        }
-
-        public Delimiter Delimiter
-        {
-            get { return this.model.Delimiter; }
-            set { this.model.Delimiter = value; OnPropertyChanged("Delimiter"); OnPropertyChanged("CanDesign"); OnPropertyChanged("CanExport"); OnPropertyChanged("CanDesignN"); OnPropertyChanged("CanExportN"); }
-        }
-
-        public int Length
-        {
-            get { return this.Signal.Length; }
-            set { this.Signal.Length = value; OnPropertyChanged("Length"); OnPropertyChanged("CanDesign"); OnPropertyChanged("CanExport"); OnPropertyChanged("CanDesignN"); OnPropertyChanged("CanExportN"); }
-        }
-
-        public double LengthTime
-        {
-            get { return this.Signal.LengthTime; }
-            set { this.Signal.LengthTime = value; OnPropertyChanged("LengthTime"); OnPropertyChanged("CanDesign"); OnPropertyChanged("CanExport"); OnPropertyChanged("CanDesignN"); OnPropertyChanged("CanExportN"); }
-        }
-
-        public double Freq
-        {
-            get { return this.Signal.Freq; }
-            set { this.Signal.Freq = value; OnPropertyChanged("Freq"); OnPropertyChanged("CanDesign"); OnPropertyChanged("CanExport"); OnPropertyChanged("CanDesignN"); OnPropertyChanged("CanExportN"); }
-        }
-
-        public double Phoff
-        {
-            get { return this.Signal.Phoff; }
-            set { this.Signal.Phoff = value; OnPropertyChanged("Phoff"); OnPropertyChanged("CanDesign"); OnPropertyChanged("CanExport"); OnPropertyChanged("CanDesignN"); OnPropertyChanged("CanExportN"); }
-        }
+        }        
 
         public string Modulation
         {
-            get { return this.model.Modulation; }
-            set { this.model.Modulation = value; OnPropertyChanged("Modulation"); OnPropertyChanged("CanDesign"); OnPropertyChanged("CanExport"); OnPropertyChanged("CanDesignN"); OnPropertyChanged("CanExportN"); }
+            get { return (this.Signal is OFDMSignal) ? (this.Signal as OFDMSignal).Modulation : null; }
+            set 
+            {
+                if (this.Signal is OFDMSignal)
+                {
+                    (this.Signal as OFDMSignal).Modulation = value; 
+                    OnPropertyChanged("Modulation");
+                    this.CanDosRecompute();
+                }
+            }
         }
 
         public double Fsoff
         {
-            get { return this.Signal.Fsoff; }
-            set { this.Signal.Fsoff = value; OnPropertyChanged("Fsoff"); OnPropertyChanged("CanDesign"); OnPropertyChanged("CanExport"); OnPropertyChanged("CanDesignN"); OnPropertyChanged("CanExportN"); }
+            get { return (this.Signal is OFDMSignal) ? (this.Signal as OFDMSignal).Fsoff : 0.0; }
+            set
+            {
+                if (this.Signal is OFDMSignal)
+                {
+                    (this.Signal as OFDMSignal).Fsoff = value;
+                    OnPropertyChanged("Fsoff");
+                    this.CanDosRecompute();
+                }
+            }
         }
 
-        public double OS
+        public int OFDMN
         {
-            get { return this.Signal.OS; }
-            set { this.Signal.OS = value; OnPropertyChanged("OS"); OnPropertyChanged("CanDesign"); OnPropertyChanged("CanExport"); OnPropertyChanged("CanDesignN"); OnPropertyChanged("CanExportN"); }
-        }
-
-        public double OFDMN
-        {
-            get { return this.Signal.OFDMN; }
-            set { this.Signal.OFDMN = value; OnPropertyChanged("OFDMN"); OnPropertyChanged("CanDesign"); OnPropertyChanged("CanExport"); OnPropertyChanged("CanDesignN"); OnPropertyChanged("CanExportN"); }
-        }
-
-        public int FFTLength
-        {
-            get { return this.Signal.FFTLength; }
-            set { this.Signal.FFTLength = value; OnPropertyChanged("FFTLength"); OnPropertyChanged("CanDesign"); OnPropertyChanged("CanExport"); OnPropertyChanged("CanDesignN"); OnPropertyChanged("CanExportN"); }
+            get { return (this.Signal is OFDMSignal) ? (this.Signal as OFDMSignal).OFDMN : 0; }
+            set
+            {
+                if (this.Signal is OFDMSignal)
+                {
+                    (this.Signal as OFDMSignal).OFDMN = value;
+                    OnPropertyChanged("OFDMN");
+                    this.CanDosRecompute();
+                }
+            }
         }
 
         public double Distance
         {
-            get { return this.Signal.Distance; }
-            set { this.Signal.Distance = value; OnPropertyChanged("Distance"); OnPropertyChanged("CanDesign"); OnPropertyChanged("CanExport"); OnPropertyChanged("CanDesignN"); OnPropertyChanged("CanExportN"); }
+            get { return (this.Signal is OFDMSignal) ? (this.Signal as OFDMSignal).Distance : 0.0; }
+            set
+            {
+                if (this.Signal is OFDMSignal)
+                {
+                    (this.Signal as OFDMSignal).Distance = value;
+                    OnPropertyChanged("Distance");
+                    this.CanDosRecompute();
+                }
+            }
         }
 
         public int CPLength
         {
-            get { return this.Signal.CPLength; }
-            set { this.Signal.CPLength = value; OnPropertyChanged("CPLength"); OnPropertyChanged("CanDesign"); OnPropertyChanged("CanExport"); OnPropertyChanged("CanDesignN"); OnPropertyChanged("CanExportN"); }
-        }
-
-        public int NSymbols
-        {
-            get { return this.Signal.NSymbols; }
-            set { this.Signal.NSymbols = value; OnPropertyChanged("NSymbols"); OnPropertyChanged("CanDesign"); OnPropertyChanged("CanExport"); OnPropertyChanged("CanDesignN"); OnPropertyChanged("CanExportN"); }
-        }
-
-        public int Bitwidth
-        {
-            get { return this.Signal.Bitwidth; }
-            set { this.Signal.Bitwidth = value; OnPropertyChanged("Bitwidth"); OnPropertyChanged("CanDesign"); OnPropertyChanged("CanExport"); OnPropertyChanged("CanDesignN"); OnPropertyChanged("CanExportN"); }
-        }
-
-        public double RMS
-        {
-            get { return this.Signal.RMS; }
-            set { this.Signal.RMS = value; OnPropertyChanged("RMS"); OnPropertyChanged("CanDesign"); OnPropertyChanged("CanExport"); OnPropertyChanged("CanDesignN"); OnPropertyChanged("CanExportN"); }
-        }
-        public string Type
-        {
-            get { return this.model.Type; }
-            set { this.model.Type = value; OnPropertyChanged("Type"); OnPropertyChanged("CanDesign"); OnPropertyChanged("CanExport"); OnPropertyChanged("CanDesignN"); OnPropertyChanged("CanExportN"); }
+            get { return (this.Signal is OFDMSignal) ? (this.Signal as OFDMSignal).CPLength : 0; }
+            set
+            {
+                if (this.Signal is OFDMSignal)
+                {
+                    (this.Signal as OFDMSignal).CPLength = value;
+                    OnPropertyChanged("CPLength");
+                    this.CanDosRecompute();
+                }
+            }
         }
 
         public bool CanDesign
@@ -204,7 +124,7 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.ViewModel
                         ptt += "Sampling frequency cannot be less or equal to zero.\n";
                         toRet = false;
                     }
-                    if(this.Length <= 0)
+                    if(this.LengthTime <= 0)
                     {
                         ptt += "Signal length cannot be negative or equal to zero.\n";
                         toRet = false;
@@ -298,17 +218,6 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.ViewModel
         {
             get { return !this.CanExport; }
         }
-
-        public double NyquistFrequency
-        {
-            get { return this.Fs / 2; }
-        }
-
-        public IList<DataPoint> IPoints { get; private set; }
-
-        public IList<DataPoint> QPoints { get; private set; }
-
-        public IList<DataPoint> FPoints { get; private set; }
 
         public WaveformDesignerViewModel(WaveformDesigner model)
         {

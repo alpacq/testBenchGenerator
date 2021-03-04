@@ -9,38 +9,8 @@ using System.Globalization;
 
 namespace testBenchGenerator.WaveformDesignerAndAnalyzer.Model
 {
-    public class WaveformDesigner
+    public class WaveformDesigner : WaveformProcessor
     {
-        #region variables and fields
-        private Signal signal;
-        private string type;
-        private Radix radix;
-        private Delimiter delimiter;
-
-        public Signal Signal
-        {
-            get { return this.signal; }
-            set { this.signal = value; }
-        }
-
-        public string Type
-        {
-            get { return this.type; }
-            set { this.type = value; }
-        }
-        public Radix Radix
-        {
-            get { return this.radix; }
-            set { this.radix = value; }
-        }
-
-        public Delimiter Delimiter
-        {
-            get { return this.delimiter; }
-            set { this.delimiter = value; }
-        }
-        #endregion
-
         public void GenerateWaveform()
         {
             this.Signal.Create();

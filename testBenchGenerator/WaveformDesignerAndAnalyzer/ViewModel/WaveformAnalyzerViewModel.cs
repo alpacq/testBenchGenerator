@@ -11,107 +11,22 @@ using testBenchGenerator.WaveformDesignerAndAnalyzer.Model;
 
 namespace testBenchGenerator.WaveformDesignerAndAnalyzer.ViewModel
 {
-    public class WaveformAnalyzerViewModel : ViewModelBase
-    {
-        private WaveformAnalyzer model;
+    public class WaveformAnalyzerViewModel : WaveformProcessorViewModel
+    {        
         private string problemToolTip;
-        private List<string> radixes;
-        private List<string> delimiters;
 
-        public List<string> Radixes
+        private WaveformAnalyzer model;
+
+        public override WaveformProcessor Model
         {
-            get { return this.radixes; }
-            set { this.radixes = value; OnPropertyChanged("Radixes"); }
+            get { return this.model; }
+            set { this.model = (WaveformAnalyzer)value; }
         }
 
-        public List<string> Delimiters
-        {
-            get { return this.delimiters; }
-            set { this.delimiters = value; OnPropertyChanged("Delimiters"); }
-        }
         public string Path
         {
             get { return this.model.Path; }
-            set { this.model.Path = value; OnPropertyChanged("Path"); OnPropertyChanged("CanImport"); OnPropertyChanged("CanImportN"); }
-        }
-
-        public double[] I
-        {
-            get { return this.model.I; }
-            set { this.model.I = value; OnPropertyChanged("I"); OnPropertyChanged("CanImport"); OnPropertyChanged("CanImportN"); }
-        }
-
-        public double[] Q
-        {
-            get { return this.model.Q; }
-            set { this.model.Q = value; OnPropertyChanged("Q"); OnPropertyChanged("CanImport"); OnPropertyChanged("CanImportN"); }
-        }
-
-        public Complex[] X
-        {
-            get { return this.model.X; }
-            set { this.model.X = value; OnPropertyChanged("X"); OnPropertyChanged("CanImport"); OnPropertyChanged("CanImportN"); }
-        }
-
-        public double[] Freqs
-        {
-            get { return this.model.Freqs; }
-            set { this.model.Freqs = value; OnPropertyChanged("IQOut"); OnPropertyChanged("CanImport"); OnPropertyChanged("CanImportN"); }
-        }
-
-        public string Type
-        {
-            get { return this.model.Type; }
-            set { this.model.Type = value; OnPropertyChanged("Type"); OnPropertyChanged("CanImport"); OnPropertyChanged("CanImportN"); }
-        }
-
-        public double Fs
-        {
-            get { return this.model.Fs; }
-            set { this.model.Fs = value; OnPropertyChanged("Fs"); OnPropertyChanged("CanImport"); OnPropertyChanged("CanImportN"); }
-        }
-
-        public int Length
-        {
-            get { return this.model.Length; }
-            set { this.model.Length = value; OnPropertyChanged("Length"); OnPropertyChanged("CanImport"); OnPropertyChanged("CanImportN"); }
-        }
-
-        public double Freq
-        {
-            get { return this.model.Freq; }
-            set { this.model.Freq = value; OnPropertyChanged("Freq"); }
-        }
-
-        public double OS
-        {
-            get { return this.model.OS; }
-            set { this.model.OS = value; OnPropertyChanged("OS"); OnPropertyChanged("CanImport"); OnPropertyChanged("CanImportN"); }
-        }
-
-        public int FFTLength
-        {
-            get { return this.model.FFTLength; }
-            set { this.model.FFTLength = value; OnPropertyChanged("FFTLength"); OnPropertyChanged("CanImport"); OnPropertyChanged("CanImportN"); }
-        }
-
-        //todo solve
-        //public double NSymbols
-        //{
-        //    get { return this.model.NSymbols; }
-        //    set { this.model.NSymbols = value; OnPropertyChanged("NSymbols"); OnPropertyChanged("CanImport"); OnPropertyChanged("CanImportN"); }
-        //}
-
-        public int Bitwidth
-        {
-            get { return this.model.Bitwidth; }
-            set { this.model.Bitwidth = value; OnPropertyChanged("Bitwidth"); OnPropertyChanged("CanImport"); OnPropertyChanged("CanImportN"); }
-        }
-
-        public double RMS
-        {
-            get { return this.model.RMS; }
-            set { this.model.RMS = value; OnPropertyChanged("RMS"); }
+            set { this.model.Path = value; OnPropertyChanged("Path"); this.CanDosRecompute(); }
         }
 
         public double InputMag
@@ -166,24 +81,7 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.ViewModel
         {
             get { return this.model.DCImag; }
             set { this.model.DCImag = value; OnPropertyChanged("DCImag"); }
-        }
-
-        public Radix Radix
-        {
-            get { return this.model.Radix; }
-            set { this.model.Radix = value; OnPropertyChanged("Radix"); OnPropertyChanged("CanImport"); OnPropertyChanged("CanImportN"); }
-        }
-
-        public Delimiter Delimiter
-        {
-            get { return this.model.Delimiter; }
-            set { this.model.Delimiter = value; OnPropertyChanged("Delimiter"); OnPropertyChanged("CanImport"); OnPropertyChanged("CanImportN"); }
-        }
-
-        public double NyquistFrequency
-        {
-            get { return this.Fs / 2; }
-        }
+        }       
 
         public string ProblemToolTip
         {
@@ -230,13 +128,7 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.ViewModel
         public bool CanImportN
         {
             get { return !this.CanImport; }
-        }
-
-        public IList<DataPoint> IPoints { get; private set; }
-
-        public IList<DataPoint> QPoints { get; private set; }
-
-        public IList<DataPoint> FPoints { get; private set; }
+        }        
 
         public WaveformAnalyzerViewModel(WaveformAnalyzer model)
         {
@@ -275,6 +167,7 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.ViewModel
             {
                 this.FPoints.Add(new DataPoint((this.Fs * i / this.Freqs.Length), this.Freqs[i]));
             }
+            OnPropertyChanged("RMS");
             OnPropertyChanged("IPoints");
             OnPropertyChanged("QPoints");
             OnPropertyChanged("FPoints");

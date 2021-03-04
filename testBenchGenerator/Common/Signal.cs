@@ -19,7 +19,7 @@ namespace testBenchGenerator.Common
         private double lengthTime;
         private double[] freqs;
         private double fs;        
-        private double os;
+        private int os;
         private int fftLength;
         private int bitwidth;
         private double rms;
@@ -60,7 +60,7 @@ namespace testBenchGenerator.Common
             set { this.fs = value; }
         }        
 
-        public double OS
+        public int OS
         {
             get { return this.os; }
             set { this.os = value; }
@@ -130,15 +130,19 @@ namespace testBenchGenerator.Common
 
         public double ComputeSignalRMS()
         {
-            return Math.Sqrt(this.X.Average(c => c.Magnitude));
+            return 20 * Math.Log10(Math.Sqrt(this.X.Average(c => (c.Magnitude * c.Magnitude))));
         }
 
         protected void CreateTimeVector()
         {
-            int len = Convert.ToInt32(this.Length * this.Fs);
+            int len = Convert.ToInt32(this.LengthTime * this.Fs);
             this.TimeVector = new double[len];
             for (int k = 0; k < len; k++)
                 this.TimeVector[k] = k * (1 / this.Fs);
+        }
+
+        public virtual void Create()
+        {
         }
 
         public Signal()
@@ -149,8 +153,25 @@ namespace testBenchGenerator.Common
             this.fftLength = 512;
         }
 
-        public virtual void Create()
+        public Signal(double fs, int length, double lengthTime, int os, int fftLength, int bitwidth, double rms)
         {
+            this.Fs = fs;
+            this.Length = length;
+            this.LengthTime = lengthTime;
+            this.OS = os;
+            this.FFTLength = fftLength;
+            this.Bitwidth = bitwidth;
+            this.RMS = rms;
+        }
+
+        public Signal(double fs, int length, double lengthTime, int os, int fftLength, int bitwidth)
+        {
+            this.Fs = fs;
+            this.Length = length;
+            this.LengthTime = lengthTime;
+            this.OS = os;
+            this.FFTLength = fftLength;
+            this.Bitwidth = bitwidth;
         }
     }
 }

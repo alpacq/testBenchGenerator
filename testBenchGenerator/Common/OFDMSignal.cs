@@ -7,21 +7,15 @@ using System.Threading.Tasks;
 
 namespace testBenchGenerator.Common
 {
-    public class OFDMSignal : Signal
+    public class OFDMSignal : PhoffSignal
     {
-        private double phoff;
+        
         private string modulation;
         private double fsoff;
-        private double ofdmn;
+        private int ofdmn;
         private double distance;
         private int cpLength;
-        private int nSymbols;
-
-        public double Phoff
-        {
-            get { return this.phoff; }
-            set { this.phoff = value; }
-        }
+        private int nSymbols;        
 
         public string Modulation
         {
@@ -35,7 +29,7 @@ namespace testBenchGenerator.Common
             set { this.fsoff = value; }
         }
 
-        public double OFDMN
+        public int OFDMN
         {
             get { return this.ofdmn; }
             set { this.ofdmn = value; }
@@ -126,48 +120,49 @@ namespace testBenchGenerator.Common
             {
                 Complex[] cp = new Complex[this.CPLength];
                 for (int m = 0; m < this.CPLength; m++)
-                    cp[m] = fftShift[this.FFTLength - (m + 1)];
-                fft = new Complex[this.FFTLength + this.CPLength];
+                    cp[m] = fftShift[this.FFTLength - (this.CPLength + m)];
                 for (int m = 0; m < this.CPLength; m++)
-                    fft[m] = cp[m];
-                for (int m = 0; m < this.FFTLength; m++)
-                    fft[m + this.CPLength] = fftShift[m];
-
-                double[] ofdmI = new double[fft.Length];
-                double[] ofdmQ = new double[fft.Length];
-                for (int m = 0; m < fft.Length; m++)
-                {
-                    ofdmI[m] = fft[m].Real;
-                    ofdmQ[m] = fft[m].Imaginary;
-                }
-                return new Tuple<double[], double[]>(ofdmI, ofdmQ);
+                    fftShift[m] = cp[m];
+                for (int m = 0; m < (this.FFTLength - this.CPLength); m++)
+                    fftShift[m + this.CPLength] = fftShift[m];
             }
-            else
+            double[] ofdmI = new double[fftShift.Length];
+            double[] ofdmQ = new double[fftShift.Length];
+            for (int m = 0; m < fftShift.Length; m++)
             {
-                double[] ofdmI = new double[fftShift.Length];
-                double[] ofdmQ = new double[fftShift.Length];
-                for (int m = 0; m < fftShift.Length; m++)
-                {
-                    ofdmI[m] = fftShift[m].Real;
-                    ofdmQ[m] = fftShift[m].Imaginary;
-                }
-                return new Tuple<double[], double[]>(ofdmI, ofdmQ);
+                ofdmI[m] = fftShift[m].Real;
+                ofdmQ[m] = fftShift[m].Imaginary;
             }
+            return new Tuple<double[], double[]>(ofdmI, ofdmQ);
         }
 
         public override void Create()
         {
-            this.I = new double[this.NSymbols * this.FFTLength * 2];
-            this.Q = new double[this.NSymbols * this.FFTLength * 2];
-            for (int k = 0; k < this.NSymbols; k++)
+            //this.I = new double[this.NSymbols * this.FFTLength * 2];
+            //this.Q = new double[this.NSymbols * this.FFTLength * 2];
+            //for (int k = 0; k < this.NSymbols; k++)
+            //{
+            //    Tuple<double[], double[]> tp = this.CreateOFDMSymbol(k);
+            //    for (int m = 0; m < tp.Item1.Length; m++)
+            //    {
+            //        this.I[(k * 2 * this.FFTLength) + m] = tp.Item1[m];
+            //        this.I[(k * 2 * this.FFTLength) + m + tp.Item1.Length] = tp.Item1[m];
+            //        this.Q[(k * 2 * this.FFTLength) + m] = tp.Item2[m];
+            //        this.Q[(k * 2 * this.FFTLength) + m + tp.Item2.Length] = tp.Item2[m];
+            //    }
+            //}
+
+            this.I = new double[this.FFTLength * 2];
+            this.Q = new double[this.FFTLength * 2];
+            for(int k = 0; k < this.NSymbols; k++)
             {
                 Tuple<double[], double[]> tp = this.CreateOFDMSymbol(k);
-                for (int m = 0; m < tp.Item1.Length; m++)
+                for(int m = 0; m < this.FFTLength; m++)
                 {
-                    this.I[(k * 2 * this.FFTLength) + m] = tp.Item1[m];
-                    this.I[(k * 2 * this.FFTLength) + m + tp.Item1.Length] = tp.Item1[m];
-                    this.Q[(k * 2 * this.FFTLength) + m] = tp.Item2[m];
-                    this.Q[(k * 2 * this.FFTLength) + m + tp.Item2.Length] = tp.Item2[m];
+                    this.I[m] += tp.Item1[m];
+                    this.I[m + this.FFTLength] += tp.Item1[m];
+                    this.Q[m] += tp.Item2[m];
+                    this.Q[m + this.FFTLength] += tp.Item2[m];
                 }
             }
         }
@@ -176,6 +171,16 @@ namespace testBenchGenerator.Common
         {            
             this.NSymbols = 1;
             this.Distance = 1;
+        }
+
+        public OFDMSignal(double fs, int length, double lengthTime, int os, int fftLength, int bitwidth, double rms, double phoff = 0.0) : base(fs, length, lengthTime, os, fftLength, bitwidth, rms, phoff)
+        {
+
+        }
+
+        public OFDMSignal(double fs, int length, double lengthTime, int os, int fftLength, int bitwidth, double phoff = 0.0) : base(fs, length, lengthTime, os, fftLength, bitwidth, phoff)
+        {
+
         }
     }
 }

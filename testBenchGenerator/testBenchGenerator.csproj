@@ -116,6 +116,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Common\ConstSignal.cs" />
+    <Compile Include="Common\OFDMSignal.cs" />
+    <Compile Include="Common\PhoffSignal.cs" />
+    <Compile Include="Common\RampSignal.cs" />
+    <Compile Include="Common\Signal.cs" />
+    <Compile Include="Common\SineSignal.cs" />
+    <Compile Include="Common\ViewModelBase.cs" />
     <Compile Include="TestbenchGenerator\Model\Clock.cs" />
     <Compile Include="FIRDesigner\Model\FilterType.cs" />
     <Compile Include="FIRDesigner\Model\FIR.cs" />
@@ -132,6 +139,7 @@
     <Compile Include="WaveformDesignerAndAnalyzer\Model\Delimiter.cs" />
     <Compile Include="WaveformDesignerAndAnalyzer\Model\WaveformAnalyzer.cs" />
     <Compile Include="WaveformDesignerAndAnalyzer\Model\WaveformDesigner.cs" />
+    <Compile Include="WaveformDesignerAndAnalyzer\Model\WaveformProcessor.cs" />
     <Compile Include="WaveformDesignerAndAnalyzer\ViewModel\WaveformAnalyzerViewModel.cs" />
     <Compile Include="TestbenchGenerator\ViewModel\ClockViewModel.cs" />
     <Compile Include="FIRDesigner\ViewModel\FIRViewModel.cs" />
@@ -145,6 +153,7 @@
     <Compile Include="TestbenchGenerator\ViewModel\PortViewModel.cs" />
     <Compile Include="TestbenchGenerator\ViewModel\ResetViewModel.cs" />
     <Compile Include="WaveformDesignerAndAnalyzer\ViewModel\WaveformDesignerViewModel.cs" />
+    <Compile Include="WaveformDesignerAndAnalyzer\ViewModel\WaveformProcessorViewModel.cs" />
     <Compile Include="WaveformDesignerAndAnalyzer\View\AnalyzerView.xaml.cs">
       <DependentUpon>AnalyzerView.xaml</DependentUpon>
     </Compile>

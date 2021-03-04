@@ -8,17 +8,13 @@ using testBenchGenerator.Common;
 
 namespace testBenchGenerator.WaveformDesignerAndAnalyzer.Model
 {
-    public class WaveformAnalyzer
+    public class WaveformAnalyzer : WaveformProcessor
     {
         #region variables and fields
         private string[] dutLines;
-        private Radix radix;
-        private Delimiter delimiter;
         private string path;
-        private Signal signal;
         private Signal refSignal;
 
-        private string type;
         private double inputMag;
         private double linesIgnore;
         private double rmsEfs;
@@ -29,89 +25,10 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.Model
         private double dcReal;
         private double dcImag;
 
-        public Signal Signal
-        {
-            get { return this.signal; }
-            set { this.signal = value; }
-        }
-
         public Signal RefSignal
         {
             get { return this.refSignal; }
             set { this.refSignal = value; }
-        }
-
-        public double[] Freqs
-        {
-            get { return this.Signal.Freqs; }
-            set { this.Signal.Freqs = value; }
-        }
-
-        public Radix Radix
-        {
-            get { return this.radix; }
-            set { this.radix = value; }
-        }
-
-        public Delimiter Delimiter
-        {
-            get { return this.delimiter; }
-            set { this.delimiter = value; }
-        }
-
-        public string Type
-        {
-            get { return this.type; }
-            set { this.type = value; }
-        }
-
-        public double Fs
-        {
-            get { return this.Signal.Fs; }
-            set { this.Signal.Fs = value; }
-        }
-
-        public double Freq
-        {
-            get { return (this.Signal as SineSignal).Freq; }
-            set { (this.Signal as SineSignal).Freq = value; }
-        }
-
-        public double OS
-        {
-            get { return this.Signal.OS; }
-            set { this.Signal.OS = value; }
-        }
-
-        public int FFTLength
-        {
-            get { return this.Signal.FFTLength; }
-            set { this.Signal.FFTLength = value; }
-        }
-
-        //todo solve
-        //public double NSymbols
-        //{
-        //    get { return this.nSymbols; }
-        //    set { this.nSymbols = value; }
-        //}
-
-        public int Bitwidth
-        {
-            get { return this.Signal.Bitwidth; }
-            set { this.Signal.Bitwidth = value; }
-        }
-
-        public double RMS
-        {
-            get { return this.Signal.RMS; }
-            set { this.Signal.RMS = value; }
-        }
-
-        public int Length
-        {
-            get { return this.Signal.Length; }
-            set { this.Signal.Length = value; }
         }
 
         public double InputMag
@@ -168,24 +85,6 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.Model
             set { this.dcImag = value; }
         }
 
-        public double[] I
-        {
-            get { return this.Signal.I; }
-            set { this.Signal.I = value; }
-        }
-
-        public double[] Q
-        {
-            get { return this.Signal.Q; }
-            set { this.Signal.Q = value; }
-        }
-
-        public Complex[] X
-        {
-            get { return this.Signal.X; }
-            set { this.Signal.X = value; }
-        }
-
         public string Path
         {
             get { return this.path; }
@@ -198,7 +97,7 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.Model
             Complex[] data = this.X;
             MathNet.Numerics.IntegralTransforms.Fourier.Forward(data);
 
-            double freq = data.ToList().IndexOf(data.Max());
+            double freq = data.ToList().IndexOf(data.Max(c => c.Magnitude));
 
             freq /= fsSig;
 
@@ -233,15 +132,15 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.Model
             this.RefSignal.FFTLength = this.FFTLength;
             this.RefSignal.Length = this.Length;
             this.RefSignal.Bitwidth = this.Bitwidth;
-            this.RefSignal.RMS = this.Signal.ComputeSignalRMS();
+            this.RefSignal.RMS = this.Signal.RMS;
         }
 
         public void ReadFile()
         {
             if (this.Type.Contains("Sine"))
             {
-                this.Signal = new SineSignal();
-                this.RefSignal = new SineSignal();
+                this.Signal = new SineSignal(this.Fs, this.Length, this.LengthTime, this.OS, this.FFTLength, this.Bitwidth);
+                this.RefSignal = new SineSignal(this.Fs, this.Length, this.LengthTime, this.OS, this.FFTLength, this.Bitwidth);
             }
             else if (this.Type.Contains("OFDM"))
             {
@@ -280,6 +179,10 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.Model
                 this.X[k] = new Complex(this.I[k], this.Q[k]);
             }
 
+            this.Signal.ComputeFFT();
+
+            this.RMS = this.Signal.ComputeSignalRMS();
+
             double fsSig = this.Fs * this.OS;
 
             this.UpdateRef();
@@ -291,11 +194,12 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.Model
                 //todo estimate phoff;                
             }
 
-            this.Signal.ComputeFFT();
+            
         }
 
         public WaveformAnalyzer()
         {
+            this.Signal = new Signal();
         }
     }
 }

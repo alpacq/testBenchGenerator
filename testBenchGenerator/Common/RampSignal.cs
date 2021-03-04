@@ -24,5 +24,15 @@ namespace testBenchGenerator.Common
         {
 
         }
+
+        public RampSignal(double fs, int length, double lengthTime, int os, int fftLength, int bitwidth, double rms) : base(fs, length, lengthTime, os, fftLength, bitwidth, rms)
+        {
+
+        }
+
+        public RampSignal(double fs, int length, double lengthTime, int os, int fftLength, int bitwidth) : base(fs, length, lengthTime, os, fftLength, bitwidth)
+        {
+
+        }
     }
 }
