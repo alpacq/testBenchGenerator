@@ -81,7 +81,7 @@ namespace testBenchGenerator.Common
                         double[] cQ = new double[this.TimeVector.Length];
                         for (int m = 0; m < this.TimeVector.Length; m++)
                         {
-                            var theta = 2 * Math.PI * c * fSpac * this.TimeVector[m] + this.Phoff;
+                            var theta = 2 * Math.PI * c * fSpac * this.TimeVector[m] + (this.Phoff * Math.PI / 180.0);
                             cI[m] = Math.Cos(theta);
                             cQ[m] = Math.Sin(theta);
                         }

@@ -35,7 +35,7 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.ViewModel
             set { this.model.InputMag = value; OnPropertyChanged("InputMag"); }
         }
 
-        public double LinesIgnore
+        public int LinesIgnore
         {
             get { return this.model.LinesIgnore; }
             set { this.model.LinesIgnore = value; OnPropertyChanged("LinesIgnore"); }
@@ -117,6 +117,11 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.ViewModel
                         ptt += "Bitwidth cannot be negative or equal to zero.\n";
                         toRet = false;
                     }
+                    if(this.LinesIgnore < 0)
+                    {
+                        ptt += "Lines to ignore cannot be negative.\n";
+                        toRet = false;
+                    }
                 }
                 if (ptt.EndsWith("\n"))
                     ptt = ptt.Remove(ptt.Length - 2);
@@ -167,6 +172,7 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.ViewModel
             {
                 this.FPoints.Add(new DataPoint((this.Fs * i / this.Freqs.Length), this.Freqs[i]));
             }
+            OnPropertyChanged("Freq");
             OnPropertyChanged("RMS");
             OnPropertyChanged("IPoints");
             OnPropertyChanged("QPoints");

@@ -17,6 +17,8 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.Model
 
             this.Signal.ApplyGain();
             this.Signal.ComputeFFT();
+
+            this.Signal.Length = this.X.Length;
         }
 
         public void CreateAndSaveFile(string path)

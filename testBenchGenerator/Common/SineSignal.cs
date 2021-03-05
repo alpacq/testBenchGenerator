@@ -22,7 +22,7 @@ namespace testBenchGenerator.Common
             this.Q = new double[this.TimeVector.Length];
             for (int k = 0; k < this.TimeVector.Length; k++)
             {
-                var theta = 2 * Math.PI * this.Freq * this.TimeVector[k] + this.Phoff;
+                var theta = 2 * Math.PI * this.Freq * this.TimeVector[k] + (this.Phoff * Math.PI / 180.0);
                 this.I[k] = Math.Cos(theta);
                 this.Q[k] = Math.Sin(theta);
             }

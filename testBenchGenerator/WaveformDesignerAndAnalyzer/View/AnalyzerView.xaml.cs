@@ -257,7 +257,7 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.View
             dlg.Filter = "Text File|*.txt";
             dlg.Title = "Export Waveform";
             dlg.FileName = (this.wfdVM.Type.Contains("Sine") ? 
-                            ("sine_" + (this.wfdVM.Freq/1000000).ToString("f2").Replace(".", "p").Replace(",","p") + "_" + (this.wfdVM.Fs/1000000).ToString("f2").Replace(".","p").Replace(",", "p") + "_" + this.wfdVM.RMS.ToString().Replace(".", "p").Replace(",", "p") + "_" + (this.wfdVM.Length*1000).ToString().Replace(",", "p").Replace(".", "p") + "ms.txt") : 
+                            ("sine_" + (this.wfdVM.Freq/1000000).ToString("f2").Replace(".", "p").Replace(",","p") + "_" + (this.wfdVM.Fs/1000000).ToString("f2").Replace(".","p").Replace(",", "p") + "_" + this.wfdVM.RMS.ToString().Replace(".", "p").Replace(",", "p") + "_" + (this.wfdVM.LengthTime*1000).ToString().Replace(",", "p").Replace(".", "p") + "ms.txt") : 
                             "waveform.txt");
             dlg.ShowDialog();
 
@@ -332,42 +332,72 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.View
             this.wfdVM.Type = this.desType.SelectedItem.ToString();
             if(this.desType.SelectedItem.ToString().Contains("Sine"))
             {
-                this.desFreq.IsEnabled = true;
-                this.desPhoff.IsEnabled = true;
-                this.modType.IsEnabled = false;
-                this.desFsoff.IsEnabled = false;
-                this.desOFDMN.IsEnabled = false;
-                this.desFFTLength.IsEnabled = false;
-                this.desCPLength.IsEnabled = false;
-                this.desNSymbols.IsEnabled = false;
-                this.desOS.IsEnabled = false;
-                this.desDistance.IsEnabled = false;
+                this.desFreq.Visibility = Visibility.Visible;
+                this.desPhoff.Visibility = Visibility.Visible;
+                this.modType.Visibility = Visibility.Collapsed;
+                this.desFsoff.Visibility = Visibility.Collapsed;
+                this.desOFDMN.Visibility = Visibility.Collapsed;
+                this.desFFTLength.Visibility = Visibility.Collapsed;
+                this.desCPLength.Visibility = Visibility.Collapsed;
+                this.desNSymbols.Visibility = Visibility.Collapsed;
+                this.desOS.Visibility = Visibility.Collapsed;
+                this.desDistance.Visibility = Visibility.Collapsed;
+                this.df.Visibility = Visibility.Visible;
+                this.dpo.Visibility = Visibility.Visible;
+                this.dmod.Visibility = Visibility.Collapsed;
+                this.dfo.Visibility = Visibility.Collapsed;
+                this.dofdmn.Visibility = Visibility.Collapsed;
+                this.dfft.Visibility = Visibility.Collapsed;
+                this.dcp.Visibility = Visibility.Collapsed;
+                this.dns.Visibility = Visibility.Collapsed;
+                this.dos.Visibility = Visibility.Collapsed;
+                this.ddis.Visibility = Visibility.Collapsed;
             }
             else if(this.desType.SelectedItem.ToString().Contains("OFDM"))
             {
-                this.desFreq.IsEnabled = false;
-                this.desPhoff.IsEnabled = true;
-                this.modType.IsEnabled = true;
-                this.desFsoff.IsEnabled = true;
-                this.desOFDMN.IsEnabled = true;
-                this.desFFTLength.IsEnabled = true;
-                this.desCPLength.IsEnabled = true;
-                this.desNSymbols.IsEnabled = true;
-                this.desOS.IsEnabled = true;
-                this.desDistance.IsEnabled = true;
+                this.desFreq.Visibility = Visibility.Collapsed;
+                this.desPhoff.Visibility = Visibility.Visible;
+                this.modType.Visibility = Visibility.Visible;
+                this.desFsoff.Visibility = Visibility.Visible;
+                this.desOFDMN.Visibility = Visibility.Visible;
+                this.desFFTLength.Visibility = Visibility.Visible;
+                this.desCPLength.Visibility = Visibility.Visible;
+                this.desNSymbols.Visibility = Visibility.Visible;
+                this.desOS.Visibility = Visibility.Visible;
+                this.desDistance.Visibility = Visibility.Visible;
+                this.df.Visibility = Visibility.Collapsed;
+                this.dpo.Visibility = Visibility.Visible;
+                this.dmod.Visibility = Visibility.Visible;
+                this.dfo.Visibility = Visibility.Visible;
+                this.dofdmn.Visibility = Visibility.Visible;
+                this.dfft.Visibility = Visibility.Visible;
+                this.dcp.Visibility = Visibility.Visible;
+                this.dns.Visibility = Visibility.Visible;
+                this.dos.Visibility = Visibility.Visible;
+                this.ddis.Visibility = Visibility.Visible;
             }
             else
             {
-                this.desFreq.IsEnabled = false;
-                this.desPhoff.IsEnabled = false;
-                this.modType.IsEnabled = false;
-                this.desFsoff.IsEnabled = false;
-                this.desOFDMN.IsEnabled = false;
-                this.desFFTLength.IsEnabled = false;
-                this.desCPLength.IsEnabled = false;
-                this.desNSymbols.IsEnabled = false;
-                this.desOS.IsEnabled = false;
-                this.desDistance.IsEnabled = false;
+                this.desFreq.Visibility = Visibility.Collapsed;
+                this.desPhoff.Visibility = Visibility.Collapsed;
+                this.modType.Visibility = Visibility.Collapsed;
+                this.desFsoff.Visibility = Visibility.Collapsed;
+                this.desOFDMN.Visibility = Visibility.Collapsed;
+                this.desFFTLength.Visibility = Visibility.Collapsed;
+                this.desCPLength.Visibility = Visibility.Collapsed;
+                this.desNSymbols.Visibility = Visibility.Collapsed;
+                this.desOS.Visibility = Visibility.Collapsed;
+                this.desDistance.Visibility = Visibility.Collapsed;
+                this.df.Visibility = Visibility.Collapsed;
+                this.dpo.Visibility = Visibility.Collapsed;
+                this.dmod.Visibility = Visibility.Collapsed;
+                this.dfo.Visibility = Visibility.Collapsed;
+                this.dofdmn.Visibility = Visibility.Collapsed;
+                this.dfft.Visibility = Visibility.Collapsed;
+                this.dcp.Visibility = Visibility.Collapsed;
+                this.dns.Visibility = Visibility.Collapsed;
+                this.dos.Visibility = Visibility.Collapsed;
+                this.ddis.Visibility = Visibility.Collapsed;
             }
         }
 
