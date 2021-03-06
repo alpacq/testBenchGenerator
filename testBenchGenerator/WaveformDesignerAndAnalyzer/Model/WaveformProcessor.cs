@@ -141,6 +141,12 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.Model
             get { return this.Signal.X; }
             set { this.Signal.X = value; }
         }
+
+        public Complex[] FFT
+        {
+            get { return this.Signal.FFT; }
+            set { this.Signal.FFT = value; }
+        }
         #endregion
     }
 }

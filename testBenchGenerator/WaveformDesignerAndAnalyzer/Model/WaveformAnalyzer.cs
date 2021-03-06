@@ -104,57 +104,19 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.Model
             return freq;
         }
 
-        private Complex[] CrossCorrelation(Complex[] ffta, Complex[] fftb)
-        {
-            var conj = ffta.Select(i => new Complex(i.Real, (-1 * i.Imaginary))).ToArray();
-            conj = conj.Zip(fftb, (v1, v2) => Complex.Multiply(v1, v2)).ToArray();
-            MathNet.Numerics.IntegralTransforms.Fourier.Inverse(conj);
-            return conj;
-        }
-
-        private Tuple<double, int> CorrelationCoefficient(Complex[] ffta, Complex[] fftb)
-        {
-            var correlation = CrossCorrelation(ffta, fftb);
-            var seq = correlation.Select(i => i.Magnitude);
-            var maxCoeff = seq.Max();
-            int maxIndex = seq.ToList().IndexOf(maxCoeff);
-            return new Tuple<double, int>(maxCoeff, maxIndex);
-        }
-
         private double MeasurePhaseOffset()
         {
-            //Complex[] a = this.Signal.X;
-            //Complex[] b = this.RefSignal.X;
+            double[] dataAngle = new double[this.FFT.Length];
+            double threshold = this.Freqs.Max() / 1000;
 
-            ////for(int m = 0; m < this.Signal.X.Length; m++)
-            ////{
-            ////    a[m] = this.Signal.X[m];
-            ////    a[m + this.Signal.X.Length] = new Complex(0, 0);
-            ////}
-            ////for (int m = 0; m < this.RefSignal.X.Length; m++)
-            ////{
-            ////    b[m] = this.RefSignal.X[m];
-            ////    b[m + this.RefSignal.X.Length] = new Complex(0, 0);
-            ////}
+            for (int m = 0; m < this.Freqs.Length; m++)
+                if (this.Freqs[m] < threshold)
+                    this.FFT[m] = new Complex(0, 0);
 
-            //MathNet.Numerics.IntegralTransforms.Fourier.Forward(b);
-            //MathNet.Numerics.IntegralTransforms.Fourier.Forward(a);
-            //var cc = this.CorrelationCoefficient(a, b);
-            //double ind = cc.Item2;
-            //double time = ind / this.Fs;
-            //double off = (time * this.Freq) % (2 * Math.PI);
-            ////return Math.Acos(ind) * 180 / Math.PI;
-            //return off * 180 / Math.PI;
-            Complex[] a = this.Signal.X;
-            Complex[] b = this.RefSignal.X;
-            MathNet.Numerics.IntegralTransforms.Fourier.Forward(b);
-            MathNet.Numerics.IntegralTransforms.Fourier.Forward(a);
+            for (int m = 0; m < dataAngle.Length; m++)
+                dataAngle[m] = Math.Atan2(this.FFT[m].Imaginary, this.FFT[m].Real);
 
-            int ind = this.Freqs.ToList().IndexOf(this.Freqs.Max());
-
-            Complex max = a[ind] / b[ind];
-
-            return Math.Atan2(max.Imaginary, max.Real) * 180 / Math.PI;
+            return dataAngle.Max() * 180 / Math.PI;
         }
 
         private void UpdateRef()

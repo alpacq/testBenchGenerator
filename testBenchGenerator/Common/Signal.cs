@@ -13,6 +13,7 @@ namespace testBenchGenerator.Common
         private double[] i;
         private double[] q;
         private Complex[] x;
+        private Complex[] fft;
         private double[] timeVector;
         private int length;
         private double gain;
@@ -40,6 +41,12 @@ namespace testBenchGenerator.Common
         {
             get { return this.x; }
             set { this.x = value; }
+        }
+
+        public Complex[] FFT
+        {
+            get { return this.fft; }
+            set { this.fft = value; }
         }
 
         public double[] TimeVector
@@ -121,11 +128,11 @@ namespace testBenchGenerator.Common
 
         public void ComputeFFT()
         {
-            Complex[] data = this.X;
-            MathNet.Numerics.IntegralTransforms.Fourier.Forward(data);
-            this.Freqs = new double[data.Length];
-            for (int i = 0; i < data.Length; i++)
-                this.Freqs[i] = data[i].Magnitude;
+            this.FFT = this.X;
+            MathNet.Numerics.IntegralTransforms.Fourier.Forward(this.FFT);
+            this.Freqs = new double[this.FFT.Length];
+            for (int i = 0; i < this.FFT.Length; i++)
+                this.Freqs[i] = this.FFT[i].Magnitude;
         }
 
         public double ComputeSignalRMS()
