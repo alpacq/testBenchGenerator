@@ -174,6 +174,8 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.ViewModel
             }
             OnPropertyChanged("Freq");
             OnPropertyChanged("RMS");
+            OnPropertyChanged("RMSElsbs");
+            OnPropertyChanged("RMSEFs");
             OnPropertyChanged("IPoints");
             OnPropertyChanged("QPoints");
             OnPropertyChanged("FPoints");

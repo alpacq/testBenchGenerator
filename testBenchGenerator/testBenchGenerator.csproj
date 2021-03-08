@@ -126,6 +126,7 @@
     <Compile Include="TestbenchGenerator\Model\Clock.cs" />
     <Compile Include="FIRDesigner\Model\FilterType.cs" />
     <Compile Include="FIRDesigner\Model\FIR.cs" />
+    <Compile Include="TestbenchGenerator\Model\ModuleFile.cs" />
     <Compile Include="TestbenchGenerator\Model\PolConverter.cs" />
     <Compile Include="TestbenchGenerator\Model\PortSel.cs" />
     <Compile Include="TestbenchGenerator\Model\TestCase.cs" />
@@ -136,6 +137,7 @@
     <Compile Include="Common\Radix.cs" />
     <Compile Include="TestbenchGenerator\Model\Reset.cs" />
     <Compile Include="FIRDesigner\Model\WindowType.cs" />
+    <Compile Include="TestbenchGenerator\Model\VHDLModuleFile.cs" />
     <Compile Include="WaveformDesignerAndAnalyzer\Model\Delimiter.cs" />
     <Compile Include="WaveformDesignerAndAnalyzer\Model\WaveformAnalyzer.cs" />
     <Compile Include="WaveformDesignerAndAnalyzer\Model\WaveformDesigner.cs" />
@@ -197,7 +199,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="TestbenchGenerator\Model\ModuleFile.cs" />
+    <Compile Include="TestbenchGenerator\Model\VerilogModuleFile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

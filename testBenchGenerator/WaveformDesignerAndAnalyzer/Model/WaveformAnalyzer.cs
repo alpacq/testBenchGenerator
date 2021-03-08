@@ -14,6 +14,7 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.Model
         private string[] dutLines;
         private string path;
         private Signal refSignal;
+        private Signal errorSignal;
 
         private double inputMag;
         private int linesIgnore;
@@ -29,6 +30,12 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.Model
         {
             get { return this.refSignal; }
             set { this.refSignal = value; }
+        }
+
+        public Signal ErrorSignal
+        {
+            get { return this.errorSignal; }
+            set { this.errorSignal = value; }
         }
 
         public double InputMag
@@ -135,6 +142,31 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.Model
             this.RefSignal.ApplyGain();
         }
 
+        private void CreateErrorSignal()
+        {
+            this.ErrorSignal = new Signal(this.Fs, this.Length, this.LengthTime, this.OS, this.FFTLength, this.Bitwidth);
+            this.ErrorSignal.I = new double[this.I.Length];
+            this.ErrorSignal.Q = new double[this.Q.Length];
+            this.ErrorSignal.X = new Complex[this.X.Length];
+            for(int m = 0; m < this.I.Length; m++)
+            {
+                this.ErrorSignal.I[m] = this.I[m] - (this.RefSignal.I[m] / (Math.Pow(2, this.Bitwidth - 1)));
+                this.ErrorSignal.Q[m] = this.Q[m] - (this.RefSignal.Q[m] / (Math.Pow(2, this.Bitwidth - 1)));
+                this.ErrorSignal.X[m] = new Complex(this.ErrorSignal.I[m], this.ErrorSignal.Q[m]);
+            }
+        }
+
+        private void ComputeErrors()
+        {
+            double[] errorMag = new double[this.ErrorSignal.X.Length];
+
+            for (int m = 0; m < errorMag.Length; m++)
+                errorMag[m] = Math.Pow(this.ErrorSignal.X[m].Magnitude, 2);
+
+            this.RMSElsbs = Math.Sqrt(errorMag.ToList().Average());
+            this.RMSEFs = 20 * Math.Log10(this.RMSElsbs / (Math.Pow(2, this.Bitwidth)));
+        }
+
         public void ReadFile()
         {
             if (this.Type.Contains("Sine"))
@@ -189,12 +221,13 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.Model
             {               
                 this.Freq = this.EstimateSineFrequency(fsSig);
                 (this.RefSignal as SineSignal).Freq = this.Freq;
-                this.CreateRefSignal();
                 this.Phoff = this.MeasurePhaseOffset();
                 (this.RefSignal as SineSignal).Phoff = this.Phoff;                
             }
 
             this.CreateRefSignal();
+            this.CreateErrorSignal();
+            this.ComputeErrors();
         }
 
         public WaveformAnalyzer()

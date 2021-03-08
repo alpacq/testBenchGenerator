@@ -153,7 +153,7 @@ namespace testBenchGenerator.TestbenchGenerator.ViewModel
         {            
             if (modulePath != null && modulePath != String.Empty)
             {
-                this.ModuleFile = new ModuleFileViewModel(new ModuleFile(modulePath));
+                this.ModuleFile = new ModuleFileViewModel(new VerilogModuleFile(modulePath));
                 this.OnPropertyChanged("Clocks");
                 this.OnPropertyChanged("Resets");
                 this.OnPropertyChanged("Inputs");
