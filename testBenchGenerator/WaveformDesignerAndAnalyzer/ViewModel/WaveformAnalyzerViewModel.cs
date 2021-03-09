@@ -32,13 +32,13 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.ViewModel
         public double InputMag
         {
             get { return this.model.InputMag; }
-            set { this.model.InputMag = value; OnPropertyChanged("InputMag"); }
+            set { this.model.InputMag = value; OnPropertyChanged("InputMag"); this.CanDosRecompute(); }
         }
 
         public int LinesIgnore
         {
             get { return this.model.LinesIgnore; }
-            set { this.model.LinesIgnore = value; OnPropertyChanged("LinesIgnore"); }
+            set { this.model.LinesIgnore = value; OnPropertyChanged("LinesIgnore"); this.CanDosRecompute(); }
         }
 
         public double RMSEFs
@@ -51,12 +51,6 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.ViewModel
         {
             get { return this.model.RMSElsbs; }
             set { this.model.RMSElsbs = value; OnPropertyChanged("RMSElsbs"); }
-        }
-
-        public double RMSEc
-        {
-            get { return this.model.RMSEc; }
-            set { this.model.RMSEc = value; OnPropertyChanged("RMSEc"); }
         }
 
         public double PRMSE
@@ -109,7 +103,7 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.ViewModel
                     }
                     if (this.Fs <= 0)
                     {
-                        ptt += "Sampling frequency cannot be less or equal to zero.\n";
+                        ptt += "Sampling frequency cannot be negative or equal to zero.\n";
                         toRet = false;
                     }
                     if (this.Bitwidth <= 0)
@@ -120,6 +114,11 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.ViewModel
                     if(this.LinesIgnore < 0)
                     {
                         ptt += "Lines to ignore cannot be negative.\n";
+                        toRet = false;
+                    }
+                    if(this.InputMag <= 0)
+                    {
+                        ptt += "Input magnitude cannot be negative or equal to zero.\n";
                         toRet = false;
                     }
                 }
@@ -171,14 +170,24 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.ViewModel
             for (int i = 0; i < this.Freqs.Length; i++)
             {
                 this.FPoints.Add(new DataPoint((this.Fs * i / this.Freqs.Length), this.Freqs[i]));
-            }
-            OnPropertyChanged("Freq");
-            OnPropertyChanged("RMS");
-            OnPropertyChanged("RMSElsbs");
-            OnPropertyChanged("RMSEFs");
+            }            
             OnPropertyChanged("IPoints");
             OnPropertyChanged("QPoints");
             OnPropertyChanged("FPoints");
+        }
+
+        public void Analyze()
+        {
+            this.model.AnalyzeSignal();
+            OnPropertyChanged("Freq");
+            OnPropertyChanged("Phoff");
+            OnPropertyChanged("RMS");
+            OnPropertyChanged("RMSElsbs");
+            OnPropertyChanged("RMSEFs");
+            OnPropertyChanged("PRMSE");
+            OnPropertyChanged("GainE");
+            OnPropertyChanged("DCReal");
+            OnPropertyChanged("DCImag");
         }
     }
 }

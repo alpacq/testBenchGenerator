@@ -20,7 +20,6 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.Model
         private int linesIgnore;
         private double rmsEfs;
         private double rmsElsbs;
-        private double rmsEc;
         private double pRmsE;
         private double gainE;
         private double dcReal;
@@ -60,12 +59,6 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.Model
         {
             get { return this.rmsElsbs; }
             set { this.rmsElsbs = value; }
-        }
-
-        public double RMSEc
-        {
-            get { return this.rmsEc; }
-            set { this.rmsEc = value; }
         }
 
         public double PRMSE
@@ -126,6 +119,29 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.Model
             return dataAngle.Max() * 180 / Math.PI;
         }
 
+        private void Unwrap(double[] ph)
+        {
+            double[] diffs = new double[ph.Length - 1];
+            double[] diffsPi = new double[ph.Length - 1];
+            double[] phCorr = new double[ph.Length - 1];
+            double[] acc = new double[ph.Length - 1];
+            for (int m = 0; m < diffs.Length; m++)
+            {
+                diffs[m] = ph[m + 1] - ph[m];
+                diffsPi[m] = (diffs[m] + Math.PI) - Math.Floor((diffs[m] + Math.PI) / (2 * Math.PI)) * (2 * Math.PI) - Math.PI;
+                if (diffsPi[m] == ((-1) * Math.PI) && diffs[m] > 0)
+                    diffsPi[m] = Math.PI;
+                phCorr[m] = diffsPi[m] - diffs[m];
+                if (Math.Abs(diffs[m]) < Math.PI)
+                    phCorr[m] = 0;
+            }
+            acc[0] = phCorr[0];
+            for (int m = 1; m < acc.Length; m++)
+                acc[m] = acc[m - 1] + phCorr[m];
+            for (int m = 1; m < ph.Length; m++)
+                ph[m] += acc[m - 1];
+        }
+
         private void UpdateRef()
         {
             this.RefSignal.Fs = this.Fs;
@@ -165,6 +181,36 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.Model
 
             this.RMSElsbs = Math.Sqrt(errorMag.ToList().Average());
             this.RMSEFs = 20 * Math.Log10(this.RMSElsbs / (Math.Pow(2, this.Bitwidth)));
+
+            double[] phaseAngsSig = new double[this.I.Length];
+            double[] phaseAngsRef = new double[this.RefSignal.I.Length];
+
+            for (int m = 0; m < phaseAngsSig.Length; m++)
+                phaseAngsSig[m] = Math.Atan2(this.Q[m], this.I[m]);
+
+            for (int m = 0; m < phaseAngsRef.Length; m++)
+                phaseAngsRef[m] = Math.Atan2(this.RefSignal.Q[m], this.RefSignal.I[m]);
+
+            this.Unwrap(phaseAngsSig);
+            this.Unwrap(phaseAngsRef);
+
+            double[] phaseError = new double[this.I.Length];
+
+            for (int m = 0; m < phaseError.Length; m++)
+                phaseError[m] = phaseAngsSig[m] - phaseAngsRef[m];
+
+            this.PRMSE = Math.Sqrt(phaseError.Select(pe => Math.Pow((Math.Abs(pe * 180 / Math.PI)), 2)).Average());
+
+            double[] mags = new double[this.I.Length];
+            for (int m = 0; m < mags.Length; m++)
+                mags[m] = (this.I[m] * this.I[m]) + (this.Q[m] * this.Q[m]);
+
+            double actual = mags.Select(x => Math.Sqrt(x)).Average() * Math.Pow(2, this.Bitwidth - 1);
+
+            this.GainE = 20 * Math.Log10(actual / this.InputMag);
+
+            this.DCReal = 20 * Math.Log10(Math.Abs(this.ErrorSignal.I.Average()) / Math.Pow(2, (this.Bitwidth - 1)));
+            this.DCImag = 20 * Math.Log10(Math.Abs(this.ErrorSignal.Q.Average()) / Math.Pow(2, (this.Bitwidth - 1)));
         }
 
         public void ReadFile()
@@ -211,18 +257,21 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.Model
                 this.X[k] = new Complex(this.I[k], this.Q[k]);
             }
 
-            this.Signal.ComputeFFT();
+            this.Signal.ComputeFFT();            
+        }
 
+        public void AnalyzeSignal()
+        {
             this.RMS = this.Signal.ComputeSignalRMS();
 
-            double fsSig = this.Fs * this.OS;            
+            double fsSig = this.Fs * this.OS;
 
             if (this.Type.Contains("Sine"))
-            {               
+            {
                 this.Freq = this.EstimateSineFrequency(fsSig);
                 (this.RefSignal as SineSignal).Freq = this.Freq;
                 this.Phoff = this.MeasurePhaseOffset();
-                (this.RefSignal as SineSignal).Phoff = this.Phoff;                
+                (this.RefSignal as SineSignal).Phoff = this.Phoff;
             }
 
             this.CreateRefSignal();

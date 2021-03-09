@@ -28,15 +28,19 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.View
         private WaveformAnalyzerViewModel wfaVM;
         private BackgroundWorker bwD;
         private BackgroundWorker bwA;
+        private BackgroundWorker bwAA;
         public AnalyzerView()
         {
             InitializeComponent();
             this.bwD = new BackgroundWorker();
             this.bwA = new BackgroundWorker();
+            this.bwAA = new BackgroundWorker();
             this.bwD.DoWork += BwD_DoWork;
             this.bwA.DoWork += BwA_DoWork;
+            this.bwAA.DoWork += BwAA_DoWork;
             this.bwD.RunWorkerCompleted += BwD_RunWorkerCompleted;
             this.bwA.RunWorkerCompleted += BwA_RunWorkerCompleted;
+            this.bwAA.RunWorkerCompleted += BwAA_RunWorkerCompleted;
             this.wfdVM = new WaveformDesignerViewModel(new WaveformDesigner());
             this.wfaVM = new WaveformAnalyzerViewModel(new WaveformAnalyzer());
             this.designer.DataContext = this.wfdVM;
@@ -53,6 +57,18 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.View
             this.wfdF.ResetAllAxes();
             this.splashD.Visibility = Visibility.Hidden;
             this.splashA.Visibility = Visibility.Hidden;
+            this.splashAA.Visibility = Visibility.Hidden;
+        }
+
+        private void BwAA_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            this.splashAA.Visibility = Visibility.Hidden;
+            this.anInfoBlock.Text = DateTime.Now.ToLongTimeString() + " Waveform analyzed.";
+        }
+
+        private void BwAA_DoWork(object sender, DoWorkEventArgs e)
+        {
+            this.wfaVM.Analyze();
         }
 
         private void BwA_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -62,6 +78,9 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.View
             this.wfaF.ResetAllAxes();
             this.splashA.Visibility = Visibility.Hidden;
             this.anInfoBlock.Text = DateTime.Now.ToLongTimeString() + " Waveform imported successfully.";
+            this.splashAA.Visibility = Visibility.Visible;
+            this.bwAA.RunWorkerAsync();
+
         }
 
         private void BwD_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)

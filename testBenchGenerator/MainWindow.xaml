@@ -11,17 +11,17 @@
         mc:Ignorable="d"
         Title="FPGA Developer Tools" WindowStartupLocation="CenterScreen" Icon="ide.ico" SizeChanged="Window_SizeChanged">
     <Grid>
-        <TabControl Grid.Row="1" x:Name="tab" SelectionChanged="tab_SelectionChanged">
-            <TabItem Header="FIR Designer">
-                <vfir:FIRView x:Name="firView" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-            </TabItem>
-            
+        <TabControl Grid.Row="1" x:Name="tab" SelectionChanged="tab_SelectionChanged">           
             <TabItem Header="Testbench Generator">
                 <vtbg:GeneratorView x:Name="genView" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
             </TabItem>
 
             <TabItem Header="Waveform designer &amp; analyzer">
                 <vwfda:AnalyzerView x:Name="anView" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+            </TabItem>
+
+            <TabItem Header="FIR Designer">
+                <vfir:FIRView x:Name="firView" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
             </TabItem>
         </TabControl>        
 

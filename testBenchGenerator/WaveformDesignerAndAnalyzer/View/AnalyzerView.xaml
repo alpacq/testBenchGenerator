@@ -238,11 +238,11 @@
                 <TextBlock Grid.Row="9" Grid.Column="0" Text="Delimiter" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
 
                 <TextBlock Grid.Row="0" Grid.Column="2" Text="Estimated frequency [Hz]" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
-                <TextBlock Grid.Row="1" Grid.Column="2" Text="RMS [dBFs]" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
-                <TextBlock Grid.Row="2" Grid.Column="2" Text="RMS error [dBFs]" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
-                <TextBlock Grid.Row="3" Grid.Column="2" Text="RMS error [lsbs]" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
-                <TextBlock Grid.Row="4" Grid.Column="2" Text="RMS error [dBc]" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
-                <TextBlock Grid.Row="5" Grid.Column="2" Text="Phase RMS error [deg]" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock Grid.Row="1" Grid.Column="2" Text="Phase offset [°]" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock Grid.Row="2" Grid.Column="2" Text="RMS [dBFs]" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock Grid.Row="3" Grid.Column="2" Text="RMS error [dBFs]" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock Grid.Row="4" Grid.Column="2" Text="RMS error [lsbs]" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>                
+                <TextBlock Grid.Row="5" Grid.Column="2" Text="Phase RMS error [°]" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
                 <TextBlock Grid.Row="6" Grid.Column="2" Text="Gain error [dB]" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
                 <TextBlock Grid.Row="7" Grid.Column="2" Text="DC bias real [dBFs]" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
                 <TextBlock Grid.Row="8" Grid.Column="2" Text="DC bias imag [dBFs]" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
@@ -261,15 +261,15 @@
                 <ComboBox x:Name="anRadix" Grid.Row="8" Grid.Column="1" ItemsSource="{Binding Radixes}" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Margin="10,0" SelectionChanged="anRadix_SelectionChanged"/>
                 <ComboBox x:Name="anDel" Grid.Row="9" Grid.Column="1" ItemsSource="{Binding Delimiters}" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Margin="10,0" SelectionChanged="anDel_SelectionChanged"/>
 
-                <TextBox Grid.Row="0" Grid.Column="3" Text="{Binding Freq}" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Margin="10,0" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonUp="TextBox_PreviewMouseLeftButtonUp"/>
-                <TextBox Grid.Row="1" Grid.Column="3" Text="{Binding RMS}" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Margin="10,0" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonUp="TextBox_PreviewMouseLeftButtonUp"/>
-                <TextBox Grid.Row="2" Grid.Column="3" Text="{Binding RMSEFs}" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Margin="10,0" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonUp="TextBox_PreviewMouseLeftButtonUp"/>
-                <TextBox Grid.Row="3" Grid.Column="3" Text="{Binding RMSElsbs}" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Margin="10,0" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonUp="TextBox_PreviewMouseLeftButtonUp"/>
-                <TextBox Grid.Row="4" Grid.Column="3" Text="{Binding RMSEc}" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Margin="10,0" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonUp="TextBox_PreviewMouseLeftButtonUp"/>
-                <TextBox Grid.Row="5" Grid.Column="3" Text="{Binding PRMSE}" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Margin="10,0" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonUp="TextBox_PreviewMouseLeftButtonUp"/>
-                <TextBox Grid.Row="6" Grid.Column="3" Text="{Binding GainE}" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Margin="10,0" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonUp="TextBox_PreviewMouseLeftButtonUp"/>
-                <TextBox Grid.Row="7" Grid.Column="3" Text="{Binding DCReal}" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Margin="10,0" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonUp="TextBox_PreviewMouseLeftButtonUp"/>
-                <TextBox Grid.Row="8" Grid.Column="3" Text="{Binding DCImag}" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Margin="10,0" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonUp="TextBox_PreviewMouseLeftButtonUp"/>
+                <TextBox Grid.Row="0" Grid.Column="3" Text="{Binding Freq, StringFormat={}{0:0.####################}}" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Margin="10,0" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonUp="TextBox_PreviewMouseLeftButtonUp"/>
+                <TextBox Grid.Row="1" Grid.Column="3" Text="{Binding Phoff, StringFormat={}{0:0.####################}}" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Margin="10,0" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonUp="TextBox_PreviewMouseLeftButtonUp"/>
+                <TextBox Grid.Row="2" Grid.Column="3" Text="{Binding RMS, StringFormat={}{0:0.####################}}" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Margin="10,0" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonUp="TextBox_PreviewMouseLeftButtonUp"/>
+                <TextBox Grid.Row="3" Grid.Column="3" Text="{Binding RMSEFs, StringFormat={}{0:0.####################}}" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Margin="10,0" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonUp="TextBox_PreviewMouseLeftButtonUp"/>
+                <TextBox Grid.Row="4" Grid.Column="3" Text="{Binding RMSElsbs, StringFormat={}{0:0.####################}}" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Margin="10,0" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonUp="TextBox_PreviewMouseLeftButtonUp"/>                
+                <TextBox Grid.Row="5" Grid.Column="3" Text="{Binding PRMSE, StringFormat={}{0:0.####################}}" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Margin="10,0" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonUp="TextBox_PreviewMouseLeftButtonUp"/>
+                <TextBox Grid.Row="6" Grid.Column="3" Text="{Binding GainE, StringFormat={}{0:0.####################}}" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Margin="10,0" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonUp="TextBox_PreviewMouseLeftButtonUp"/>
+                <TextBox Grid.Row="7" Grid.Column="3" Text="{Binding DCReal, StringFormat={}{0:0.####################}}" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Margin="10,0" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonUp="TextBox_PreviewMouseLeftButtonUp"/>
+                <TextBox Grid.Row="8" Grid.Column="3" Text="{Binding DCImag, StringFormat={}{0:0.####################}}" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Margin="10,0" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonUp="TextBox_PreviewMouseLeftButtonUp"/>
 
                 <StackPanel Grid.Row="9" Grid.Column="2" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="{Binding ProblemToolTip}" ToolTipService.IsEnabled="{Binding CanImportN}">
                     <Button x:Name="import" Content="Import" Width="80" Grid.Row="9" Grid.ColumnSpan="4" VerticalAlignment="Center" HorizontalAlignment="Center" Click="import_Click" IsEnabled="{Binding CanImport}"/>
@@ -278,6 +278,7 @@
             </Grid>
 
             <TextBox Grid.RowSpan="2" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" x:Name="splashA" Text="Reading..." Background="LightBlue" Width="100" Height="30" BorderBrush="ForestGreen" BorderThickness="1"/>
+            <TextBox Grid.RowSpan="2" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" x:Name="splashAA" Text="Analyzing..." Background="LightBlue" Width="100" Height="30" BorderBrush="ForestGreen" BorderThickness="1"/>
 
         </Grid>
 

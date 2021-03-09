@@ -121,7 +121,7 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.ViewModel
                 {
                     if(this.Fs <= 0)
                     {
-                        ptt += "Sampling frequency cannot be less or equal to zero.\n";
+                        ptt += "Sampling frequency cannot be negative or equal to zero.\n";
                         toRet = false;
                     }
                     if(this.LengthTime <= 0)
