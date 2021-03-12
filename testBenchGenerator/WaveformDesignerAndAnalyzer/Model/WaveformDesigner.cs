@@ -19,6 +19,11 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.Model
             this.Signal.ComputeFFT();
 
             this.Signal.Length = this.X.Length;
+            double[] mags = new double[this.I.Length];
+            for (int m = 0; m < mags.Length; m++)
+                mags[m] = (this.I[m] * this.I[m]) + (this.Q[m] * this.Q[m]);
+
+            this.InputMag = mags.Select(x => Math.Sqrt(x)).Average() / (Math.Pow(2, (this.Bitwidth - 1)));             
         }
 
         public void CreateAndSaveFile(string path)

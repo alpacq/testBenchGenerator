@@ -9,7 +9,7 @@ using testBenchGenerator.TestbenchGenerator.Model;
 
 namespace testBenchGenerator.TestbenchGenerator.ViewModel
 {
-    public class GeneratorViewModel : ViewModelBase
+    public class GeneratorViewModel : ViewModelBase, IGeneratable
     {
         private ModuleFileViewModel moduleFile;
         private TestCaseViewModel selectedTC;
@@ -153,7 +153,10 @@ namespace testBenchGenerator.TestbenchGenerator.ViewModel
         {            
             if (modulePath != null && modulePath != String.Empty)
             {
-                this.ModuleFile = new ModuleFileViewModel(new VerilogModuleFile(modulePath));
+                if (modulePath.EndsWith(".sv") || modulePath.EndsWith(".v"))
+                    this.ModuleFile = new VerilogModuleFileViewModel(new VerilogModuleFile(modulePath));
+                else if (modulePath.EndsWith(".vhd"))
+                    this.ModuleFile = new VHDLModuleFileViewModel(new VHDLModuleFile(modulePath));
                 this.OnPropertyChanged("Clocks");
                 this.OnPropertyChanged("Resets");
                 this.OnPropertyChanged("Inputs");
@@ -165,9 +168,13 @@ namespace testBenchGenerator.TestbenchGenerator.ViewModel
             this.OnPropertyChanged("CanGenerate"); this.OnPropertyChanged("CanGenerateN");
         }
 
-        public bool GenerateFile()
+        public bool Generate()
         {
-            string tbFilePath = this.ModuleFile.Path.Replace(".sv", "_tb.sv").Replace(".v", "_tb.sv");
+            string tbFilePath = String.Empty;
+            if (this.ModuleFile is VerilogModuleFileViewModel)
+                tbFilePath = this.ModuleFile.Path.Replace(".sv", "_tb.sv").Replace(".v", "_tb.sv");
+            else
+                tbFilePath = this.ModuleFile.Path.Replace(".vhd", "_tb.sv");
 
             FileGen file = new FileGen(this.ModuleFile.ModuleFile, tbFilePath);
 

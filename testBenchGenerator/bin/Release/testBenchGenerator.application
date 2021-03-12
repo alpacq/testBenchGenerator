@@ -7,14 +7,14 @@
     <framework targetVersion="4.7.2" profile="Full" supportedRuntime="4.0.30319" />
   </compatibleFrameworks>
   <dependency>
-    <dependentAssembly dependencyType="install" codebase="testBenchGenerator.exe.manifest" size="6435">
+    <dependentAssembly dependencyType="install" codebase="testBenchGenerator.exe.manifest" size="7088">
       <assemblyIdentity name="testBenchGenerator.exe" version="1.0.0.4" publicKeyToken="0000000000000000" language="en" processorArchitecture="msil" type="win32" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>lPdcfSYpEG2rc2O/NHRTI213MMuuwpykXakT4Z+geeE=</dsig:DigestValue>
+        <dsig:DigestValue>TqjhidhE5Qhv85xji+Fof4SRe/G+0UZEvn/gQp9+0Iw=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

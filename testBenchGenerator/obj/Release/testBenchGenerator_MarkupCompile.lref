@@ -1,8 +1,8 @@
-﻿
+﻿C:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\obj\Release\GeneratedInternalTypeHelper.g.cs
 
 FC:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\MainWindow.xaml;;
-FC:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\View\AnalyzerView.xaml;;
-FC:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\View\FIRView.xaml;;
-FC:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\View\GeneratorView.xaml;;
-FC:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\View\NewTCView.xaml;;
+FC:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\WaveformDesignerAndAnalyzer\View\AnalyzerView.xaml;;
+FC:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\FIRDesigner\View\FIRView.xaml;;
+FC:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\TestbenchGenerator\View\GeneratorView.xaml;;
+FC:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\TestbenchGenerator\View\NewTCView.xaml;;
 

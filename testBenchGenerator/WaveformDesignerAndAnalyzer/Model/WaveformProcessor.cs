@@ -15,6 +15,7 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.Model
         private Delimiter delimiter;
         private Signal signal;
         private string type;
+        private double inputMag;
 
         public Signal Signal
         {
@@ -146,6 +147,12 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.Model
         {
             get { return this.Signal.FFT; }
             set { this.Signal.FFT = value; }
+        }
+
+        public double InputMag
+        {
+            get { return this.inputMag; }
+            set { this.inputMag = value; }
         }
         #endregion
     }

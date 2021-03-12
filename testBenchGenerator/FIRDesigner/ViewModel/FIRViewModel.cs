@@ -11,7 +11,7 @@ using testBenchGenerator.FIRDesigner.Model;
 
 namespace testBenchGenerator.FIRDesigner.ViewModel
 {
-    public class FIRViewModel : ViewModelBase
+    public class FIRViewModel : ViewModelBase, IDesignable, IExportable
     {
         private FIR fir;
         private string problemToolTip;
@@ -161,7 +161,7 @@ namespace testBenchGenerator.FIRDesigner.ViewModel
             }
         }
 
-        public bool CanUpdate
+        public bool CanDesign
         {
             get
             {
@@ -198,7 +198,7 @@ namespace testBenchGenerator.FIRDesigner.ViewModel
 
         public bool CanUpdateN
         {
-            get { return !this.CanUpdate; }
+            get { return !this.CanDesign; }
         }
 
         public bool CanExport
@@ -284,9 +284,9 @@ namespace testBenchGenerator.FIRDesigner.ViewModel
             OnPropertyChanged("CanUpdate");
         }
 
-        public void Update()
+        public void Design()
         {
-            if(this.CanUpdate)
+            if(this.CanDesign)
                 this.FIR.Update();
             this.WinRespPoints = new List<DataPoint>();
             this.WinChartPoints = new List<DataPoint>();
@@ -327,6 +327,24 @@ namespace testBenchGenerator.FIRDesigner.ViewModel
                 OnPropertyChanged("WinChartPoints");
                 OnPropertyChanged("WinRespPoints");
             }
+        }
+
+        public void Export(string path)
+        {
+            string[] data = new string[3];
+            data[0] = "Filter Order: " + this.Length + " Sampling Frequency (Hz): " + this.Fs.ToString("F6") + " Cut-Off Frequency Lo (Hz): " + this.LowFreq.ToString("F6") + " Cut-Off Frequency Hi (Hz): " + this.HighFreq.ToString("F6") + "\n\n";
+
+            data[1] = this.WindowedImpulseResponse[0].ToString("F7");
+            data[2] = "float coeff[] = {" + this.WindowedImpulseResponse[0].ToString("F7") + "f";
+            for (int n = 1; n < this.Length; n++)
+            {
+                data[1] += "," + this.WindowedImpulseResponse[n].ToString("F9");
+                data[2] += "," + this.WindowedImpulseResponse[n].ToString("F7") + "f";
+            }
+            data[1] += "\n\n";
+            data[2] += "};";
+
+            System.IO.File.WriteAllLines(path, data);
         }
     }
 }

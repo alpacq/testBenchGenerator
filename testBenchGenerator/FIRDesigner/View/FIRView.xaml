@@ -140,11 +140,11 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <TextBlock Grid.Column="0" Margin="10,5" Text="Coefficients" FontWeight="Bold" VerticalAlignment="Center"/>
-            <TextBox x:Name="coeffs" Grid.Column="1" Text="{Binding Coeffs, Mode=OneWay}" Margin="0,0,10,5" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
+            <TextBox x:Name="coeffs" IsReadOnly="True" Background="LightGray" Grid.Column="1" Text="{Binding Coeffs, Mode=OneWay}" Margin="0,0,10,5" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
             <TextBlock x:Name="infoBlock" Grid.Row="1" Grid.Column="0" Margin="100,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Left"/>
             <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10,5">
                 <StackPanel ToolTip="{Binding ProblemToolTip}" ToolTipService.IsEnabled="{Binding CanUpdateN}">
-                    <Button x:Name="design" Content="Design" Click="design_Click" FontWeight="Bold" Width="80" Margin="5,0" IsEnabled="{Binding CanUpdate}"/>
+                    <Button x:Name="design" Content="Design" Click="design_Click" FontWeight="Bold" Width="80" Margin="5,0" IsEnabled="{Binding CanDesign}"/>
                 </StackPanel>
                 <StackPanel ToolTip="{Binding ProblemExportToolTip}" ToolTipService.IsEnabled="{Binding CanExportN}">
                     <Button x:Name="export" Content="Export" Click="export_Click" FontWeight="Bold" Width="80" Margin="5,0" IsEnabled="{Binding CanExport}"/>

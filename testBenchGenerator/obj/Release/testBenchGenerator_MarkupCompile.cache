@@ -10,11 +10,11 @@ none
 false
 TRACE
 C:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\App.xaml
-5-765631900
+5882058283
 
-36-1348652688
-22420716490
-MainWindow.xaml;View\AnalyzerView.xaml;View\FIRView.xaml;View\GeneratorView.xaml;View\NewTCView.xaml;
+55592683711
+25-1787056447
+MainWindow.xaml;WaveformDesignerAndAnalyzer\View\AnalyzerView.xaml;FIRDesigner\View\FIRView.xaml;TestbenchGenerator\View\GeneratorView.xaml;TestbenchGenerator\View\NewTCView.xaml;
 
 False
 

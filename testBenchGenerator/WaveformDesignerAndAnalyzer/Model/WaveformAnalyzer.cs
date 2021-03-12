@@ -16,7 +16,6 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.Model
         private Signal refSignal;
         private Signal errorSignal;
 
-        private double inputMag;
         private int linesIgnore;
         private double rmsEfs;
         private double rmsElsbs;
@@ -35,12 +34,6 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.Model
         {
             get { return this.errorSignal; }
             set { this.errorSignal = value; }
-        }
-
-        public double InputMag
-        {
-            get { return this.inputMag; }
-            set { this.inputMag = value; }
         }
 
         public int LinesIgnore
@@ -205,7 +198,7 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.Model
             for (int m = 0; m < mags.Length; m++)
                 mags[m] = (this.I[m] * this.I[m]) + (this.Q[m] * this.Q[m]);
 
-            double actual = mags.Select(x => Math.Sqrt(x)).Average() * Math.Pow(2, this.Bitwidth - 1);
+            double actual = mags.Select(x => Math.Sqrt(x)).Average();
 
             this.GainE = 20 * Math.Log10(actual / this.InputMag);
 
@@ -282,6 +275,7 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.Model
         public WaveformAnalyzer()
         {
             this.Signal = new Signal();
+            this.InputMag = 1;
         }
     }
 }

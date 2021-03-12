@@ -39,7 +39,7 @@ namespace testBenchGenerator.FIRDesigner.View
 
         private void design_Click(object sender, RoutedEventArgs e)
         {
-            this.viewModel.Update();
+            this.viewModel.Design();
             this.firChart.ResetAllAxes();
             this.firResp.ResetAllAxes();
             this.winResp.ResetAllAxes();
@@ -55,20 +55,7 @@ namespace testBenchGenerator.FIRDesigner.View
 
             if (dlg.FileName != "")
             {
-                string[] data = new string[3];
-                data[0] = "Filter Order: " + this.viewModel.Length + " Sampling Frequency (Hz): " + this.viewModel.Fs.ToString("F6") + " Cut-Off Frequency Lo (Hz): " + this.viewModel.LowFreq.ToString("F6") + " Cut-Off Frequency Hi (Hz): " + this.viewModel.HighFreq.ToString("F6") + "\n\n";
-
-                data[1] = this.viewModel.WindowedImpulseResponse[0].ToString("F7");
-                data[2] = "float coeff[] = {" + this.viewModel.WindowedImpulseResponse[0].ToString("F7") + "f";
-                for (int n = 1; n < this.viewModel.Length; n++)
-                {
-                    data[1] += "," + this.viewModel.WindowedImpulseResponse[n].ToString("F9");
-                    data[2] += "," + this.viewModel.WindowedImpulseResponse[n].ToString("F7") + "f";
-                }
-                data[1] += "\n\n";
-                data[2] += "};";
-
-                System.IO.File.WriteAllLines(dlg.FileName, data);
+                this.viewModel.Export(dlg.FileName);
                 this.infoBlock.Text = DateTime.Now.ToLongTimeString() + "Coefficients exported successfully.";
             }
         }

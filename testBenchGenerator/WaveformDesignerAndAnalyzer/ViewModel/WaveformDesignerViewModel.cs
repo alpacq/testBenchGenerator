@@ -11,7 +11,7 @@ using testBenchGenerator.Common;
 
 namespace testBenchGenerator.WaveformDesignerAndAnalyzer.ViewModel
 {
-    public class WaveformDesignerViewModel : WaveformProcessorViewModel
+    public class WaveformDesignerViewModel : WaveformProcessorViewModel, IDesignable, IExportable
     {
         private WaveformDesigner model;
 
@@ -268,6 +268,7 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.ViewModel
             {
                 this.FPoints.Add(new DataPoint((this.Fs * i/this.Freqs.Length), this.Freqs[i]));
             }
+            OnPropertyChanged("InputMag");
             OnPropertyChanged("IPoints");
             OnPropertyChanged("QPoints");
             OnPropertyChanged("FPoints");

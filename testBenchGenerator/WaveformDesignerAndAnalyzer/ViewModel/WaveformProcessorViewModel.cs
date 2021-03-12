@@ -177,6 +177,12 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.ViewModel
             set { this.Signal.TimeVector = value; OnPropertyChanged("TimeVector"); this.CanDosRecompute(); }
         }
 
+        public double InputMag
+        {
+            get { return this.Model.InputMag; }
+            set { this.Model.InputMag = value; OnPropertyChanged("InputMag"); this.CanDosRecompute(); }
+        }
+
         protected void CanDosRecompute()
         {
             OnPropertyChanged("CanImport");

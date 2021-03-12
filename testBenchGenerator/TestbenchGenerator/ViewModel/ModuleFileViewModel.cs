@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,9 +8,9 @@ using testBenchGenerator.TestbenchGenerator.Model;
 
 namespace testBenchGenerator.TestbenchGenerator.ViewModel
 {
-    public class ModuleFileViewModel : ViewModelBase
+    public abstract class ModuleFileViewModel : ViewModelBase
     {
-        private ModuleFile moduleFile;
+        #region variables and fields
         private List<PortViewModel> inputs;
         private List<PortViewModel> ins;
         private List<PortViewModel> outputs;
@@ -20,9 +19,9 @@ namespace testBenchGenerator.TestbenchGenerator.ViewModel
         private List<ClockViewModel> clocks;
         private List<TestCaseViewModel> testCases;
 
-        public ModuleFile ModuleFile
+        public abstract ModuleFile ModuleFile
         {
-            get { return this.moduleFile; }
+            get; 
         }
 
         public string Path
@@ -61,23 +60,23 @@ namespace testBenchGenerator.TestbenchGenerator.ViewModel
 
         public List<PortViewModel> Inputs
         {
-            get 
+            get
             {
                 this.inputs = new List<PortViewModel>();
-                foreach(Port input in this.ModuleFile.Inputs)
+                foreach (Port input in this.ModuleFile.Inputs)
                 {
                     this.inputs.Add(new PortViewModel(input));
                 }
-                return this.inputs; 
+                return this.inputs;
             }
-            set 
+            set
             {
                 this.ModuleFile.Inputs = new List<Port>();
                 foreach (PortViewModel input in this.inputs)
                 {
                     this.ModuleFile.Inputs.Add(input.Port);
                 }
-                OnPropertyChanged("Inputs"); 
+                OnPropertyChanged("Inputs");
             }
         }
 
@@ -130,7 +129,7 @@ namespace testBenchGenerator.TestbenchGenerator.ViewModel
             get
             {
                 this.resets = new List<ResetViewModel>();
-                foreach(Reset reset in this.ModuleFile.Resets)
+                foreach (Reset reset in this.ModuleFile.Resets)
                 {
                     this.resets.Add(new ResetViewModel(reset));
                 }
@@ -139,7 +138,7 @@ namespace testBenchGenerator.TestbenchGenerator.ViewModel
             set
             {
                 this.ModuleFile.Resets = new List<Reset>();
-                foreach(ResetViewModel reset in this.resets)
+                foreach (ResetViewModel reset in this.resets)
                 {
                     this.ModuleFile.Resets.Add(reset.Reset);
                 }
@@ -152,7 +151,7 @@ namespace testBenchGenerator.TestbenchGenerator.ViewModel
             get
             {
                 this.clocks = new List<ClockViewModel>();
-                foreach(Clock clk in this.ModuleFile.Clocks)
+                foreach (Clock clk in this.ModuleFile.Clocks)
                 {
                     this.clocks.Add(new ClockViewModel(clk));
                 }
@@ -161,7 +160,7 @@ namespace testBenchGenerator.TestbenchGenerator.ViewModel
             set
             {
                 this.ModuleFile.Clocks = new List<Clock>();
-                foreach(ClockViewModel clk in this.clocks)
+                foreach (ClockViewModel clk in this.clocks)
                 {
                     this.ModuleFile.Clocks.Add(clk.Clock);
                 }
@@ -179,7 +178,7 @@ namespace testBenchGenerator.TestbenchGenerator.ViewModel
             {
                 this.testCases = value;
                 this.ModuleFile.TestCases = new List<TestCase>();
-                foreach(TestCaseViewModel tc in this.testCases)
+                foreach (TestCaseViewModel tc in this.testCases)
                 {
                     this.ModuleFile.TestCases.Add(tc.TestCase);
                 }
@@ -192,10 +191,10 @@ namespace testBenchGenerator.TestbenchGenerator.ViewModel
             get { return this.ModuleFile.BwLen; }
             set { this.ModuleFile.BwLen = value; OnPropertyChanged("BwLen"); }
         }
+        #endregion
 
-        public ModuleFileViewModel(ModuleFile moduleFile)
+        public ModuleFileViewModel()
         {
-            this.moduleFile = moduleFile;
             this.testCases = new List<TestCaseViewModel>();
         }
     }

@@ -11,7 +11,7 @@ using testBenchGenerator.WaveformDesignerAndAnalyzer.Model;
 
 namespace testBenchGenerator.WaveformDesignerAndAnalyzer.ViewModel
 {
-    public class WaveformAnalyzerViewModel : WaveformProcessorViewModel
+    public class WaveformAnalyzerViewModel : WaveformProcessorViewModel, IImportable
     {        
         private string problemToolTip;
 
@@ -27,12 +27,6 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.ViewModel
         {
             get { return this.model.Path; }
             set { this.model.Path = value; OnPropertyChanged("Path"); this.CanDosRecompute(); }
-        }
-
-        public double InputMag
-        {
-            get { return this.model.InputMag; }
-            set { this.model.InputMag = value; OnPropertyChanged("InputMag"); this.CanDosRecompute(); }
         }
 
         public int LinesIgnore
@@ -116,10 +110,21 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.ViewModel
                         ptt += "Lines to ignore cannot be negative.\n";
                         toRet = false;
                     }
-                    if(this.InputMag <= 0)
+                    if (this.Type.Contains("Sine"))
                     {
-                        ptt += "Input magnitude cannot be negative or equal to zero.\n";
-                        toRet = false;
+                        if (this.InputMag <= 0)
+                        {
+                            ptt += "Input magnitude cannot be negative or equal to zero.\n";
+                            toRet = false;
+                        }
+                    }
+                    else if(this.Type.Contains("OFDM"))
+                    {
+                        if(this.NSymbols <= 0)
+                        {
+                            ptt += "Number of symbols cannot be negative or equal to zero.\n";
+                            toRet = false;
+                        }
                     }
                 }
                 if (ptt.EndsWith("\n"))

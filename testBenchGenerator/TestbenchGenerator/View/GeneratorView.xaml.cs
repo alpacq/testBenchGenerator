@@ -59,7 +59,7 @@ namespace testBenchGenerator.TestbenchGenerator.View
 
             // Set filter for file extension and default file extension 
             dlg.DefaultExt = ".sv";
-            dlg.Filter = "SystemVerilog Files (*.sv)|*.sv|Verilog Files (*.v)|*.v";
+            dlg.Filter = "SystemVerilog Files (*.sv)|*.sv|Verilog Files (*.v)|*.v|VHDL Files (*.vhd)|*.vhd";
 
 
             // Display OpenFileDialog by calling ShowDialog method 
@@ -81,7 +81,7 @@ namespace testBenchGenerator.TestbenchGenerator.View
         {
             if (this.viewModel != null)
             {             
-                bool result = this.viewModel.GenerateFile();
+                bool result = this.viewModel.Generate();
 
                 this.infoBlock.Text = result ? DateTime.Now.ToLongTimeString() + " Testbench file generated successfully." : DateTime.Now.ToLongTimeString() + " Error - testbench file not generated.";
             }

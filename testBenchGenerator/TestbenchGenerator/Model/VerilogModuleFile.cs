@@ -126,44 +126,5 @@ namespace testBenchGenerator.TestbenchGenerator.Model
                 }
             }
         }
-
-        protected override void RecognizeResets()
-        {
-            this.Resets = new List<Reset>();
-            foreach(Port input in this.Inputs)
-            {
-                if(input.Name.Contains("rst") || input.Name.Contains("reset"))
-                {
-                    if (input.Name.Contains("n"))
-                        this.Resets.Add(new Reset(input, false)); //rst = 0
-                    else
-                        this.Resets.Add(new Reset(input, true)); //rst = 1
-                }
-            }
-        }
-
-        protected override void RecognizeClocks()
-        {
-            this.Clocks = new List<Clock>();
-            foreach(Port input in this.Inputs)
-            {
-                if(input.Name.Contains("clk") || input.Name.Contains("clock"))
-                {
-                    this.Clocks.Add(new Clock(input, 491.52));
-                }
-            }
-        }
-
-        protected override void RecognizeIns()
-        {
-            this.Ins = new List<Port>();
-            foreach(Port input in this.Inputs)
-            {
-                if(!input.Name.Contains("clk") && !input.Name.Contains("clock") && !input.Name.Contains("rst") && !input.Name.Contains("reset"))
-                {
-                    this.Ins.Add(input);
-                }
-            }
-        }
     }
 }

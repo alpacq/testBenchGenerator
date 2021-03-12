@@ -117,6 +117,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Common\ConstSignal.cs" />
+    <Compile Include="Common\IDesignable.cs" />
+    <Compile Include="Common\IExportable.cs" />
+    <Compile Include="Common\IGeneratable.cs" />
+    <Compile Include="Common\IImportable.cs" />
     <Compile Include="Common\OFDMSignal.cs" />
     <Compile Include="Common\PhoffSignal.cs" />
     <Compile Include="Common\RampSignal.cs" />
@@ -138,6 +142,8 @@
     <Compile Include="TestbenchGenerator\Model\Reset.cs" />
     <Compile Include="FIRDesigner\Model\WindowType.cs" />
     <Compile Include="TestbenchGenerator\Model\VHDLModuleFile.cs" />
+    <Compile Include="TestbenchGenerator\ViewModel\ModuleFileViewModel.cs" />
+    <Compile Include="TestbenchGenerator\ViewModel\VHDLModuleFileViewModel.cs" />
     <Compile Include="WaveformDesignerAndAnalyzer\Model\Delimiter.cs" />
     <Compile Include="WaveformDesignerAndAnalyzer\Model\WaveformAnalyzer.cs" />
     <Compile Include="WaveformDesignerAndAnalyzer\Model\WaveformDesigner.cs" />
@@ -150,7 +156,7 @@
     <Compile Include="TestbenchGenerator\ViewModel\TestCaseViewModel.cs" />
     <Compile Include="TestbenchGenerator\ViewModel\GeneratorViewModel.cs" />
     <Compile Include="TestbenchGenerator\ViewModel\InputFileViewModel.cs" />
-    <Compile Include="TestbenchGenerator\ViewModel\ModuleFileViewModel.cs" />
+    <Compile Include="TestbenchGenerator\ViewModel\VerilogModuleFileViewModel.cs" />
     <Compile Include="TestbenchGenerator\ViewModel\ParameterViewModel.cs" />
     <Compile Include="TestbenchGenerator\ViewModel\PortViewModel.cs" />
     <Compile Include="TestbenchGenerator\ViewModel\ResetViewModel.cs" />

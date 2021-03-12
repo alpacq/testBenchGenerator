@@ -338,7 +338,76 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.View
         private void anType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             this.wfaVM.Type = this.anType.SelectedItem.ToString();
-            //TODO
+            if (this.anType.SelectedItem.ToString().Contains("Sine"))
+            {
+                this.anInputMag.Visibility = Visibility.Visible;
+                this.anNS.Visibility = Visibility.Collapsed;
+                this.anFFT.Visibility = Visibility.Collapsed;
+                this.anFreq.Visibility = Visibility.Visible;
+                this.anToff.Visibility = Visibility.Collapsed;
+                this.anRMS.Visibility = Visibility.Visible;
+                this.anAvgEVM.Visibility = Visibility.Collapsed;
+                this.anRMSEFs.Visibility = Visibility.Visible;
+                this.anAvgSNR.Visibility = Visibility.Collapsed;
+                this.anRMSElsbs.Visibility = Visibility.Visible;
+                this.anWEVM.Visibility = Visibility.Collapsed;
+                this.anPRMSE.Visibility = Visibility.Visible;
+                this.anWSNR.Visibility = Visibility.Collapsed;
+                this.anGainE.Visibility = Visibility.Visible;
+                this.anDCReal.Visibility = Visibility.Visible;
+                this.anDCImag.Visibility = Visibility.Visible;
+                this.aim.Visibility = Visibility.Visible;
+                this.ans.Visibility = Visibility.Collapsed;
+                this.afft.Visibility = Visibility.Collapsed;
+                this.af.Visibility = Visibility.Visible;
+                this.ato.Visibility = Visibility.Collapsed;
+                this.arms.Visibility = Visibility.Visible;
+                this.aae.Visibility = Visibility.Collapsed;
+                this.armsfs.Visibility = Visibility.Visible;
+                this.aas.Visibility = Visibility.Collapsed;
+                this.armslsbs.Visibility = Visibility.Visible;
+                this.awe.Visibility = Visibility.Collapsed;
+                this.aprmse.Visibility = Visibility.Visible;
+                this.aws.Visibility = Visibility.Collapsed;
+                this.age.Visibility = Visibility.Visible;
+                this.adcr.Visibility = Visibility.Visible;
+                this.adci.Visibility = Visibility.Visible;
+            }
+            else if (this.anType.SelectedItem.ToString().Contains("OFDM"))
+            {
+                this.anInputMag.Visibility = Visibility.Collapsed;
+                this.anNS.Visibility = Visibility.Visible;
+                this.anFFT.Visibility = Visibility.Visible;
+                this.anFreq.Visibility = Visibility.Collapsed;
+                this.anToff.Visibility = Visibility.Visible;
+                this.anRMS.Visibility = Visibility.Collapsed;
+                this.anAvgEVM.Visibility = Visibility.Visible;
+                this.anRMSEFs.Visibility = Visibility.Collapsed;
+                this.anAvgSNR.Visibility = Visibility.Visible;
+                this.anRMSElsbs.Visibility = Visibility.Collapsed;
+                this.anWEVM.Visibility = Visibility.Visible;
+                this.anPRMSE.Visibility = Visibility.Collapsed;
+                this.anWSNR.Visibility = Visibility.Visible;
+                this.anGainE.Visibility = Visibility.Collapsed;
+                this.anDCReal.Visibility = Visibility.Collapsed;
+                this.anDCImag.Visibility = Visibility.Collapsed;
+                this.aim.Visibility = Visibility.Collapsed;
+                this.ans.Visibility = Visibility.Visible;
+                this.afft.Visibility = Visibility.Visible;
+                this.af.Visibility = Visibility.Collapsed;
+                this.ato.Visibility = Visibility.Visible;
+                this.arms.Visibility = Visibility.Collapsed;
+                this.aae.Visibility = Visibility.Visible;
+                this.armsfs.Visibility = Visibility.Collapsed;
+                this.aas.Visibility = Visibility.Visible;
+                this.armslsbs.Visibility = Visibility.Collapsed;
+                this.awe.Visibility = Visibility.Visible;
+                this.aprmse.Visibility = Visibility.Collapsed;
+                this.aws.Visibility = Visibility.Visible;
+                this.age.Visibility = Visibility.Collapsed;
+                this.adcr.Visibility = Visibility.Collapsed;
+                this.adci.Visibility = Visibility.Collapsed;
+            }
         }
 
         private void modType_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -355,6 +424,7 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.View
                 this.desPhoff.Visibility = Visibility.Visible;
                 this.modType.Visibility = Visibility.Collapsed;
                 this.desFsoff.Visibility = Visibility.Collapsed;
+                this.desInputMag.Visibility = Visibility.Visible;
                 this.desOFDMN.Visibility = Visibility.Collapsed;
                 this.desFFTLength.Visibility = Visibility.Collapsed;
                 this.desCPLength.Visibility = Visibility.Collapsed;
@@ -365,6 +435,7 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.View
                 this.dpo.Visibility = Visibility.Visible;
                 this.dmod.Visibility = Visibility.Collapsed;
                 this.dfo.Visibility = Visibility.Collapsed;
+                this.dim.Visibility = Visibility.Visible;
                 this.dofdmn.Visibility = Visibility.Collapsed;
                 this.dfft.Visibility = Visibility.Collapsed;
                 this.dcp.Visibility = Visibility.Collapsed;
@@ -378,6 +449,7 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.View
                 this.desPhoff.Visibility = Visibility.Visible;
                 this.modType.Visibility = Visibility.Visible;
                 this.desFsoff.Visibility = Visibility.Visible;
+                this.desInputMag.Visibility = Visibility.Collapsed;
                 this.desOFDMN.Visibility = Visibility.Visible;
                 this.desFFTLength.Visibility = Visibility.Visible;
                 this.desCPLength.Visibility = Visibility.Visible;
@@ -388,6 +460,7 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.View
                 this.dpo.Visibility = Visibility.Visible;
                 this.dmod.Visibility = Visibility.Visible;
                 this.dfo.Visibility = Visibility.Visible;
+                this.dim.Visibility = Visibility.Collapsed;
                 this.dofdmn.Visibility = Visibility.Visible;
                 this.dfft.Visibility = Visibility.Visible;
                 this.dcp.Visibility = Visibility.Visible;
@@ -401,6 +474,7 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.View
                 this.desPhoff.Visibility = Visibility.Collapsed;
                 this.modType.Visibility = Visibility.Collapsed;
                 this.desFsoff.Visibility = Visibility.Collapsed;
+                this.desInputMag.Visibility = Visibility.Collapsed;
                 this.desOFDMN.Visibility = Visibility.Collapsed;
                 this.desFFTLength.Visibility = Visibility.Collapsed;
                 this.desCPLength.Visibility = Visibility.Collapsed;
@@ -411,6 +485,7 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.View
                 this.dpo.Visibility = Visibility.Collapsed;
                 this.dmod.Visibility = Visibility.Collapsed;
                 this.dfo.Visibility = Visibility.Collapsed;
+                this.dim.Visibility = Visibility.Collapsed;
                 this.dofdmn.Visibility = Visibility.Collapsed;
                 this.dfft.Visibility = Visibility.Collapsed;
                 this.dcp.Visibility = Visibility.Collapsed;
