@@ -79,14 +79,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="testBenchGenerator.exe" size="923648">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="testBenchGenerator.exe" size="927232">
       <assemblyIdentity name="testBenchGenerator" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>HKbELsgcYDlpWLaGcuHngjsYFqlEHY96W6oBUlp09Q4=</dsig:DigestValue>
+        <dsig:DigestValue>N9xHfGEAahcyXh4U67Odp1EP0QHj43ggHqbj6yUPoHI=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

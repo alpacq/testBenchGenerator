@@ -442,6 +442,10 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.View
                 this.dns.Visibility = Visibility.Collapsed;
                 this.dos.Visibility = Visibility.Collapsed;
                 this.ddis.Visibility = Visibility.Collapsed;
+                this.desRand.Visibility = Visibility.Collapsed;
+                this.desSeed.Visibility = Visibility.Collapsed;
+                this.drand.Visibility = Visibility.Collapsed;
+                this.dseed.Visibility = Visibility.Collapsed;
             }
             else if(this.desType.SelectedItem.ToString().Contains("OFDM"))
             {
@@ -467,6 +471,10 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.View
                 this.dns.Visibility = Visibility.Visible;
                 this.dos.Visibility = Visibility.Visible;
                 this.ddis.Visibility = Visibility.Visible;
+                this.desRand.Visibility = Visibility.Visible;
+                this.desSeed.Visibility = Visibility.Visible;
+                this.drand.Visibility = Visibility.Visible;
+                this.dseed.Visibility = Visibility.Visible;
             }
             else
             {
@@ -492,6 +500,10 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.View
                 this.dns.Visibility = Visibility.Collapsed;
                 this.dos.Visibility = Visibility.Collapsed;
                 this.ddis.Visibility = Visibility.Collapsed;
+                this.desRand.Visibility = Visibility.Collapsed;
+                this.desSeed.Visibility = Visibility.Collapsed;
+                this.drand.Visibility = Visibility.Collapsed;
+                this.dseed.Visibility = Visibility.Collapsed;
             }
         }
 

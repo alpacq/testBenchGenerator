@@ -265,11 +265,10 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.Model
                 (this.RefSignal as SineSignal).Freq = this.Freq;
                 this.Phoff = this.MeasurePhaseOffset();
                 (this.RefSignal as SineSignal).Phoff = this.Phoff;
+                this.CreateRefSignal();
+                this.CreateErrorSignal();
+                this.ComputeErrors();
             }
-
-            this.CreateRefSignal();
-            this.CreateErrorSignal();
-            this.ComputeErrors();
         }
 
         public WaveformAnalyzer()

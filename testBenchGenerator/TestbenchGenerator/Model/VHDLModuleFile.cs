@@ -100,7 +100,6 @@ namespace testBenchGenerator.TestbenchGenerator.Model
             {
                 if (codeLine.Contains("out "))
                 {
-
                     string connName = codeLine.Split(':').FirstOrDefault().Trim();
 
                     if (codeLine.Contains(" downto ") || codeLine.Contains(" to "))
@@ -119,6 +118,22 @@ namespace testBenchGenerator.TestbenchGenerator.Model
         protected override void ReadParameters()
         {
             this.Parameters = new List<Parameter>();
+
+            if(this.dutLines.Any(line => line.Contains("generic")))
+            {
+                int startIndex = this.dutLines.ToList().FindIndex(line => line.Contains("generic"));
+                int endIndex = this.dutLines.Any(line => line.Contains("port")) ? this.dutLines.ToList().FindIndex(line => line.Contains("port")) : this.dutLines.ToList().IndexOf(this.dutLines[this.dutLines.Length - 1]);
+
+                for(int i = startIndex + 1; i < endIndex; i++)
+                {
+                    if(this.dutLines[i].Contains(":"))
+                    {
+                        string parName = this.dutLines[i].Split(':').FirstOrDefault().Trim();
+                        string parValue = this.dutLines[i].Split('=').LastOrDefault().Replace(";", "").Trim();
+                        this.Parameters.Add(new Parameter(parName, parValue));
+                    }
+                }
+            }
         }
     }
 }

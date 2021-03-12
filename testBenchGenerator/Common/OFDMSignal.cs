@@ -9,7 +9,7 @@ namespace testBenchGenerator.Common
 {
     public class OFDMSignal : PhoffSignal
     {
-        
+        #region variables and fields
         private string modulation;
         private double fsoff;
         private int ofdmn;
@@ -53,6 +53,7 @@ namespace testBenchGenerator.Common
             get { return this.nSymbols; }
             set { this.nSymbols = value; }
         }
+        #endregion
 
         private void CreateOFDMTimeVector(double fsSig)
         {
