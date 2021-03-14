@@ -223,12 +223,15 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <Resource Include="WaveformDesignerAndAnalyzer\View\Dosis.ttf" />
+    <Resource Include="FIRDesigner\View\Dosis.ttf" />
     <None Include="packages.config" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Resource Include="Resources\Fonts\Dosis.ttf" />
     <None Include="testBenchGenerator_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>

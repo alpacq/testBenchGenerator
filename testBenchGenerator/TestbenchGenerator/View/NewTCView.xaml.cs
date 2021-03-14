@@ -24,6 +24,7 @@ namespace testBenchGenerator.TestbenchGenerator.View
         public NewTCView(NewTCViewModel viewModel)
         {
             InitializeComponent();
+            Style = (Style)FindResource(typeof(Window));
             this.viewModel = viewModel;
             this.DataContext = this.viewModel;
             if (this.viewModel.Clock != null)

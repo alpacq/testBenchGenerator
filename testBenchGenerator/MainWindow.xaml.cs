@@ -24,6 +24,7 @@ namespace testBenchGenerator
         public MainWindow()
         {
             InitializeComponent();
+            Style = (Style)FindResource(typeof(Window));
         }        
 
         private void tab_SelectionChanged(object sender, SelectionChangedEventArgs e)

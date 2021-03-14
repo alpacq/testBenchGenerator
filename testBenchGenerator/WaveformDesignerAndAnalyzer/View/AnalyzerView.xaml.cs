@@ -32,6 +32,12 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.View
         public AnalyzerView()
         {
             InitializeComponent();
+            wfdF.Style = (Style)FindResource(typeof(OxyPlot.Wpf.Plot));
+            wfdI.Style = (Style)FindResource(typeof(OxyPlot.Wpf.Plot));
+            wfdQ.Style = (Style)FindResource(typeof(OxyPlot.Wpf.Plot));
+            wfaF.Style = (Style)FindResource(typeof(OxyPlot.Wpf.Plot));
+            wfaI.Style = (Style)FindResource(typeof(OxyPlot.Wpf.Plot));
+            wfaQ.Style = (Style)FindResource(typeof(OxyPlot.Wpf.Plot));
             this.bwD = new BackgroundWorker();
             this.bwA = new BackgroundWorker();
             this.bwAA = new BackgroundWorker();

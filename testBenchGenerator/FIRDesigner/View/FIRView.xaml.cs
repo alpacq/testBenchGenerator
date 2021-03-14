@@ -26,6 +26,10 @@ namespace testBenchGenerator.FIRDesigner.View
         public FIRView()
         {
             InitializeComponent();
+            //firResp.Style = (Style)FindResource(typeof(OxyPlot.Wpf.Plot));
+            //firChart.Style = (Style)FindResource(typeof(OxyPlot.Wpf.Plot));
+            //winResp.Style = (Style)FindResource(typeof(OxyPlot.Wpf.Plot));
+            //winChart.Style = (Style)FindResource(typeof(OxyPlot.Wpf.Plot));
             this.viewModel = new FIRViewModel(new FIR());
             this.DataContext = this.viewModel;
             this.wt.SelectedIndex = 0;
