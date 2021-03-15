@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:testBenchGenerator.TestbenchGenerator.View"
         mc:Ignorable="d"
-        Title="New Test Case" Height="450" Width="1330">
+        Title="New Test Case" Height="450" Width="1330" WindowStyle="None" ResizeMode="NoResize">
     <Grid Margin="0,0,10,0">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>

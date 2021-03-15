@@ -15,7 +15,9 @@ namespace testBenchGenerator.Common
         private int ofdmn;
         private double distance;
         private int cpLength;
-        private int nSymbols;        
+        private int nSymbols;
+        //private bool isRand;
+        //private double seed;
 
         public string Modulation
         {
@@ -53,6 +55,18 @@ namespace testBenchGenerator.Common
             get { return this.nSymbols; }
             set { this.nSymbols = value; }
         }
+
+        //public bool IsRand
+        //{
+        //    get { return this.isRand; }
+        //    set { this.isRand = value; }
+        //}
+
+        //public double Seed
+        //{
+        //    get { return this.seed; }
+        //    set { this.seed = value; }
+        //}
         #endregion
 
         private void CreateOFDMTimeVector(double fsSig)

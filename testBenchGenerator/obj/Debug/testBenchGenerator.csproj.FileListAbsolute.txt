@@ -71,3 +71,4 @@ C:\Users\krzys\Documents\Archiwum\Projekty\testBenchGenerator\testBenchGenerator
 C:\Users\krzys\Documents\Archiwum\Projekty\testBenchGenerator\testBenchGenerator\obj\Debug\TestbenchGenerator\View\GeneratorView.baml
 C:\Users\krzys\Documents\Archiwum\Projekty\testBenchGenerator\testBenchGenerator\obj\Debug\TestbenchGenerator\View\NewTCView.baml
 C:\Users\krzys\Documents\Archiwum\Projekty\testBenchGenerator\testBenchGenerator\obj\Debug\App.baml
+C:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\obj\Debug\App.baml

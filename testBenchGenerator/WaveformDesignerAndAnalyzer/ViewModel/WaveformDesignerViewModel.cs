@@ -106,6 +106,34 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.ViewModel
             }
         }
 
+        //public bool IsRand
+        //{
+        //    get { return (this.Signal is OFDMSignal) ? (this.Signal as OFDMSignal).IsRand : false; }
+        //    set
+        //    {
+        //        if(this.Signal is OFDMSignal)
+        //        {
+        //            (this.Signal as OFDMSignal).IsRand = value;
+        //            OnPropertyChanged("IsRand");
+        //            this.CanDosRecompute();
+        //        }
+        //    }
+        //}
+
+        //public double Seed
+        //{
+        //    get { return (this.Signal is OFDMSignal) ? (this.Signal as OFDMSignal).Seed : 0.0; }
+        //    set
+        //    {
+        //        if(this.Signal is OFDMSignal)
+        //        {
+        //            (this.Signal as OFDMSignal).Seed = value;
+        //            OnPropertyChanged("Seed");
+        //            this.CanDosRecompute();
+        //        }
+        //    }
+        //}
+
         public bool CanDesign
         {
             get 

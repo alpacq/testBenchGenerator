@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:testBenchGenerator.TestbenchGenerator.View"
              xmlns:model="clr-namespace:testBenchGenerator.TestbenchGenerator.Model"
              mc:Ignorable="d" 
-             Background="White" x:Name="genView" SizeChanged="genView_SizeChanged">
+             x:Name="genView" SizeChanged="genView_SizeChanged">
     <UserControl.Resources>
         <model:PolConverter x:Key="PolConverter"/>
     </UserControl.Resources>
