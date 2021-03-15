@@ -11,16 +11,21 @@
         mc:Ignorable="d"
         Title="FPGA Developer Tools" WindowStartupLocation="CenterScreen" Icon="ide.ico" SizeChanged="Window_SizeChanged">
     <Grid>
-        <TabControl Grid.Row="1" x:Name="tab" SelectionChanged="tab_SelectionChanged">           
-            <TabItem Header="Testbench Generator">
+        <Border>
+            <Border.Background>
+                <SolidColorBrush Color="#FF4C3589"/>
+            </Border.Background>
+        </Border>
+        <TabControl Grid.Row="1" x:Name="tab" SelectionChanged="tab_SelectionChanged" Background="Transparent" Foreground="White">           
+            <TabItem Header="Testbench Generator" Background="Transparent" Foreground="White">
                 <vtbg:GeneratorView x:Name="genView" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
             </TabItem>
 
-            <TabItem Header="Waveform designer &amp; analyzer">
+            <TabItem Header="Waveform designer &amp; analyzer" Background="Transparent" Foreground="White">
                 <vwfda:AnalyzerView x:Name="anView" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
             </TabItem>
 
-            <TabItem Header="FIR Designer">
+            <TabItem Header="FIR Designer" Background="Transparent" Foreground="White">
                 <vfir:FIRView x:Name="firView" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
             </TabItem>
         </TabControl>        

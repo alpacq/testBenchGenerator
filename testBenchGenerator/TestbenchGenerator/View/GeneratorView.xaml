@@ -35,7 +35,7 @@
                     <Border DockPanel.Dock="Top" BorderThickness="1,1,0,0" BorderBrush="Black">
                         <StackPanel Orientation="Vertical">
                             <TextBlock Text="Clocks" FontWeight="Bold" Margin="10,5,0,5" x:Name="clkpanel"/>
-                            <ListView x:Name="clocks" VerticalAlignment="Stretch" ItemsSource="{Binding Clocks}" BorderThickness="0" Height="Auto" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                            <ListView x:Name="clocks" VerticalAlignment="Stretch" ItemsSource="{Binding Clocks}" Background="Transparent" BorderThickness="0" Height="Auto" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                                 <ListView.View>
                                     <GridView>
                                         <GridViewColumn Header="Name">
@@ -63,7 +63,7 @@
                     <Border DockPanel.Dock="Top" BorderThickness="1,1,0,0" BorderBrush="Black">
                         <StackPanel Orientation="Vertical">
                             <TextBlock Text="Resets" FontWeight="Bold" Margin="10,5,0,5"/>
-                            <ListView x:Name="resets" VerticalAlignment="Stretch" ItemsSource="{Binding Resets}" BorderThickness="0" Height="Auto" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                            <ListView x:Name="resets" VerticalAlignment="Stretch" ItemsSource="{Binding Resets}" Background="Transparent" BorderThickness="0" Height="Auto" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                                 <ListView.View>
                                     <GridView>
                                         <GridViewColumn Header="Name">
@@ -91,7 +91,7 @@
                     <Border DockPanel.Dock="Top" BorderThickness="1,1,0,0" BorderBrush="Black">
                         <StackPanel Orientation="Vertical">
                             <TextBlock Text="Parameters" FontWeight="Bold" Margin="10,5,0,5"/>
-                            <ListView x:Name="paramss" VerticalAlignment="Stretch" ItemsSource="{Binding Parameters}" BorderThickness="0" Height="Auto" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                            <ListView x:Name="paramss" VerticalAlignment="Stretch" ItemsSource="{Binding Parameters}" Background="Transparent" BorderThickness="0" Height="Auto" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                                 <ListView.View>
                                     <GridView>
                                         <GridViewColumn Header="Name">
@@ -119,7 +119,7 @@
                     <Border DockPanel.Dock="Top" BorderThickness="1,1,0,0" BorderBrush="Black">
                         <StackPanel Orientation="Vertical">
                             <TextBlock Text="Inputs" FontWeight="Bold" Margin="10,5,0,5"/>
-                            <ListView x:Name="inputs" VerticalAlignment="Stretch" ItemsSource="{Binding Inputs}" BorderThickness="0" Height="Auto" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                            <ListView x:Name="inputs" VerticalAlignment="Stretch" ItemsSource="{Binding Inputs}" Background="Transparent" BorderThickness="0" Height="Auto" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                                 <ListView.View>
                                     <GridView>
                                         <GridViewColumn Header="Name">
@@ -147,7 +147,7 @@
                     <Border DockPanel.Dock="Top" BorderThickness="1,1,1,0" BorderBrush="Black">
                         <StackPanel Orientation="Vertical">
                             <TextBlock Text="Outputs" FontWeight="Bold" Margin="10,5,0,5"/>
-                            <ListView x:Name="outputs" VerticalAlignment="Stretch" ItemsSource="{Binding Outputs}" BorderThickness="0" Height="Auto" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                            <ListView x:Name="outputs" VerticalAlignment="Stretch" ItemsSource="{Binding Outputs}" Background="Transparent" BorderThickness="0" Height="Auto" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                                 <ListView.ItemContainerStyle>
                                     <Style TargetType="ListViewItem">
                                         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
@@ -184,7 +184,7 @@
                     <Border DockPanel.Dock="Top" BorderThickness="1" BorderBrush="Black">
                         <StackPanel Orientation="Vertical" VerticalAlignment="Stretch">
                             <TextBlock Text="Test Cases" FontWeight="Bold" Margin="10,5,0,5" x:Name="tcpanel"/>
-                            <ListView x:Name="datains" VerticalAlignment="Stretch" ItemsSource="{Binding TestCases}" BorderThickness="0" SelectedItem="{Binding SelectedTestCase}" Height="Auto" 
+                            <ListView x:Name="datains" VerticalAlignment="Stretch" ItemsSource="{Binding TestCases}" Background="Transparent" BorderThickness="0" SelectedItem="{Binding SelectedTestCase}" Height="Auto" 
                                       PreviewMouseDoubleClick="datains_PreviewMouseDoubleClick" PreviewMouseLeftButtonDown="datains_PreviewMouseLeftButtonDown">
                                 <ListView.View>
                                     <GridView>

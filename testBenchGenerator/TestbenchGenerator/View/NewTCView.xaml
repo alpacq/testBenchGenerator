@@ -5,22 +5,29 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:testBenchGenerator.TestbenchGenerator.View"
         mc:Ignorable="d"
-        Title="New Test Case" Height="450" Width="1330" WindowStyle="None" ResizeMode="NoResize">
-    <Grid Margin="0,0,10,0">
+        Title="New Test Case" Height="450" Width="1330" WindowStyle="None" ResizeMode="NoResize" Foreground="White">
+    <Grid>
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="1*"/>
-            <!--<ColumnDefinition Width="2*"/>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="1*"/>-->
+            <ColumnDefinition Width="10"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition Height="5*"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
+
+        <Border Grid.RowSpan="3" Grid.ColumnSpan="4" Panel.ZIndex="-1">
+            <Border.Background>
+                <LinearGradientBrush>
+                    <GradientStop Color="DarkBlue" Offset="0.0"/>
+                    <GradientStop Color="DarkViolet" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.Background>
+        </Border>       
 
         <Grid Grid.Column="0" Grid.RowSpan="2" Margin="0,15,5,0">
             <Grid.RowDefinitions>
@@ -67,7 +74,7 @@
             <TextBlock Grid.Row="0" Text="Input ports" VerticalAlignment="Center" HorizontalAlignment="Center"/>
             <TextBlock Grid.Row="2" Text="Input valid port" VerticalAlignment="Center" HorizontalAlignment="Center"/>
 
-            <ListBox Grid.Row="1" Name="diLB" HorizontalContentAlignment="Stretch" Margin="2" ItemsSource="{Binding Ins}" SelectionMode="Multiple">
+            <ListBox Grid.Row="1" Name="diLB" HorizontalContentAlignment="Stretch" Margin="2" ItemsSource="{Binding Ins}" SelectionMode="Multiple" Background="Transparent">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid Margin="0,2">
@@ -96,7 +103,7 @@
             <TextBlock Grid.Row="0" Text="Output ports" VerticalAlignment="Center" HorizontalAlignment="Center"/>
             <TextBlock Grid.Row="2" Text="Output valid port" VerticalAlignment="Center" HorizontalAlignment="Center"/>
 
-            <ListBox Grid.Row="1" Name="doLB" HorizontalContentAlignment="Stretch" Margin="2" ItemsSource="{Binding Outs}" SelectionMode="Multiple">
+            <ListBox Grid.Row="1" Name="doLB" HorizontalContentAlignment="Stretch" Margin="2" ItemsSource="{Binding Outs}" SelectionMode="Multiple" Background="Transparent">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid Margin="0,2">
@@ -114,11 +121,11 @@
 
         </Grid>     
         
-        <StackPanel Orientation="Horizontal" Grid.Column="6" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,30,0">
+        <StackPanel Orientation="Horizontal" Grid.Column="2" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,30,0">
             <StackPanel ToolTip="{Binding ProblemToolTip}" ToolTipService.IsEnabled="{Binding CanSaveN}">
-                <Button x:Name="add" Content="{Binding AddText}" Click="add_Click" HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Margin="0,0,10,0" IsEnabled="{Binding CanSave}"/>
+                <Button x:Name="add" Content="{Binding AddText}" Click="add_Click" HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Foreground="White" Margin="0,0,10,0" IsEnabled="{Binding CanSave}"/>
             </StackPanel>
-            <Button x:Name="cancel" Content="Cancel" Click="cancel_Click" HorizontalAlignment="Center" VerticalAlignment="Center" Width="50"/>
+            <Button x:Name="cancel" Content="Cancel" Click="cancel_Click" HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Foreground="White"/>
         </StackPanel>
 
     </Grid>

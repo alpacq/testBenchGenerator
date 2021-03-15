@@ -44,16 +44,16 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
 
-                <oxy:Plot x:Name="wfdI" Grid.Row="0" Grid.Column="0" Margin="10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" TitleFontSize="12" TitleFont="#Dosis" DefaultFont="#Dosis" Background="White" Title="I" BorderThickness="1">
+                <oxy:Plot x:Name="wfdI" Grid.Row="0" Background="Transparent" Foreground="White" Grid.Column="0" Margin="10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" PlotAreaBorderColor="White" LegendTextColor="White" LegendTitleColor="White" SubtitleColor="White" TextColor="White" TitleColor="White" TitleFontSize="12" TitleFont="#Dosis" DefaultFont="#Dosis" Title="I" BorderThickness="1">
                     <oxy:Plot.Series>
                         <oxy:LineSeries ItemsSource="{Binding IPoints}"/>
                     </oxy:Plot.Series>
                     <oxy:Plot.Axes>
-                        <oxy:LinearAxis Title="Time" Position="Bottom" Unit="s" LabelFormatter="ValueAxisLabelFormatters"/>
+                        <oxy:LinearAxis Title="Time" Position="Bottom" Unit="s" LabelFormatter="ValueAxisLabelFormatters" TextColor="White" MajorGridlineColor="White" MinorGridlineColor="White" AxislineColor="White" TicklineColor="White" TitleColor="White" ExtraGridlineColor="White"/>
                         <oxy:LinearAxis Position="Left" LabelFormatter="ValueAxisLabelFormatter"/>
                     </oxy:Plot.Axes>
                 </oxy:Plot>
-                <oxy:Plot x:Name="wfdQ" Grid.Row="1" Grid.Column="0" Margin="10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" TitleFontSize="12" TitleFont="#Dosis" DefaultFont="#Dosis" Background="White" Title="Q" BorderThickness="1">
+                <oxy:Plot x:Name="wfdQ" Grid.Row="1" Background="Transparent" Foreground="White" Grid.Column="0" Margin="10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" TitleFontSize="12" TitleFont="#Dosis" DefaultFont="#Dosis" Title="Q" BorderThickness="1">
                     <oxy:Plot.Series>
                         <oxy:LineSeries ItemsSource="{Binding QPoints}" Color="DarkRed"/>
                     </oxy:Plot.Series>
@@ -63,7 +63,7 @@
                     </oxy:Plot.Axes>
                 </oxy:Plot>
 
-                <oxy:Plot x:Name="wfdF" Grid.RowSpan="2" Grid.Column="1" Margin="10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" TitleFontSize="12" TitleFont="#Dosis" DefaultFont="#Dosis" Background="White" Title="Fourier plot" BorderThickness="1">
+                <oxy:Plot x:Name="wfdF" Grid.RowSpan="2" Background="Transparent" Foreground="White" Grid.Column="1" Margin="10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" TitleFontSize="12" TitleFont="#Dosis" DefaultFont="#Dosis" Title="Fourier plot" BorderThickness="1">
                     <oxy:Plot.Series>
                         <oxy:LineSeries ItemsSource="{Binding FPoints}" Color="DarkBlue"/>
                     </oxy:Plot.Series>
@@ -181,7 +181,7 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
 
-                <oxy:Plot x:Name="wfaI" Grid.Row="0" Grid.Column="0" Margin="10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" TitleFontSize="12" TitleFont="#Dosis" DefaultFont="#Dosis" Background="White" Title="I" BorderThickness="1">
+                <oxy:Plot x:Name="wfaI" Grid.Row="0" Background="Transparent" Foreground="White" Grid.Column="0" Margin="10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" TitleFontSize="12" TitleFont="#Dosis" DefaultFont="#Dosis" Title="I" BorderThickness="1">
                     <oxy:Plot.Series>
                         <oxy:LineSeries ItemsSource="{Binding IPoints}"/>
                     </oxy:Plot.Series>
@@ -190,7 +190,7 @@
                         <oxy:LinearAxis Position="Left" LabelFormatter="ValueAxisLabelFormatter"/>
                     </oxy:Plot.Axes>
                 </oxy:Plot>
-                <oxy:Plot x:Name="wfaQ" Grid.Row="1" Grid.Column="0" Margin="10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" TitleFontSize="12" TitleFont="#Dosis" DefaultFont="#Dosis" Background="White" Title="Q" BorderThickness="1">
+                <oxy:Plot x:Name="wfaQ" Grid.Row="1" Background="Transparent" Foreground="White" Grid.Column="0" Margin="10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" TitleFontSize="12" TitleFont="#Dosis" DefaultFont="#Dosis" Title="Q" BorderThickness="1">
                     <oxy:Plot.Series>
                         <oxy:LineSeries ItemsSource="{Binding QPoints}" Color="DarkRed"/>
                     </oxy:Plot.Series>
@@ -200,7 +200,7 @@
                     </oxy:Plot.Axes>
                 </oxy:Plot>
 
-                <oxy:Plot x:Name="wfaF" Grid.RowSpan="2" Grid.Column="1" Margin="10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" TitleFontSize="12" TitleFont="#Dosis" DefaultFont="#Dosis" Background="White" Title="Fourier plot" BorderThickness="1">
+                <oxy:Plot x:Name="wfaF" Grid.RowSpan="2" Background="Transparent" Foreground="White" Grid.Column="1" Margin="10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" TitleFontSize="12" TitleFont="#Dosis" DefaultFont="#Dosis" Title="Fourier plot" BorderThickness="1">
                     <oxy:Plot.Series>
                         <oxy:LineSeries ItemsSource="{Binding FPoints}" Color="DarkBlue" FontFamily="../../Resources/Fonts/#Dosis"/>
                     </oxy:Plot.Series>

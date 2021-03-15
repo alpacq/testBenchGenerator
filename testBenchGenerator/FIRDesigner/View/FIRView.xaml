@@ -21,7 +21,7 @@
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
-            <oxy:Plot x:Name="firResp" Grid.Row="0" Margin="10,10,10,5" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" TitleFont="#Dosis" DefaultFont="#Dosis" TitleFontSize="14" Background="White" Title="Filter Response in Time Domain" BorderThickness="1" FontFamily="Corbel">
+            <oxy:Plot x:Name="firResp" Grid.Row="0" Margin="10,10,10,5" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="Transparent" TitleFont="#Dosis" DefaultFont="#Dosis" TitleFontSize="14" Title="Filter Response in Time Domain" BorderThickness="1" FontFamily="Corbel">
                 <oxy:Plot.Series>
                     <oxy:LineSeries ItemsSource="{Binding FIRRespPoints}"/>
                 </oxy:Plot.Series>
@@ -30,7 +30,7 @@
                     <oxy:LinearAxis Position="Left" LabelFormatter="ValueAxisLabelFormatter"/>
                 </oxy:Plot.Axes>
             </oxy:Plot>
-            <oxy:Plot x:Name="firChart" Grid.Row="1" Margin="10,5,10,10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" TitleFont="#Dosis" DefaultFont="#Dosis" TitleFontSize="14" Background="White" Title="Filter Frequency Response" BorderThickness="1">
+            <oxy:Plot x:Name="firChart" Grid.Row="1" Margin="10,5,10,10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="Transparent" TitleFont="#Dosis" DefaultFont="#Dosis" TitleFontSize="14" Title="Filter Frequency Response" BorderThickness="1">
                 <oxy:Plot.Series>
                     <oxy:LineSeries ItemsSource="{Binding FIRChartPoints}" Color="Navy"/>
                 </oxy:Plot.Series>
@@ -52,7 +52,7 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <oxy:Plot x:Name="winResp" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" TitleFont="#Dosis" DefaultFont="#Dosis" TitleFontSize="12" Margin="10,10,5,10" Title="Window Function in Time Domain" BorderThickness="1">
+                <oxy:Plot x:Name="winResp" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" TitleFont="#Dosis" Background="Transparent" DefaultFont="#Dosis" TitleFontSize="12" Margin="10,10,5,10" Title="Window Function in Time Domain" BorderThickness="1">
                     <oxy:Plot.Series>
                         <oxy:LineSeries ItemsSource="{Binding WinRespPoints}" Color="Yellow"/>
                     </oxy:Plot.Series>
@@ -61,7 +61,7 @@
                         <oxy:LinearAxis Position="Left" LabelFormatter="ValueAxisLabelFormatter"/>
                     </oxy:Plot.Axes>
                 </oxy:Plot>
-                <oxy:Plot x:Name="winChart" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" TitleFont="#Dosis" DefaultFont="#Dosis" TitleFontSize="12" Margin="5,10,10,10" Title="Window Function Frequency Response" BorderThickness="1">
+                <oxy:Plot x:Name="winChart" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" TitleFont="#Dosis" Background="Transparent" DefaultFont="#Dosis" TitleFontSize="12" Margin="5,10,10,10" Title="Window Function Frequency Response" BorderThickness="1">
                     <oxy:Plot.Series>
                         <oxy:LineSeries ItemsSource="{Binding WinChartPoints}" Color="DarkRed"/>
                     </oxy:Plot.Series>
