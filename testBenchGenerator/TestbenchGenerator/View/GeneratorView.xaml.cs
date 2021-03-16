@@ -20,7 +20,7 @@ namespace testBenchGenerator.TestbenchGenerator.View
     /// <summary>
     /// Interaction logic for GeneratorView.xaml
     /// </summary>
-    public partial class GeneratorView : UserControl
+    public partial class GeneratorView : Page
     {
         private GeneratorViewModel viewModel;
         public bool IsDragging { get; set; }
@@ -46,6 +46,14 @@ namespace testBenchGenerator.TestbenchGenerator.View
         public GeneratorView()
         {
             InitializeComponent();
+            dut.Style = (Style)FindResource(typeof(Button));
+            dut.Template = (ControlTemplate)FindResource("btnTmpltFile");
+            add.Style = (Style)FindResource(typeof(Button));
+            add.Template = (ControlTemplate)FindResource("btnTmplt");
+            remove.Style = (Style)FindResource(typeof(Button));
+            remove.Template = (ControlTemplate)FindResource("btnTmplt");
+            run.Style = (Style)FindResource(typeof(Button));
+            run.Template = (ControlTemplate)FindResource("btnTmplt");
             this.viewModel = new GeneratorViewModel(null);
             this.DataContext = this.viewModel;            
         }
@@ -246,6 +254,39 @@ namespace testBenchGenerator.TestbenchGenerator.View
             this.IsDragging = false;
             this.popup1.IsOpen = false;
             this.datains.SelectedItem = null;
+        }
+
+        private void Grid_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            var tcItem = UIHelpers.TryFindFromPoint<ListViewItem>((UIElement)sender,
+                                                    e.GetPosition(this.datains));
+            if (tcItem == null)
+                this.datains.SelectedItem = null;
+
+            var clItem = UIHelpers.TryFindFromPoint<ListViewItem>((UIElement)sender,
+                                                    e.GetPosition(this.clocks));
+            if (clItem == null)
+                this.clocks.SelectedItem = null;
+
+            var rstItem = UIHelpers.TryFindFromPoint<ListViewItem>((UIElement)sender,
+                                                    e.GetPosition(this.resets));
+            if (rstItem == null)
+                this.resets.SelectedItem = null;
+
+            var parItem = UIHelpers.TryFindFromPoint<ListViewItem>((UIElement)sender,
+                                                    e.GetPosition(this.paramss));
+            if (parItem == null)
+                this.paramss.SelectedItem = null;
+
+            var inItem = UIHelpers.TryFindFromPoint<ListViewItem>((UIElement)sender,
+                                                    e.GetPosition(this.inputs));
+            if (inItem == null)
+                this.inputs.SelectedItem = null;
+
+            var outItem = UIHelpers.TryFindFromPoint<ListViewItem>((UIElement)sender,
+                                                    e.GetPosition(this.outputs));
+            if (outItem == null)
+                this.outputs.SelectedItem = null;
         }
     }
 }

@@ -1,21 +1,22 @@
-﻿<UserControl x:Class="testBenchGenerator.TestbenchGenerator.View.GeneratorView"
+﻿<Page x:Class="testBenchGenerator.TestbenchGenerator.View.GeneratorView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:testBenchGenerator.TestbenchGenerator.View"
              xmlns:model="clr-namespace:testBenchGenerator.TestbenchGenerator.Model"
+             xmlns:ic="http://metro.mahapps.com/winfx/xaml/iconpacks"
              mc:Ignorable="d" 
-             x:Name="genView" SizeChanged="genView_SizeChanged">
-    <UserControl.Resources>
+             x:Name="genView" SizeChanged="genView_SizeChanged" Foreground="White">
+    <Page.Resources>
         <model:PolConverter x:Key="PolConverter"/>
-    </UserControl.Resources>
-    <Grid MouseLeftButtonUp="datains_MouseLeftButtonUp" MouseMove="datains_MouseMove">
+    </Page.Resources>
+    <Grid MouseLeftButtonUp="datains_MouseLeftButtonUp" MouseMove="datains_MouseMove" UIElement.PreviewMouseDown="Grid_PreviewMouseDown">
         <Popup x:Name="popup1" IsHitTestVisible="False" Placement="RelativePoint" PlacementTarget="{Binding ElementName=genView}" AllowsTransparency="True">
             <Border BorderThickness="2" BorderBrush="Black" Background="White" Opacity="0.75">
                 <StackPanel Orientation="Horizontal" Margin="4,3,8,3">
                     <Image Source="/Resources/change.png" Width="25" Height="25" />
-                    <TextBlock FontWeight="Bold" VerticalAlignment="Center" Text="{Binding ElementName=genView, Path=DraggedItem.Description}" Margin="8,0,0,0" />
+                    <TextBlock FontWeight="Bold" Foreground="#FF4C3589" VerticalAlignment="Center" Text="{Binding ElementName=genView, Path=DraggedItem.Description}" Margin="8,0,0,0" />
                 </StackPanel>
             </Border>
         </Popup>
@@ -25,7 +26,9 @@
                 <TextBlock Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Text="Module under test source file"/>
                 <StackPanel Orientation="Horizontal" Margin="20">
                     <TextBox x:Name="dutFile" Width="300" Height="25" IsReadOnly="True" VerticalContentAlignment="Center"/>
-                    <Button x:Name="dut" Margin="10,0" Height="25" Width="35" Content="..." Click="dut_Click"/>
+                    <Button x:Name="dut" Margin="10,0" Click="dut_Click">
+                        <ic:Material Kind="TextBoxPlusOutline"/>
+                    </Button>
                 </StackPanel>
             </StackPanel>
             
@@ -36,19 +39,33 @@
                         <StackPanel Orientation="Vertical">
                             <TextBlock Text="Clocks" FontWeight="Bold" Margin="10,5,0,5" x:Name="clkpanel"/>
                             <ListView x:Name="clocks" VerticalAlignment="Stretch" ItemsSource="{Binding Clocks}" Background="Transparent" BorderThickness="0" Height="Auto" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                                <ListView.ItemContainerStyle>
+                                    <Style TargetType="{x:Type ListViewItem}">
+                                        <Style.Triggers>
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Setter Property="Background" Value="#365590"/>
+                                                <Setter Property="Foreground" Value="White"/>
+                                            </Trigger>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" Value="#565570"/>
+                                                <Setter Property="Foreground" Value="White"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ListView.ItemContainerStyle>
                                 <ListView.View>
                                     <GridView>
                                         <GridViewColumn Header="Name">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <TextBlock Text="{Binding Name}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ToolTip="{Binding Name}"/>
+                                                    <TextBlock Text="{Binding Name}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ToolTip="{Binding Name}" Background="Transparent" Foreground="White"/>
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
                                         <GridViewColumn Header="Freq. (MHz)">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <TextBox Text="{Binding Frequency, Mode=TwoWay}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalAlignment="Stretch" BorderThickness="0" ToolTip="{Binding Frequency}"/>
+                                                    <TextBox Text="{Binding Frequency, Mode=TwoWay}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalAlignment="Stretch" BorderThickness="0" ToolTip="{Binding Frequency}" Background="Transparent" Foreground="White"/>
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
@@ -64,19 +81,33 @@
                         <StackPanel Orientation="Vertical">
                             <TextBlock Text="Resets" FontWeight="Bold" Margin="10,5,0,5"/>
                             <ListView x:Name="resets" VerticalAlignment="Stretch" ItemsSource="{Binding Resets}" Background="Transparent" BorderThickness="0" Height="Auto" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                                <ListView.ItemContainerStyle>
+                                    <Style TargetType="{x:Type ListViewItem}">
+                                        <Style.Triggers>
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Setter Property="Background" Value="#365590"/>
+                                                <Setter Property="Foreground" Value="White"/>
+                                            </Trigger>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" Value="#565570"/>
+                                                <Setter Property="Foreground" Value="White"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ListView.ItemContainerStyle>
                                 <ListView.View>
                                     <GridView>
                                         <GridViewColumn Header="Name">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <TextBlock Text="{Binding Name}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ToolTip="{Binding Name}"/>
+                                                    <TextBlock Text="{Binding Name}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ToolTip="{Binding Name}" Background="Transparent" Foreground="White"/>
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
                                         <GridViewColumn Header="Polarization">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <TextBox Text="{Binding Polarization, Converter={StaticResource PolConverter}, Mode=TwoWay}" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0" ToolTip="{Binding Polarization, Converter={StaticResource PolConverter}}"/>
+                                                    <TextBox Text="{Binding Polarization, Converter={StaticResource PolConverter}, Mode=TwoWay}" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" Background="Transparent" Foreground="White" VerticalAlignment="Stretch" BorderThickness="0" ToolTip="{Binding Polarization, Converter={StaticResource PolConverter}}"/>
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
@@ -92,19 +123,33 @@
                         <StackPanel Orientation="Vertical">
                             <TextBlock Text="Parameters" FontWeight="Bold" Margin="10,5,0,5"/>
                             <ListView x:Name="paramss" VerticalAlignment="Stretch" ItemsSource="{Binding Parameters}" Background="Transparent" BorderThickness="0" Height="Auto" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                                <ListView.ItemContainerStyle>
+                                    <Style TargetType="{x:Type ListViewItem}">
+                                        <Style.Triggers>
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Setter Property="Background" Value="#365590"/>
+                                                <Setter Property="Foreground" Value="White"/>
+                                            </Trigger>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" Value="#565570"/>
+                                                <Setter Property="Foreground" Value="White"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ListView.ItemContainerStyle>
                                 <ListView.View>
                                     <GridView>
                                         <GridViewColumn Header="Name">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <TextBlock Text="{Binding Name}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ToolTip="{Binding Name}"/>
+                                                    <TextBlock Text="{Binding Name}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ToolTip="{Binding Name}" Background="Transparent" Foreground="White"/>
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
                                         <GridViewColumn Header="Value">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <TextBox Text="{Binding Value, Mode=TwoWay}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0" ToolTip="{Binding Value}"/>
+                                                    <TextBox Text="{Binding Value, Mode=TwoWay}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0" ToolTip="{Binding Value}" Background="Transparent" Foreground="White"/>
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
@@ -120,19 +165,33 @@
                         <StackPanel Orientation="Vertical">
                             <TextBlock Text="Inputs" FontWeight="Bold" Margin="10,5,0,5"/>
                             <ListView x:Name="inputs" VerticalAlignment="Stretch" ItemsSource="{Binding Inputs}" Background="Transparent" BorderThickness="0" Height="Auto" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                                <ListView.ItemContainerStyle>
+                                    <Style TargetType="{x:Type ListViewItem}">
+                                        <Style.Triggers>
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Setter Property="Background" Value="#365590"/>
+                                                <Setter Property="Foreground" Value="White"/>
+                                            </Trigger>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" Value="#565570"/>
+                                                <Setter Property="Foreground" Value="White"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ListView.ItemContainerStyle>
                                 <ListView.View>
                                     <GridView>
                                         <GridViewColumn Header="Name">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <TextBlock Text="{Binding Name}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ToolTip="{Binding Name}"/>
+                                                    <TextBlock Text="{Binding Name}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ToolTip="{Binding Name}" Background="Transparent" Foreground="White"/>
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
                                         <GridViewColumn Header="Bitwidth">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <TextBlock Text="{Binding Bitwidth}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ToolTip="{Binding Bitwidth}"/>
+                                                    <TextBlock Text="{Binding Bitwidth}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ToolTip="{Binding Bitwidth}" Background="Transparent" Foreground="White"/>
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
@@ -151,6 +210,16 @@
                                 <ListView.ItemContainerStyle>
                                     <Style TargetType="ListViewItem">
                                         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                        <Style.Triggers>
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Setter Property="Background" Value="#365590"/>
+                                                <Setter Property="Foreground" Value="White"/>
+                                            </Trigger>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" Value="#565570"/>
+                                                <Setter Property="Foreground" Value="White"/>
+                                            </Trigger>
+                                        </Style.Triggers>
                                     </Style>
                                 </ListView.ItemContainerStyle>
                                 <ListView.View>
@@ -158,14 +227,14 @@
                                         <GridViewColumn Header="Name">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <TextBlock Text="{Binding Name}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ToolTip="{Binding Name}"/>
+                                                    <TextBlock Text="{Binding Name}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ToolTip="{Binding Name}" Background="Transparent" Foreground="White"/>
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
                                         <GridViewColumn Header="Bitwidth">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <TextBlock Text="{Binding Bitwidth}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ToolTip="{Binding Bitwidth}"/>
+                                                    <TextBlock Text="{Binding Bitwidth}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ToolTip="{Binding Bitwidth}" Background="Transparent" Foreground="White"/>
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
@@ -186,75 +255,89 @@
                             <TextBlock Text="Test Cases" FontWeight="Bold" Margin="10,5,0,5" x:Name="tcpanel"/>
                             <ListView x:Name="datains" VerticalAlignment="Stretch" ItemsSource="{Binding TestCases}" Background="Transparent" BorderThickness="0" SelectedItem="{Binding SelectedTestCase}" Height="Auto" 
                                       PreviewMouseDoubleClick="datains_PreviewMouseDoubleClick" PreviewMouseLeftButtonDown="datains_PreviewMouseLeftButtonDown">
+                                <ListView.ItemContainerStyle>
+                                    <Style TargetType="{x:Type ListViewItem}">
+                                        <Style.Triggers>
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Setter Property="Background" Value="#365590"/>
+                                                <Setter Property="Foreground" Value="White"/>
+                                            </Trigger>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" Value="#565570"/>
+                                                <Setter Property="Foreground" Value="White"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ListView.ItemContainerStyle>
                                 <ListView.View>
                                     <GridView>
                                         <GridViewColumn Header="No">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <TextBlock Margin="5,0" Text="{Binding Order}" HorizontalAlignment="Center" VerticalAlignment="Stretch"/>
+                                                    <TextBlock Margin="5,0" Text="{Binding Order}" HorizontalAlignment="Center" VerticalAlignment="Stretch" Background="Transparent" Foreground="White"/>
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
                                         <GridViewColumn Header="Clock sync">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <TextBlock Text="{Binding ClockSync}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ToolTip="{Binding ClockSync}"/>
+                                                    <TextBlock Text="{Binding ClockSync}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ToolTip="{Binding ClockSync}" Background="Transparent" Foreground="White"/>
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
                                         <GridViewColumn Header="Input ports">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <TextBlock Text="{Binding DIs}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ToolTip="{Binding DIs}"/>
+                                                    <TextBlock Text="{Binding DIs}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ToolTip="{Binding DIs}" Background="Transparent" Foreground="White"/>
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>                                        
                                         <GridViewColumn Header="Input valid port">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <TextBlock Text="{Binding ValidIn}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ToolTip="{Binding ValidIn}"/>
+                                                    <TextBlock Text="{Binding ValidIn}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ToolTip="{Binding ValidIn}" Background="Transparent" Foreground="White"/>
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
                                         <GridViewColumn Header="Input pattern">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <TextBlock Text="{Binding DataVector}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ToolTip="{Binding DataVector}"/>
+                                                    <TextBlock Text="{Binding DataVector}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ToolTip="{Binding DataVector}" Background="Transparent" Foreground="White"/>
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
                                         <GridViewColumn Header="Valid sequence">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <TextBlock Text="{Binding VldSeq}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ToolTip="{Binding VldSeq}"/>
+                                                    <TextBlock Text="{Binding VldSeq}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ToolTip="{Binding VldSeq}" Background="Transparent" Foreground="White"/>
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
                                         <GridViewColumn Header="Output ports">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <TextBlock Text="{Binding DOs}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ToolTip="{Binding DOs}"/>
+                                                    <TextBlock Text="{Binding DOs}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ToolTip="{Binding DOs}" Background="Transparent" Foreground="White"/>
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
                                         <GridViewColumn Header="Output valid port">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <TextBlock Text="{Binding ValidOut}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ToolTip="{Binding ValidOut}"/>
+                                                    <TextBlock Text="{Binding ValidOut}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ToolTip="{Binding ValidOut}" Background="Transparent" Foreground="White"/>
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
                                         <GridViewColumn Header="Radix">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <TextBlock Text="{Binding Radix}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ToolTip="{Binding Radix}"/>
+                                                    <TextBlock Text="{Binding Radix}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ToolTip="{Binding Radix}" Background="Transparent" Foreground="White"/>
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
                                         <GridViewColumn Header="Loop">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <CheckBox Margin="5,0" IsChecked="{Binding Loop}" HorizontalAlignment="Center"/>
+                                                    <CheckBox Margin="5,0" IsChecked="{Binding Loop}" HorizontalAlignment="Center" Foreground="#FF4C3589"/>
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
@@ -263,10 +346,14 @@
                             </ListView>
                             <StackPanel Orientation="Horizontal" Grid.Column="6" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,10,10,10" x:Name="btnspanel">
                                 <StackPanel ToolTip="{Binding ProblemAddToolTip}" ToolTipService.IsEnabled="{Binding CanAddN}">
-                                    <Button x:Name="add" Content="Add" Click="add_Click"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Margin="0,0,10,0" IsEnabled="{Binding CanAdd}"/>
+                                    <Button x:Name="add" Click="add_Click"  HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,10,0" IsEnabled="{Binding CanAdd}">
+                                        <ic:Material Kind="PlaylistPlus"/>
+                                    </Button>
                                 </StackPanel>
                                 <StackPanel ToolTip="{Binding ProblemRemoveToolTip}" ToolTipService.IsEnabled="{Binding CanRemoveN}">
-                                    <Button x:Name="remove" Content="Remove" Click="remove_Click"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" IsEnabled="{Binding CanRemove}"/>
+                                    <Button x:Name="remove" Click="remove_Click"  HorizontalAlignment="Center" VerticalAlignment="Center" IsEnabled="{Binding CanRemove}">
+                                        <ic:Material Kind="PlaylistRemove"/>
+                                    </Button>
                                 </StackPanel>
                             </StackPanel>
                         </StackPanel>
@@ -278,11 +365,11 @@
             <StackPanel Orientation="Horizontal" VerticalAlignment="Stretch" HorizontalAlignment="Right" x:Name="genpanel" Margin="0,10,0,10">
                 <TextBlock x:Name="infoBlock" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="3" Grid.Column="0"/>
                 <StackPanel ToolTip="{Binding ProblemGenerateToolTip}" ToolTipService.IsEnabled="{Binding CanGenerateN}">
-                    <Button x:Name="run" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Height="25" Width="70" Content="Generate" IsEnabled="{Binding CanGenerate}" Click="run_Click"/>
+                    <Button x:Name="run" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Content="Generate" IsEnabled="{Binding CanGenerate}" Click="run_Click"/>
                 </StackPanel>
             </StackPanel>
 
         </StackPanel>
         
     </Grid>
-</UserControl>
+</Page>

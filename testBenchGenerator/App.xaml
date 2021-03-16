@@ -8,11 +8,34 @@
         <Style TargetType="{x:Type Window}">
             <Setter Property="FontFamily" Value="Resources/Fonts/#Dosis" />
         </Style>
-        <Style TargetType="{x:Type oxy:Plot}">
+        <Style TargetType="{x:Type Page}">
             <Setter Property="FontFamily" Value="Resources/Fonts/#Dosis" />
-            <Setter Property="TitleFont" Value="Resources/Fonts/#Dosis" />
-            <Setter Property="DefaultFont" Value="Resources/Fonts/#Dosis" />
         </Style>
-        
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="TextElement.FontFamily" Value="Resources/Fonts/#Dosis"/>
+            <Setter Property="Background" Value="#39385d"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#365590"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>        
+        <ControlTemplate x:Key="btnTmplt" TargetType="{x:Type Button}">
+            <Border Width="100" Height="25" CornerRadius="12" Background="{TemplateBinding Background}">
+                <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            </Border>
+        </ControlTemplate>
+        <ControlTemplate x:Key="btnTmpltFile" TargetType="{x:Type Button}">
+            <Border Width="35" Height="25" CornerRadius="5" Background="{TemplateBinding Background}">
+                <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            </Border>
+        </ControlTemplate>
+        <ControlTemplate x:Key="btnTmpltMenu" TargetType="{x:Type Button}">
+            <Border Height="25" CornerRadius="12" Background="{TemplateBinding Background}">
+                <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            </Border>
+        </ControlTemplate>
     </Application.Resources>
 </Application>

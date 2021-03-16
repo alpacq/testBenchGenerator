@@ -22,7 +22,7 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.View
     /// <summary>
     /// Interaction logic for AnalyzerView.xaml
     /// </summary>
-    public partial class AnalyzerView : UserControl
+    public partial class AnalyzerView : Page
     {
         private WaveformDesignerViewModel wfdVM;
         private WaveformAnalyzerViewModel wfaVM;
@@ -32,12 +32,12 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.View
         public AnalyzerView()
         {
             InitializeComponent();
-            wfdF.Style = (Style)FindResource(typeof(OxyPlot.Wpf.Plot));
-            wfdI.Style = (Style)FindResource(typeof(OxyPlot.Wpf.Plot));
-            wfdQ.Style = (Style)FindResource(typeof(OxyPlot.Wpf.Plot));
-            wfaF.Style = (Style)FindResource(typeof(OxyPlot.Wpf.Plot));
-            wfaI.Style = (Style)FindResource(typeof(OxyPlot.Wpf.Plot));
-            wfaQ.Style = (Style)FindResource(typeof(OxyPlot.Wpf.Plot));
+            design.Style = (Style)FindResource(typeof(Button));
+            design.Template = (ControlTemplate)FindResource("btnTmplt");
+            export.Style = (Style)FindResource(typeof(Button));
+            export.Template = (ControlTemplate)FindResource("btnTmplt");
+            import.Style = (Style)FindResource(typeof(Button));
+            import.Template = (ControlTemplate)FindResource("btnTmplt");
             this.bwD = new BackgroundWorker();
             this.bwA = new BackgroundWorker();
             this.bwAA = new BackgroundWorker();

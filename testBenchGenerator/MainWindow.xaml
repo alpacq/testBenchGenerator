@@ -3,32 +3,51 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:testBenchGenerator"
-        xmlns:tbg="clr-namespace:testBenchGenerator"
-        xmlns:vtbg="clr-namespace:testBenchGenerator.TestbenchGenerator.View"
-        xmlns:vfir="clr-namespace:testBenchGenerator.FIRDesigner.View"
-        xmlns:vwfda="clr-namespace:testBenchGenerator.WaveformDesignerAndAnalyzer.View"
+        xmlns:ic="http://metro.mahapps.com/winfx/xaml/iconpacks"
         mc:Ignorable="d"
-        Title="FPGA Developer Tools" WindowStartupLocation="CenterScreen" Icon="ide.ico" SizeChanged="Window_SizeChanged">
+        Title="FPGA Developer Tools" WindowStartupLocation="CenterScreen" Icon="ide.ico" SizeChanged="Window_SizeChanged" WindowStyle="None" ResizeMode="NoResize">
     <Grid>
-        <Border>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Background="#181735">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="0" x:Name="tbgBtn" Click="tbgBtn_Click" Margin="5,0" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                <ic:Material Kind="Memory"/>
+            </Button>
+            <Button Grid.Column="1" x:Name="wfpBtn" Click="wfpBtn_Click" Margin="5,0" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                <ic:Material Kind="SineWave"/>
+            </Button>
+            <Button Grid.Column="2" x:Name="firBtn" Click="firBtn_Click" Margin="5,0" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                <ic:Material Kind="Waveform"/>
+            </Button>
+
+            <Button Grid.Column="8" x:Name="exit" Click="exit_Click" Margin="10,0" HorizontalAlignment="Right" VerticalAlignment="Center">
+                <ic:Material Kind="Close"/>
+            </Button>
+
+        </Grid>
+        
+        <Border Grid.Row="1">
             <Border.Background>
-                <SolidColorBrush Color="#FF4C3589"/>
+                <SolidColorBrush Color="#0f0f2d"/>
             </Border.Background>
         </Border>
-        <TabControl Grid.Row="1" x:Name="tab" SelectionChanged="tab_SelectionChanged" Background="Transparent" Foreground="White">           
-            <TabItem Header="Testbench Generator" Background="Transparent" Foreground="White">
-                <vtbg:GeneratorView x:Name="genView" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-            </TabItem>
 
-            <TabItem Header="Waveform designer &amp; analyzer" Background="Transparent" Foreground="White">
-                <vwfda:AnalyzerView x:Name="anView" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-            </TabItem>
-
-            <TabItem Header="FIR Designer" Background="Transparent" Foreground="White">
-                <vfir:FIRView x:Name="firView" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-            </TabItem>
-        </TabControl>        
-
+        <Frame x:Name="presenter" Grid.Row="1" Background="Transparent" Foreground="White" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" NavigationUIVisibility="Hidden"/>
+        
     </Grid>
 </Window>

@@ -25,6 +25,12 @@ namespace testBenchGenerator.TestbenchGenerator.View
         {
             InitializeComponent();
             Style = (Style)FindResource(typeof(Window));
+            inB.Style = (Style)FindResource(typeof(Button));
+            inB.Template = (ControlTemplate)FindResource("btnTmpltFile");
+            add.Style = (Style)FindResource(typeof(Button));
+            cancel.Style = (Style)FindResource(typeof(Button));
+            add.Template = (ControlTemplate)FindResource("btnTmplt");
+            cancel.Template = (ControlTemplate)FindResource("btnTmplt");
             this.viewModel = viewModel;
             this.DataContext = this.viewModel;
             if (this.viewModel.Clock != null)

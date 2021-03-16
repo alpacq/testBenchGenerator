@@ -22,7 +22,6 @@ namespace testBenchGenerator.TestbenchGenerator.ViewModel
         private string seq;
         private PortViewModel validIn;
         private PortViewModel validOut;
-        private string addText;
         private List<string> seqs;
         private List<string> radixes;
         private string problemToolTip;
@@ -119,12 +118,6 @@ namespace testBenchGenerator.TestbenchGenerator.ViewModel
             set { this.validOut = value; OnPropertyChanged("ValidOut"); OnPropertyChanged("CanSave"); OnPropertyChanged("CanSaveN"); }
         }
 
-        public string AddText
-        {
-            get { return this.addText; }
-            set { this.addText = value; OnPropertyChanged("AddText"); }
-        }
-
         public string ProblemToolTip
         {
             get { return this.problemToolTip; }
@@ -164,7 +157,7 @@ namespace testBenchGenerator.TestbenchGenerator.ViewModel
                 }
                 if(!this.Outs.Any(i => i.IsSel))
                 {
-                    ptt += "Data output ports are not selected\n";
+                    ptt += "Data output ports are not selected.\n";
                     toRet = false;
                 }
                 if(this.ValidIn == null)
@@ -178,7 +171,7 @@ namespace testBenchGenerator.TestbenchGenerator.ViewModel
                     toRet = false;
                 }
                 if (ptt.EndsWith("\n"))
-                    ptt = ptt.Remove(ptt.Length - 2);
+                    ptt = ptt.Remove(ptt.Length - 1);
                 this.ProblemToolTip = ptt;
                 return toRet;
             }
@@ -209,7 +202,6 @@ namespace testBenchGenerator.TestbenchGenerator.ViewModel
             {
                 this.Outs.Add(new PortSelViewModel(new PortSel(port.Port)));
             }
-            this.AddText = "Add";
         }
 
         public NewTCViewModel(ModuleFileViewModel moduleFileVM, TestCaseViewModel tcVM)
@@ -247,8 +239,6 @@ namespace testBenchGenerator.TestbenchGenerator.ViewModel
             this.ValidIn = this.ModuleFileVM.Ins.Where(p => p.Name == this.TCVM.ValidIn.Name).FirstOrDefault();
             this.ValidOut = this.ModuleFileVM.Outputs.Where(p => p.Name == this.TCVM.ValidOut.Name).FirstOrDefault();
             this.InputPath = this.TCVM.DataVector;
-
-            this.AddText = "Save";
         }
 
         public void Add()

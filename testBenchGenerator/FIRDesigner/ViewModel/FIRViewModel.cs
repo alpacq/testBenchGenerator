@@ -190,7 +190,7 @@ namespace testBenchGenerator.FIRDesigner.ViewModel
                     toRet = false;
                 }
                 if (ptt.EndsWith("\n"))
-                    ptt = ptt.Remove(ptt.Length - 2);
+                    ptt = ptt.Remove(ptt.Length - 1);
                 this.ProblemToolTip = ptt;
                 return toRet;
             }
@@ -224,7 +224,7 @@ namespace testBenchGenerator.FIRDesigner.ViewModel
                     toRet = false;
                 }
                 if (ptt.EndsWith("\n"))
-                    ptt = ptt.Remove(ptt.Length - 2);
+                    ptt = ptt.Remove(ptt.Length - 1);
                 this.ProblemExportToolTip = ptt;
                 return toRet;
             }

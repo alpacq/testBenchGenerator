@@ -119,7 +119,7 @@ namespace testBenchGenerator.TestbenchGenerator.ViewModel
                     toRet = false;
                 }
                 if (ptt.EndsWith("\n"))
-                    ptt = ptt.Remove(ptt.Length - 2);
+                    ptt = ptt.Remove(ptt.Length - 1);
                 this.ProblemRemoveToolTip = ptt;
                 return toRet;
             }

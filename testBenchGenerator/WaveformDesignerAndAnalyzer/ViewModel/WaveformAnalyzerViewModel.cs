@@ -128,7 +128,7 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.ViewModel
                     }
                 }
                 if (ptt.EndsWith("\n"))
-                    ptt = ptt.Remove(ptt.Length - 2);
+                    ptt = ptt.Remove(ptt.Length - 1);
                 this.ProblemToolTip = ptt;
                 return toRet;
             }

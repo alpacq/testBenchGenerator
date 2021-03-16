@@ -20,16 +20,16 @@ namespace testBenchGenerator.FIRDesigner.View
     /// <summary>
     /// Interaction logic for FIRView.xaml
     /// </summary>
-    public partial class FIRView : System.Windows.Controls.UserControl
+    public partial class FIRView : Page
     {
         private FIRViewModel viewModel;
         public FIRView()
         {
             InitializeComponent();
-            //firResp.Style = (Style)FindResource(typeof(OxyPlot.Wpf.Plot));
-            //firChart.Style = (Style)FindResource(typeof(OxyPlot.Wpf.Plot));
-            //winResp.Style = (Style)FindResource(typeof(OxyPlot.Wpf.Plot));
-            //winChart.Style = (Style)FindResource(typeof(OxyPlot.Wpf.Plot));
+            design.Style = (Style)FindResource(typeof(Button));
+            design.Template = (ControlTemplate)FindResource("btnTmplt");
+            export.Style = (Style)FindResource(typeof(Button));
+            export.Template = (ControlTemplate)FindResource("btnTmplt");
             this.viewModel = new FIRViewModel(new FIR());
             this.DataContext = this.viewModel;
             this.wt.SelectedIndex = 0;

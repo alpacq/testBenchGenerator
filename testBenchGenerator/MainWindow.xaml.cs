@@ -6,13 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using testBenchGenerator.FIRDesigner.View;
+using testBenchGenerator.TestbenchGenerator.View;
+using testBenchGenerator.WaveformDesignerAndAnalyzer.View;
 
 namespace testBenchGenerator
 {
@@ -21,16 +17,30 @@ namespace testBenchGenerator
     /// </summary>
     public partial class MainWindow : Window
     {
+        private FIRView firView;
+        private GeneratorView genView;
+        private AnalyzerView anView;
+
         public MainWindow()
         {
             InitializeComponent();
             Style = (Style)FindResource(typeof(Window));
+            tbgBtn.Style = (Style)FindResource(typeof(Button));
+            tbgBtn.Template = (ControlTemplate)FindResource("btnTmpltMenu");
+            firBtn.Style = (Style)FindResource(typeof(Button));
+            firBtn.Template = (ControlTemplate)FindResource("btnTmpltMenu");
+            wfpBtn.Style = (Style)FindResource(typeof(Button));
+            wfpBtn.Template = (ControlTemplate)FindResource("btnTmpltMenu");
+            exit.Style = (Style)FindResource(typeof(Button));
+            exit.Template = (ControlTemplate)FindResource("btnTmpltFile");
+            this.firView = new FIRView();
+            this.genView = new GeneratorView();
+            this.anView = new AnalyzerView();
+            this.firView.Style = (Style)FindResource(typeof(Page));
+            this.genView.Style = (Style)FindResource(typeof(Page));
+            this.anView.Style = (Style)FindResource(typeof(Page));
+            this.presenter.Content = this.genView;
         }        
-
-        private void tab_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
 
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
         {
@@ -47,6 +57,26 @@ namespace testBenchGenerator
             double windowHeight = this.Height;
             this.Left = (screenWidth / 2) - (windowWidth / 2);
             this.Top = (screenHeight / 2) - (windowHeight / 2);
+        }
+
+        private void tbgBtn_Click(object sender, RoutedEventArgs e)
+        {
+            this.presenter.Content = this.genView;
+        }
+
+        private void wfpBtn_Click(object sender, RoutedEventArgs e)
+        {
+            this.presenter.Content = this.anView;
+        }
+
+        private void firBtn_Click(object sender, RoutedEventArgs e)
+        {
+            this.presenter.Content = this.firView;
+        }
+
+        private void exit_Click(object sender, RoutedEventArgs e)
+        {
+            App.Current.Shutdown();
         }
     }
 }
