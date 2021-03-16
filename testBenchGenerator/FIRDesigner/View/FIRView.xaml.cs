@@ -30,6 +30,9 @@ namespace testBenchGenerator.FIRDesigner.View
             design.Template = (ControlTemplate)FindResource("btnTmplt");
             export.Style = (Style)FindResource(typeof(Button));
             export.Template = (ControlTemplate)FindResource("btnTmplt");
+            wt.Style = (Style)FindResource("ComboBoxFlatStyle");
+            ft.Style = (Style)FindResource("ComboBoxFlatStyle");
+            pt.Style = (Style)FindResource("ComboBoxFlatStyle");
             this.viewModel = new FIRViewModel(new FIR());
             this.DataContext = this.viewModel;
             this.wt.SelectedIndex = 0;

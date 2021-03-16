@@ -315,7 +315,7 @@
 
         </Grid>
 
-        <Border Grid.RowSpan="2" Grid.Column="0" BorderThickness="0,0,1,0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" BorderBrush="Black"/>
+        <Border Grid.RowSpan="2" Grid.Column="0" BorderThickness="0,0,1,0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" BorderBrush="White"/>
 
     </Grid>
 </Page>

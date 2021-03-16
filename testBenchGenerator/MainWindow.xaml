@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ic="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:loc="clr-namespace:testBenchGenerator"
         mc:Ignorable="d"
         Title="FPGA Developer Tools" WindowStartupLocation="CenterScreen" Icon="ide.ico" SizeChanged="Window_SizeChanged" WindowStyle="None" ResizeMode="NoResize">
     <Grid>
@@ -25,13 +26,13 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <Button Grid.Column="0" x:Name="tbgBtn" Click="tbgBtn_Click" Margin="5,0" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+            <Button Grid.Column="0" x:Name="tbgBtn" Click="tbgBtn_Click" Margin="5,0" HorizontalAlignment="Stretch" VerticalAlignment="Center" MouseEnter="tbgBtn_MouseEnter" MouseLeave="onMouseLeave">
                 <ic:Material Kind="Memory"/>
             </Button>
-            <Button Grid.Column="1" x:Name="wfpBtn" Click="wfpBtn_Click" Margin="5,0" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+            <Button Grid.Column="1" x:Name="wfpBtn" Click="wfpBtn_Click" Margin="5,0" HorizontalAlignment="Stretch" VerticalAlignment="Center" MouseEnter="wfpBtn_MouseEnter" MouseLeave="onMouseLeave">
                 <ic:Material Kind="SineWave"/>
             </Button>
-            <Button Grid.Column="2" x:Name="firBtn" Click="firBtn_Click" Margin="5,0" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+            <Button Grid.Column="2" x:Name="firBtn" Click="firBtn_Click" Margin="5,0" HorizontalAlignment="Stretch" VerticalAlignment="Center" MouseEnter="firBtn_MouseEnter" MouseLeave="onMouseLeave">
                 <ic:Material Kind="Waveform"/>
             </Button>
 
@@ -48,6 +49,12 @@
         </Border>
 
         <Frame x:Name="presenter" Grid.Row="1" Background="Transparent" Foreground="White" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" NavigationUIVisibility="Hidden"/>
+
+        <Popup x:Name="popupWrapper" AllowsTransparency="True" HorizontalOffset="5">
+            <Grid>
+                <loc:NavPopup x:Name="header" Foreground="White"/>
+            </Grid>
+        </Popup>
         
     </Grid>
 </Window>

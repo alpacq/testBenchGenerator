@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using testBenchGenerator.FIRDesigner.View;
 using testBenchGenerator.TestbenchGenerator.View;
 using testBenchGenerator.WaveformDesignerAndAnalyzer.View;
@@ -77,6 +78,36 @@ namespace testBenchGenerator
         private void exit_Click(object sender, RoutedEventArgs e)
         {
             App.Current.Shutdown();
+        }
+
+        private void tbgBtn_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            popupWrapper.PlacementTarget = tbgBtn;
+            popupWrapper.Placement = PlacementMode.Bottom;
+            popupWrapper.IsOpen = true;
+            header.PopupText.Text = "Testbench generator";
+        }
+
+        private void wfpBtn_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            popupWrapper.PlacementTarget = wfpBtn;
+            popupWrapper.Placement = PlacementMode.Bottom;
+            popupWrapper.IsOpen = true;
+            header.PopupText.Text = "Waveform processor";
+        }
+
+        private void firBtn_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            popupWrapper.PlacementTarget = firBtn;
+            popupWrapper.Placement = PlacementMode.Bottom;
+            popupWrapper.IsOpen = true;
+            header.PopupText.Text = "FIR designer";
+        }
+
+        private void onMouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            popupWrapper.Visibility = Visibility.Collapsed;
+            popupWrapper.IsOpen = false;
         }
     }
 }

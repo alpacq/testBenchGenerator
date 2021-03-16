@@ -220,6 +220,9 @@
     <Compile Include="Common\Signal.cs" />
     <Compile Include="Common\SineSignal.cs" />
     <Compile Include="Common\ViewModelBase.cs" />
+    <Compile Include="NavPopup.xaml.cs">
+      <DependentUpon>NavPopup.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TestbenchGenerator\Model\Clock.cs" />
     <Compile Include="FIRDesigner\Model\FilterType.cs" />
     <Compile Include="FIRDesigner\Model\FIR.cs" />
@@ -280,6 +283,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="NavPopup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="WaveformDesignerAndAnalyzer\View\AnalyzerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

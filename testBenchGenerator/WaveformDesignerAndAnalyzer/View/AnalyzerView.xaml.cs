@@ -38,6 +38,13 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.View
             export.Template = (ControlTemplate)FindResource("btnTmplt");
             import.Style = (Style)FindResource(typeof(Button));
             import.Template = (ControlTemplate)FindResource("btnTmplt");
+            desType.Style = (Style)FindResource("ComboBoxFlatStyle");
+            modType.Style = (Style)FindResource("ComboBoxFlatStyle");
+            desRadix.Style = (Style)FindResource("ComboBoxFlatStyle");
+            desDel.Style = (Style)FindResource("ComboBoxFlatStyle");
+            anType.Style = (Style)FindResource("ComboBoxFlatStyle");
+            anRadix.Style = (Style)FindResource("ComboBoxFlatStyle");
+            anDel.Style = (Style)FindResource("ComboBoxFlatStyle");
             this.bwD = new BackgroundWorker();
             this.bwA = new BackgroundWorker();
             this.bwAA = new BackgroundWorker();
