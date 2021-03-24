@@ -55,12 +55,12 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.Model
 
         public double Freq
         {
-            get { return (this.Signal is SineSignal) ? (this.Signal as SineSignal).Freq : 0.0; }
+            get { return (this.Signal is FreqSignal) ? (this.Signal as FreqSignal).Freq : 0.0; }
             set
             {
-                if (this.Signal is SineSignal)
+                if (this.Signal is FreqSignal)
                 {
-                    (this.Signal as SineSignal).Freq = value;
+                    (this.Signal as FreqSignal).Freq = value;
                 }
             }
         }

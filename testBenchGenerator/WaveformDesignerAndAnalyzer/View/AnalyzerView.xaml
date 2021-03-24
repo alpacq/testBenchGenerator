@@ -137,9 +137,13 @@
 
                 <ComboBox x:Name="desType" Grid.Row="0" Grid.Column="1" BorderThickness="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="10,0" SelectionChanged="desType_SelectionChanged" HorizontalContentAlignment="Right">
                     <ComboBoxItem Content="Sine"/>
+                    <ComboBoxItem Content="Square"/>
+                    <ComboBoxItem Content="Triangle"/>
+                    <ComboBoxItem Content="Saw"/>
                     <ComboBoxItem Content="Ramp"/>
-                    <ComboBoxItem Content="OFDM"/>
                     <ComboBoxItem Content="Constant"/>
+                    <ComboBoxItem Content="White noise"/>
+                    <ComboBoxItem Content="OFDM"/>
                 </ComboBox>
                 <TextBox x:Name="desFs" Background="#0f0f2d" Foreground="White" BorderThickness="1" Grid.Row="1" Grid.Column="1" Text="{Binding Fs}" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Margin="10,0" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonUp="TextBox_PreviewMouseLeftButtonUp"/>
                 <TextBox x:Name="desBitwidth" Background="#0f0f2d" Foreground="White" BorderThickness="1" Grid.Row="2" Grid.Column="1" Text="{Binding Bitwidth}" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Margin="10,0" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonUp="TextBox_PreviewMouseLeftButtonUp"/>

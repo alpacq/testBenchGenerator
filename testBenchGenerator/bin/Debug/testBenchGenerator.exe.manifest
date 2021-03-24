@@ -451,14 +451,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="testBenchGenerator.exe" size="1402880">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="testBenchGenerator.exe" size="1407488">
       <assemblyIdentity name="testBenchGenerator" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>Ego2pBPtDuDBqk1CroLmFw894lKgONTJuIuSw44rNZA=</dsig:DigestValue>
+        <dsig:DigestValue>R/+F1WBtDNxTQ2anFH3NMb0GFaZ6yGGG7NlKoHyJsj0=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

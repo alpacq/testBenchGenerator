@@ -56,13 +56,16 @@ namespace testBenchGenerator.FIRDesigner.View
         private void export_Click(object sender, RoutedEventArgs e)
         {
             Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
-            dlg.Filter = "Text File|*.txt";
-            dlg.Title = "Export Filter Coefficients";
+            dlg.Filter = "Text file (*.txt)|*.txt|Xilinx coefficient file (*.coe)|*.coe";
+            dlg.Title = "Export filter coefficients";
             dlg.ShowDialog();
 
             if (dlg.FileName != "")
             {
-                this.viewModel.Export(dlg.FileName);
+                if (dlg.FileName.EndsWith(".txt"))
+                    this.viewModel.ExportTxt(dlg.FileName);
+                else if (dlg.FileName.EndsWith(".coe"))
+                    this.viewModel.ExportCoe(dlg.FileName);
                 this.infoBlock.Text = DateTime.Now.ToLongTimeString() + "Coefficients exported successfully.";
             }
         }
@@ -301,6 +304,16 @@ namespace testBenchGenerator.FIRDesigner.View
         private void pt_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             this.viewModel.PlotType = this.pt.SelectedItem.ToString();
+        }
+
+        private void bw_GotFocus(object sender, RoutedEventArgs e)
+        {
+            this.bw.SelectAll();
+        }
+
+        private void bw_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            this.bw.SelectAll();
         }
     }
 }

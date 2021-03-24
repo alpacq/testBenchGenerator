@@ -53,6 +53,12 @@ namespace testBenchGenerator.FIRDesigner.ViewModel
             set { this.FIR.HighFreq = value; OnPropertyChanged("HighFreq"); OnPropertyChanged("CanUpdateN"); OnPropertyChanged("CanDesign"); OnPropertyChanged("CanExport"); OnPropertyChanged("CanExportN"); }
         }
 
+        public int Bitwidth
+        {
+            get { return this.FIR.Bitwidth; }
+            set { this.FIR.Bitwidth = value; OnPropertyChanged("HighFreq"); OnPropertyChanged("CanUpdateN"); OnPropertyChanged("CanDesign"); OnPropertyChanged("CanExport"); OnPropertyChanged("CanExportN"); }
+        }
+
         public int FreqSamples
         {
             get { return this.FIR.FreqSamples; }
@@ -154,7 +160,7 @@ namespace testBenchGenerator.FIRDesigner.ViewModel
             get 
             {
                 string coeffs = String.Empty;
-                foreach (double coeff in this.WindowedImpulseResponse) coeffs += (coeff.ToString("f8") + ", ");
+                foreach (double coeff in this.WindowedImpulseResponse) coeffs += (Math.Round(coeff * (Math.Pow(2, (this.Bitwidth - 1)))).ToString() + ", ");
                 if(coeffs.Length > 2)
                     coeffs = coeffs.Remove(coeffs.Length - 2);
                 return coeffs;
@@ -177,16 +183,19 @@ namespace testBenchGenerator.FIRDesigner.ViewModel
                     ptt += "Sampling frequency cannot be negative.\n";
                     toRet = false;
                 }
-
                 if (this.LowFreq >= 0.5 / this.Ts || this.HighFreq >= 0.5 / this.Ts)
                 {
                     ptt += "Cut-off frequency has to be less than the Nyquist frequency (i.e. sampling frequency / 2).\n";
                     toRet = false;
                 }
-
                 if (this.Length < 0 || this.ShiftSamples < 0)
                 {
                     ptt += "Total number of samples and sample shift number both need to be integers, greater than zero.";
+                    toRet = false;
+                }
+                if(this.Bitwidth <= 0)
+                {
+                    ptt += "Bitwidth cannot be negative or equal to zero.\n";
                     toRet = false;
                 }
                 if (ptt.EndsWith("\n"))
@@ -329,7 +338,7 @@ namespace testBenchGenerator.FIRDesigner.ViewModel
             }
         }
 
-        public void Export(string path)
+        public void ExportTxt(string path)
         {
             string[] data = new string[3];
             data[0] = "Filter Order: " + this.Length + " Sampling Frequency (Hz): " + this.Fs.ToString("F6") + " Cut-Off Frequency Lo (Hz): " + this.LowFreq.ToString("F6") + " Cut-Off Frequency Hi (Hz): " + this.HighFreq.ToString("F6") + "\n\n";
@@ -343,6 +352,20 @@ namespace testBenchGenerator.FIRDesigner.ViewModel
             }
             data[1] += "\n\n";
             data[2] += "};";
+
+            System.IO.File.WriteAllLines(path, data);
+        }
+
+        public void ExportCoe(string path)
+        {
+            string[] data = new string[2];
+
+            data[0] = "Radix = 10;";
+            string coeffs = String.Empty;
+            foreach (double coeff in this.WindowedImpulseResponse) coeffs += (((int)Math.Round(coeff * (Math.Pow(2, (this.Bitwidth - 1))))).ToString() + ", ");
+            if (coeffs.Length > 2)
+                coeffs = coeffs.Remove(coeffs.Length - 2);
+            data[1] = "CoefData= " + coeffs + ";";
 
             System.IO.File.WriteAllLines(path, data);
         }

@@ -16,6 +16,7 @@ namespace testBenchGenerator.FIRDesigner.Model
         private double lowFreq;
         private double highFreq;
         private int freqSamples;
+        private int bitwidth;
         private WindowType winType;
         private FilterType filtType;
         private List<double> timeVector;
@@ -63,6 +64,12 @@ namespace testBenchGenerator.FIRDesigner.Model
         {
             get { return this.freqSamples; }
             set { this.freqSamples = value; }
+        }
+
+        public int Bitwidth
+        {
+            get { return this.bitwidth; }
+            set { this.bitwidth = value; }
         }
 
         public WindowType WinType
@@ -383,6 +390,7 @@ namespace testBenchGenerator.FIRDesigner.Model
             this.WinRespMag = new List<double>();
             this.WinMag = new List<double>();
             this.FreqSamples = 256;
+            this.Bitwidth = 16;
         }
 
         public void Update()

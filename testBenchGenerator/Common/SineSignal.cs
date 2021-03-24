@@ -15,6 +15,7 @@ namespace testBenchGenerator.Common
             get { return this.freq; }
             set { this.freq = value; }
         }
+
         public override void Create()
         {
             this.CreateTimeVector();

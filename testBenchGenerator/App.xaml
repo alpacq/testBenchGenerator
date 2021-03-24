@@ -21,6 +21,9 @@
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="Background" Value="#365590"/>
                 </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Opacity" Value="0.5"/>
+                </Trigger>
             </Style.Triggers>
         </Style>        
         <ControlTemplate x:Key="btnTmplt" TargetType="{x:Type Button}">

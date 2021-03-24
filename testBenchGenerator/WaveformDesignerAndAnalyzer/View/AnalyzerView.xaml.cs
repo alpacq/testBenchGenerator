@@ -297,7 +297,7 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.View
 
             if (dlg.FileName != "")
             {
-                this.wfdVM.Export(dlg.FileName);
+                this.wfdVM.ExportTxt(dlg.FileName);
                 this.wfdI.ResetAllAxes();
                 this.wfdQ.ResetAllAxes();
                 this.wfdF.ResetAllAxes();
@@ -433,7 +433,7 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.View
         private void desType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             this.wfdVM.Type = this.desType.SelectedItem.ToString();
-            if(this.desType.SelectedItem.ToString().Contains("Sine"))
+            if(this.desType.SelectedItem.ToString().Contains("Sine") || this.desType.SelectedItem.ToString().Contains("Square") || this.desType.SelectedItem.ToString().Contains("Saw") || this.desType.SelectedItem.ToString().Contains("Triangle"))
             {
                 this.desFreq.Visibility = Visibility.Visible;
                 this.desPhoff.Visibility = Visibility.Visible;

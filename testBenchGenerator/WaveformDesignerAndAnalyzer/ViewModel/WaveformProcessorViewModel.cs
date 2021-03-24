@@ -78,6 +78,26 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.ViewModel
                     ConstSignal cst = new ConstSignal(this.Fs, this.Length, this.LengthTime, this.OS, this.FFTLength, this.Bitwidth, this.RMS);
                     this.Signal = cst;
                 }
+                else if(value.Contains("Square"))
+                {
+                    SquareSignal square = new SquareSignal(this.Fs, this.Length, this.LengthTime, this.OS, this.FFTLength, this.Bitwidth, this.RMS, this.Phoff, this.Freq);
+                    this.Signal = square;
+                }
+                else if (value.Contains("Triangle"))
+                {
+                    TriangleSignal triangle = new TriangleSignal(this.Fs, this.Length, this.LengthTime, this.OS, this.FFTLength, this.Bitwidth, this.RMS, this.Phoff, this.Freq);
+                    this.Signal = triangle;
+                }
+                else if (value.Contains("Saw"))
+                {
+                    SawSignal saw = new SawSignal(this.Fs, this.Length, this.LengthTime, this.OS, this.FFTLength, this.Bitwidth, this.RMS, this.Phoff, this.Freq);
+                    this.Signal = saw;
+                }
+                else if (value.Contains("White"))
+                {
+                    WhiteNoiseSignal wn = new WhiteNoiseSignal(this.Fs, this.Length, this.LengthTime, this.OS, this.FFTLength, this.Bitwidth, this.RMS);
+                    this.Signal = wn;
+                }
                 this.CanDosRecompute(); 
             }
         }

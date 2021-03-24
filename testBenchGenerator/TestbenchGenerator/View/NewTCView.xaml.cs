@@ -31,6 +31,11 @@ namespace testBenchGenerator.TestbenchGenerator.View
             cancel.Style = (Style)FindResource(typeof(Button));
             add.Template = (ControlTemplate)FindResource("btnTmplt");
             cancel.Template = (ControlTemplate)FindResource("btnTmplt");
+            clkCB.Style = (Style)FindResource("ComboBoxFlatStyle");
+            rCB.Style = (Style)FindResource("ComboBoxFlatStyle");
+            vsCB.Style = (Style)FindResource("ComboBoxFlatStyle");
+            vipCB.Style = (Style)FindResource("ComboBoxFlatStyle");
+            vopCB.Style = (Style)FindResource("ComboBoxFlatStyle");
             this.viewModel = viewModel;
             this.DataContext = this.viewModel;
             if (this.viewModel.Clock != null)

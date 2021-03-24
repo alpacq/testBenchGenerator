@@ -82,6 +82,7 @@
                     <RowDefinition/>
                     <RowDefinition/>
                     <RowDefinition/>
+                    <RowDefinition/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*"/>
@@ -93,16 +94,18 @@
                 <TextBlock Text="Shift samples" Grid.Row="2" Grid.Column="0" Margin="10,0" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                 <TextBlock Text="Cutoff frequency low [Hz]" Grid.Row="3" Grid.Column="0" Margin="10,0" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                 <TextBlock Text="Cutoff frequency high [Hz]" Grid.Row="4" Grid.Column="0" Margin="10,0" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-                <TextBlock Text="Window function" Grid.Row="5" Grid.Column="0" Margin="10,0" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-                <TextBlock Text="Filter type" Grid.Row="6" Grid.Column="0" Margin="10,0" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-                <TextBlock Text="Response plot" Grid.Row="7" Grid.Column="0" Margin="10,0" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                <TextBlock Text="Bitwidth" Grid.Row="5" Grid.Column="0" Margin="10,0" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                <TextBlock Text="Window function" Grid.Row="6" Grid.Column="0" Margin="10,0" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                <TextBlock Text="Filter type" Grid.Row="7" Grid.Column="0" Margin="10,0" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                <TextBlock Text="Response plot" Grid.Row="8" Grid.Column="0" Margin="10,0" VerticalAlignment="Center" HorizontalAlignment="Left"/>
 
                 <TextBox x:Name="fs" Grid.Row="0" Grid.Column="1" Background="#0f0f2d" Foreground="White" BorderThickness="1" Margin="10,0" Text="{Binding Fs}" HorizontalContentAlignment="Right" VerticalAlignment="Center" HorizontalAlignment="Stretch" GotFocus="fs_GotFocus" PreviewMouseLeftButtonUp="fs_PreviewMouseLeftButtonUp"/>
                 <TextBox x:Name="len" Grid.Row="1" Grid.Column="1" Background="#0f0f2d" Foreground="White" BorderThickness="1" Margin="10,0" Text="{Binding Length}" HorizontalContentAlignment="Right" VerticalAlignment="Center" HorizontalAlignment="Stretch" GotFocus="len_GotFocus" PreviewMouseLeftButtonUp="len_PreviewMouseLeftButtonUp"/>
                 <TextBox x:Name="ss" Grid.Row="2" Grid.Column="1" Background="#0f0f2d" Foreground="White" BorderThickness="1" Margin="10,0" Text="{Binding ShiftSamples}" HorizontalContentAlignment="Right" VerticalAlignment="Center" HorizontalAlignment="Stretch" GotFocus="ss_GotFocus" PreviewMouseLeftButtonUp="ss_PreviewMouseLeftButtonUp"/>
                 <TextBox x:Name="lf" Grid.Row="3" Grid.Column="1" Background="#0f0f2d" Foreground="White" BorderThickness="1" Margin="10,0" Text="{Binding LowFreq}" HorizontalContentAlignment="Right" VerticalAlignment="Center" HorizontalAlignment="Stretch" IsEnabled="{Binding IsLFEnabled}" GotFocus="lf_GotFocus" PreviewMouseLeftButtonUp="lf_PreviewMouseLeftButtonUp"/>
                 <TextBox x:Name="hf" Grid.Row="4" Grid.Column="1" Background="#0f0f2d" Foreground="White" BorderThickness="1" Margin="10,0" Text="{Binding HighFreq}" HorizontalContentAlignment="Right" VerticalAlignment="Center" HorizontalAlignment="Stretch" IsEnabled="{Binding IsHFEnabled}" GotFocus="hf_GotFocus" PreviewMouseLeftButtonUp="hf_PreviewMouseLeftButtonUp"/>
-                <ComboBox x:Name="wt" Grid.Row="5" Grid.Column="1" BorderThickness="1" Margin="10,0" VerticalAlignment="Center" HorizontalAlignment="Stretch" SelectionChanged="wt_SelectionChanged">
+                <TextBox x:Name="bw" Grid.Row="5" Grid.Column="1" Background="#0f0f2d" Foreground="White" BorderThickness="1" Margin="10,0" Text="{Binding Bitwidth}" HorizontalContentAlignment="Right" VerticalAlignment="Center" HorizontalAlignment="Stretch" GotFocus="bw_GotFocus" PreviewMouseLeftButtonUp="bw_PreviewMouseLeftButtonUp"/>
+                <ComboBox x:Name="wt" Grid.Row="6" Grid.Column="1" BorderThickness="1" Margin="10,0" VerticalAlignment="Center" HorizontalAlignment="Stretch" SelectionChanged="wt_SelectionChanged">
                     <ComboBoxItem Content="Rectangular"/>
                     <ComboBoxItem Content="Triangular"/>
                     <ComboBoxItem Content="Welch"/>
@@ -115,13 +118,13 @@
                     <ComboBoxItem Content="Blackman-Harris"/>
                     <ComboBoxItem Content="Flat Top"/>
                 </ComboBox>
-                <ComboBox x:Name="ft" Grid.Row="6" Grid.Column="1" BorderThickness="1" Margin="10,0" VerticalAlignment="Center" HorizontalAlignment="Stretch" SelectionChanged="ft_SelectionChanged">
+                <ComboBox x:Name="ft" Grid.Row="7" Grid.Column="1" BorderThickness="1" Margin="10,0" VerticalAlignment="Center" HorizontalAlignment="Stretch" SelectionChanged="ft_SelectionChanged">
                     <ComboBoxItem Content="Lowpass filter (LPF)"/>
                     <ComboBoxItem Content="Highpass filter (HPF)"/>
                     <ComboBoxItem Content="Bandpass filter (BPF)"/>
                     <ComboBoxItem Content="Bandstop filter (BSF)"/>
                 </ComboBox>
-                <ComboBox x:Name="pt" Grid.Row="7" Grid.Column="1" BorderThickness="1" Margin="10,0" VerticalAlignment="Center" HorizontalAlignment="Stretch" SelectionChanged="pt_SelectionChanged">
+                <ComboBox x:Name="pt" Grid.Row="8" Grid.Column="1" BorderThickness="1" Margin="10,0" VerticalAlignment="Center" HorizontalAlignment="Stretch" SelectionChanged="pt_SelectionChanged">
                     <ComboBoxItem Content="Impulse"/>
                     <ComboBoxItem Content="Step"/>
                 </ComboBox>

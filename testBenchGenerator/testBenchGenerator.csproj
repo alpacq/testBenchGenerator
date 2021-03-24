@@ -210,6 +210,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Common\ConstSignal.cs" />
+    <Compile Include="Common\FreqSignal.cs" />
     <Compile Include="Common\IDesignable.cs" />
     <Compile Include="Common\IExportable.cs" />
     <Compile Include="Common\IGeneratable.cs" />
@@ -217,9 +218,13 @@
     <Compile Include="Common\OFDMSignal.cs" />
     <Compile Include="Common\PhoffSignal.cs" />
     <Compile Include="Common\RampSignal.cs" />
+    <Compile Include="Common\SawSignal.cs" />
     <Compile Include="Common\Signal.cs" />
     <Compile Include="Common\SineSignal.cs" />
+    <Compile Include="Common\SquareSignal.cs" />
+    <Compile Include="Common\TriangleSignal.cs" />
     <Compile Include="Common\ViewModelBase.cs" />
+    <Compile Include="Common\WhiteNoiseSignal.cs" />
     <Compile Include="NavPopup.xaml.cs">
       <DependentUpon>NavPopup.xaml</DependentUpon>
     </Compile>
@@ -338,16 +343,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="icon.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\icon.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\icon2.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="icon2.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\change.png" />
@@ -357,21 +356,9 @@
     <Resource Include="Resources\chip2.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="chip.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="chip2.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="chip3.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\chip3.png" />
     <Resource Include="Resources\chip44.png" />
     <Resource Include="Resources\ide.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="chip44.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="ide.ico" />

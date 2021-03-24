@@ -304,7 +304,7 @@ namespace testBenchGenerator.WaveformDesignerAndAnalyzer.ViewModel
             OnPropertyChanged("CanExport");
         }
 
-        public void Export(string path)
+        public void ExportTxt(string path)
         {
             this.model.CreateAndSaveFile(path);
         }

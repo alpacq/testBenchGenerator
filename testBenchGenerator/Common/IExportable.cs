@@ -10,6 +10,6 @@ namespace testBenchGenerator.Common
     {
         bool CanExport { get; }
 
-        void Export(string path);
+        void ExportTxt(string path);
     }
 }
