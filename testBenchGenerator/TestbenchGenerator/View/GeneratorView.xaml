@@ -1,10 +1,10 @@
-﻿<Page x:Class="testBenchGenerator.TestbenchGenerator.View.GeneratorView"
+﻿<Page x:Class="FPGADeveloperTools.TestbenchGenerator.View.GeneratorView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:testBenchGenerator.TestbenchGenerator.View"
-             xmlns:model="clr-namespace:testBenchGenerator.TestbenchGenerator.Model"
+             xmlns:local="clr-namespace:FPGADeveloperTools.TestbenchGenerator.View"
+             xmlns:model="clr-namespace:FPGADeveloperTools.TestbenchGenerator.Model"
              xmlns:ic="http://metro.mahapps.com/winfx/xaml/iconpacks"
              mc:Ignorable="d" 
              x:Name="genView" SizeChanged="genView_SizeChanged" Foreground="White">

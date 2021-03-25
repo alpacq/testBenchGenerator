@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "testBenchGenerator", "testBenchGenerator\testBenchGenerator.csproj", "{B193A533-6F0B-4075-909C-671A2A137021}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FPGADeveloperTools", "testBenchGenerator\FPGADeveloperTools.csproj", "{B193A533-6F0B-4075-909C-671A2A137021}"
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "Setup\Setup.vdproj", "{78A1E24C-4121-468B-802C-C79C03EBBD01}"
 EndProject

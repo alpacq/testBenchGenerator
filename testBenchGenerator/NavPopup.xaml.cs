@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace testBenchGenerator
+namespace FPGADeveloperTools
 {
     /// <summary>
     /// Interaction logic for NavPopup.xaml

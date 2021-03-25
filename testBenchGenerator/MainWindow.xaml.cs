@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using testBenchGenerator.FIRDesigner.View;
-using testBenchGenerator.TestbenchGenerator.View;
-using testBenchGenerator.WaveformDesignerAndAnalyzer.View;
+using FPGADeveloperTools.FIRDesigner.View;
+using FPGADeveloperTools.TestbenchGenerator.View;
+using FPGADeveloperTools.WaveformDesignerAndAnalyzer.View;
 
-namespace testBenchGenerator
+namespace FPGADeveloperTools
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -20,7 +20,7 @@ namespace testBenchGenerator
     {
         private FIRView firView;
         private GeneratorView genView;
-        private AnalyzerView anView;
+        private WaveformProcessorView anView;
 
         public MainWindow()
         {
@@ -36,7 +36,7 @@ namespace testBenchGenerator
             exit.Template = (ControlTemplate)FindResource("btnTmpltFile");
             this.firView = new FIRView();
             this.genView = new GeneratorView();
-            this.anView = new AnalyzerView();
+            this.anView = new WaveformProcessorView();
             this.firView.Style = (Style)FindResource(typeof(Page));
             this.genView.Style = (Style)FindResource(typeof(Page));
             this.anView.Style = (Style)FindResource(typeof(Page));

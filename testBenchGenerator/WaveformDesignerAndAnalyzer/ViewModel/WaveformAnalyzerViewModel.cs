@@ -1,15 +1,10 @@
 ﻿using OxyPlot;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
-using testBenchGenerator.Common;
-using testBenchGenerator.WaveformDesignerAndAnalyzer.Model;
+using FPGADeveloperTools.Common;
+using FPGADeveloperTools.WaveformDesignerAndAnalyzer.Model;
 
-namespace testBenchGenerator.WaveformDesignerAndAnalyzer.ViewModel
+namespace FPGADeveloperTools.WaveformDesignerAndAnalyzer.ViewModel
 {
     public class WaveformAnalyzerViewModel : WaveformProcessorViewModel, IImportable
     {        

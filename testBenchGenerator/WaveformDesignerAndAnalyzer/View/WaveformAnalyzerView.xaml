@@ -1,0 +1,170 @@
+﻿<UserControl x:Class="FPGADeveloperTools.WaveformDesignerAndAnalyzer.View.WaveformAnalyzerView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:oxy="http://oxyplot.org/wpf"
+             xmlns:local="clr-namespace:FPGADeveloperTools.WaveformDesignerAndAnalyzer.View"
+             mc:Ignorable="d" Foreground="White">
+    <UserControl.Resources>
+        <ControlTemplate x:Key="TextBoxBaseControlTemplate" TargetType="{x:Type TextBoxBase}">
+            <Border Background="{TemplateBinding Background}" 
+                x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="7">
+                <ScrollViewer x:Name="PART_ContentHost"/>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="Width" Value="Auto">
+                    <Setter Property="MinWidth" Value="100"/>
+                </Trigger>
+                <Trigger Property="Height" Value="Auto">
+                    <Setter Property="MinHeight" Value="20"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Grid.Column="1" Margin="10" Orientation="Horizontal">
+            <TextBlock Text="Analyzer" FontWeight="Bold" />
+            <TextBlock FontSize="10" x:Name="anInfoBlock" Margin="100,0,0,0" VerticalAlignment="Center"/>
+        </StackPanel>
+
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="2*"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="3*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <oxy:Plot x:Name="wfaI" Grid.Row="0" Background="Transparent" Foreground="White" PlotAreaBackground="AntiqueWhite" Grid.Column="0" Margin="10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" PlotAreaBorderColor="White" LegendTextColor="White" LegendTitleColor="White" SubtitleColor="White" TextColor="White" TitleColor="White" TitleFontSize="12" TitleFont="#Dosis" DefaultFont="#Dosis" Title="I" BorderThickness="1">
+                    <oxy:Plot.Series>
+                        <oxy:LineSeries ItemsSource="{Binding IPoints}"/>
+                    </oxy:Plot.Series>
+                    <oxy:Plot.Axes>
+                        <oxy:LinearAxis Title="Time" Position="Bottom" Unit="s" LabelFormatter="ValueAxisLabelFormatters" TextColor="White" MajorGridlineColor="White" MinorGridlineColor="White" AxislineColor="White" TicklineColor="White" TitleColor="White" ExtraGridlineColor="White"/>
+                        <oxy:LinearAxis Position="Left" LabelFormatter="ValueAxisLabelFormatter" TextColor="White" MajorGridlineColor="White" MinorGridlineColor="White" AxislineColor="White" TicklineColor="White" TitleColor="White" ExtraGridlineColor="White"/>
+                    </oxy:Plot.Axes>
+                </oxy:Plot>
+                <oxy:Plot x:Name="wfaQ" Grid.Row="1" Background="Transparent" Foreground="White" PlotAreaBackground="AntiqueWhite" Grid.Column="0" Margin="10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" PlotAreaBorderColor="White" LegendTextColor="White" LegendTitleColor="White" SubtitleColor="White" TextColor="White" TitleColor="White" TitleFontSize="12" TitleFont="#Dosis" DefaultFont="#Dosis" Title="Q" BorderThickness="1">
+                    <oxy:Plot.Series>
+                        <oxy:LineSeries ItemsSource="{Binding QPoints}" Color="DarkRed"/>
+                    </oxy:Plot.Series>
+                    <oxy:Plot.Axes>
+                        <oxy:LinearAxis Title="Time" Position="Bottom" Unit="s" LabelFormatter="ValueAxisLabelFormatters" TextColor="White" MajorGridlineColor="White" MinorGridlineColor="White" AxislineColor="White" TicklineColor="White" TitleColor="White" ExtraGridlineColor="White"/>
+                        <oxy:LinearAxis Position="Left" LabelFormatter="ValueAxisLabelFormatter" TextColor="White" MajorGridlineColor="White" MinorGridlineColor="White" AxislineColor="White" TicklineColor="White" TitleColor="White" ExtraGridlineColor="White"/>
+                    </oxy:Plot.Axes>
+                </oxy:Plot>
+
+                <oxy:Plot x:Name="wfaF" Grid.RowSpan="2" Background="Transparent" Foreground="White" PlotAreaBackground="AntiqueWhite" Grid.Column="1" Margin="10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" PlotAreaBorderColor="White" LegendTextColor="White" LegendTitleColor="White" SubtitleColor="White" TextColor="White" TitleColor="White" TitleFontSize="12" TitleFont="#Dosis" DefaultFont="#Dosis" Title="Fourier plot" BorderThickness="1">
+                    <oxy:Plot.Series>
+                        <oxy:LineSeries ItemsSource="{Binding FPoints}" Color="DarkBlue"/>
+                    </oxy:Plot.Series>
+                    <oxy:Plot.Axes>
+                        <oxy:LinearAxis Title="Frequency" Position="Bottom" Unit="Hz" LabelFormatter="ValueAxisLabelFormatterHz" TextColor="White" MajorGridlineColor="White" MinorGridlineColor="White" AxislineColor="White" TicklineColor="White" TitleColor="White" ExtraGridlineColor="White"/>
+                        <oxy:LinearAxis Position="Left" LabelFormatter="ValueAxisLabelFormatter" TextColor="White" MajorGridlineColor="White" MinorGridlineColor="White" AxislineColor="White" TicklineColor="White" TitleColor="White" ExtraGridlineColor="White"/>
+                    </oxy:Plot.Axes>
+                </oxy:Plot>
+
+            </Grid>
+
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <TextBlock x:Name="awt" Grid.Row="0" Grid.Column="0" Text="Waveform type" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock x:Name="afs" Grid.Row="1" Grid.Column="0" Text="Sampling frequency [Hz]" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock x:Name="abw" Grid.Row="2" Grid.Column="0" Text="Bitwidth" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock x:Name="ali" Grid.Row="3" Grid.Column="0" Text="Lines to ignore" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock x:Name="aos" Grid.Row="4" Grid.Column="0" Text="Oversampling" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock x:Name="aim" Grid.Row="5" Grid.Column="0" Text="Input magnitude" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock x:Name="ans" Grid.Row="5" Grid.Column="0" Text="Number of symbols" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock x:Name="afft" Grid.Row="6" Grid.Column="0" Text="FFT size" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock x:Name="ardx" Grid.Row="7" Grid.Column="0" Text="Radix" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock x:Name="adel" Grid.Row="8" Grid.Column="0" Text="Delimiter" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+
+                <TextBlock x:Name="af" Grid.Row="0" Grid.Column="2" Text="Estimated frequency [Hz]" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock x:Name="ato" Grid.Row="0" Grid.Column="2" Text="Timing offset [samples]" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock x:Name="apo" Grid.Row="1" Grid.Column="2" Text="Phase offset [°]" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock x:Name="arms" Grid.Row="2" Grid.Column="2" Text="RMS [dBFs]" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock x:Name="aae" Grid.Row="2" Grid.Column="2" Text="Average EVM" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock x:Name="armsfs" Grid.Row="3" Grid.Column="2" Text="RMS error [dBFs]" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock x:Name="aas" Grid.Row="3" Grid.Column="2" Text="Average SNR [dB]" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock x:Name="armslsbs" Grid.Row="4" Grid.Column="2" Text="RMS error [lsbs]" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock x:Name="awe" Grid.Row="4" Grid.Column="2" Text="Worst EVM" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock x:Name="aprmse" Grid.Row="5" Grid.Column="2" Text="Phase RMS error [°]" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock x:Name="aws" Grid.Row="5" Grid.Column="2" Text="Worst SNR [dB]" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock x:Name="age" Grid.Row="6" Grid.Column="2" Text="Gain error [dB]" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock x:Name="adcr" Grid.Row="7" Grid.Column="2" Text="DC bias real [dBFs]" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+                <TextBlock x:Name="adci" Grid.Row="8" Grid.Column="2" Text="DC bias imag [dBFs]" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,5,0"/>
+
+                <ComboBox x:Name="anType" Grid.Row="0" Grid.Column="1" BorderThickness="1" HorizontalContentAlignment="Right" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="10,0" SelectionChanged="anType_SelectionChanged">
+                    <ComboBoxItem Content="Sine"/>
+                    <!--<ComboBoxItem Content="OFDM"/>-->
+                </ComboBox>
+                <TextBox x:Name="anFs" Grid.Row="1" Grid.Column="1" Background="#0f0f2d" Foreground="White" BorderThickness="1" Text="{Binding Fs}" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Margin="10,0" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonUp="TextBox_PreviewMouseLeftButtonUp"/>
+                <TextBox x:Name="anBW" Grid.Row="2" Grid.Column="1" Background="#0f0f2d" Foreground="White" BorderThickness="1" Text="{Binding Bitwidth}" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Margin="10,0" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonUp="TextBox_PreviewMouseLeftButtonUp"/>
+                <TextBox x:Name="anLI" Grid.Row="3" Grid.Column="1" Background="#0f0f2d" Foreground="White" BorderThickness="1" Text="{Binding LinesIgnore}" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Margin="10,0" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonUp="TextBox_PreviewMouseLeftButtonUp"/>
+                <TextBox x:Name="anOS" Grid.Row="4" Grid.Column="1" Background="#0f0f2d" Foreground="White" BorderThickness="1" Text="{Binding OS}" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Margin="10,0" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonUp="TextBox_PreviewMouseLeftButtonUp"/>
+                <TextBox x:Name="anInputMag" Grid.Row="5" Grid.Column="1" Background="#0f0f2d" Foreground="White" BorderThickness="1" Text="{Binding InputMag}" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Margin="10,0" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonUp="TextBox_PreviewMouseLeftButtonUp"/>
+                <TextBox x:Name="anNS" Grid.Row="5" Grid.Column="1" Background="#0f0f2d" Foreground="White" BorderThickness="1" Text="{Binding NSymbols}" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Margin="10,0" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonUp="TextBox_PreviewMouseLeftButtonUp"/>
+                <TextBox x:Name="anFFT" Grid.Row="6" Grid.Column="1" Background="#0f0f2d" Foreground="White" BorderThickness="1" Text="{Binding FFTLength}" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Margin="10,0" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonUp="TextBox_PreviewMouseLeftButtonUp"/>
+                <ComboBox x:Name="anRadix" Grid.Row="7" Grid.Column="1" BorderThickness="1" ItemsSource="{Binding Radixes}" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Margin="10,0" SelectionChanged="anRadix_SelectionChanged"/>
+                <ComboBox x:Name="anDel" Grid.Row="8" Grid.Column="1" BorderThickness="1" ItemsSource="{Binding Delimiters}" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Margin="10,0" SelectionChanged="anDel_SelectionChanged"/>
+
+                <TextBlock x:Name="anFreq" Grid.Row="0" Grid.Column="3" Text="{Binding Freq, StringFormat={}{0:0.####################}}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10,0"/>
+                <TextBlock x:Name="anToff" Grid.Row="0" Grid.Column="3" Text="{Binding Toff, StringFormat={}{0:0.####################}}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10,0"/>
+                <TextBlock x:Name="anPhoff" Grid.Row="1" Grid.Column="3" Text="{Binding Phoff, StringFormat={}{0:0.####################}}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10,0"/>
+                <TextBlock x:Name="anRMS" Grid.Row="2" Grid.Column="3" Text="{Binding RMS, StringFormat={}{0:0.####################}}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10,0"/>
+                <TextBlock x:Name="anAvgEVM" Grid.Row="2" Grid.Column="3" Text="{Binding AvgEVM, StringFormat={}{0:0.####################}}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10,0"/>
+                <TextBlock x:Name="anRMSEFs" Grid.Row="3" Grid.Column="3" Text="{Binding RMSEFs, StringFormat={}{0:0.####################}}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10,0"/>
+                <TextBlock x:Name="anAvgSNR" Grid.Row="3" Grid.Column="3" Text="{Binding AvgSNR, StringFormat={}{0:0.####################}}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10,0"/>
+                <TextBlock x:Name="anRMSElsbs" Grid.Row="4" Grid.Column="3" Text="{Binding RMSElsbs, StringFormat={}{0:0.####################}}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10,0"/>
+                <TextBlock x:Name="anWEVM" Grid.Row="4" Grid.Column="3" Text="{Binding WEVM, StringFormat={}{0:0.####################}}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10,0"/>
+                <TextBlock x:Name="anPRMSE" Grid.Row="5" Grid.Column="3" Text="{Binding PRMSE, StringFormat={}{0:0.####################}}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10,0"/>
+                <TextBlock x:Name="anWSNR" Grid.Row="5" Grid.Column="3" Text="{Binding WSNR, StringFormat={}{0:0.####################}}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10,0"/>
+                <TextBlock x:Name="anGainE" Grid.Row="6" Grid.Column="3" Text="{Binding GainE, StringFormat={}{0:0.####################}}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10,0"/>
+                <TextBlock x:Name="anDCReal" Grid.Row="7" Grid.Column="3" Text="{Binding DCReal, StringFormat={}{0:0.####################}}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10,0"/>
+                <TextBlock x:Name="anDCImag" Grid.Row="8" Grid.Column="3" Text="{Binding DCImag, StringFormat={}{0:0.####################}}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10,0"/>
+
+                <StackPanel Grid.Row="9" Grid.ColumnSpan="4" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="{Binding ProblemToolTip}" ToolTipService.IsEnabled="{Binding CanImportN}">
+                    <Button x:Name="import" Content="Import" VerticalAlignment="Center" HorizontalAlignment="Center" Click="import_Click" IsEnabled="{Binding CanImport}"/>
+                </StackPanel>
+
+            </Grid>
+
+            <TextBox Template="{StaticResource TextBoxBaseControlTemplate}" Grid.RowSpan="2" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" x:Name="splashA" Text="Reading..." Width="100" Height="30" Foreground="White" Background="#ff4c70" BorderBrush="#fe6584" BorderThickness="1"/>
+            <TextBox Template="{StaticResource TextBoxBaseControlTemplate}" Grid.RowSpan="2" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" x:Name="splashAA" Foreground="White" Text="Analyzing..." Background="#ff4c70" Width="100" Height="30" BorderBrush="#fe6584" BorderThickness="1"/>
+
+        </Grid>
+    </Grid>
+</UserControl>

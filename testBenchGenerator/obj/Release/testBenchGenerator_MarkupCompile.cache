@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\krzys\Documents\Archiwum\Projekty\testBenchGenerator\testBenchGenerator\obj\Release\
+C:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\obj\Release\
 testBenchGenerator
 none
 false
 TRACE
-C:\Users\krzys\Documents\Archiwum\Projekty\testBenchGenerator\testBenchGenerator\App.xaml
+C:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\App.xaml
 61740898944
 
-63-1439751363
-56873501242
+62-44566247
+561371586735
 MainWindow.xaml;NavPopup.xaml;WaveformDesignerAndAnalyzer\View\AnalyzerView.xaml;FIRDesigner\View\FIRView.xaml;TestbenchGenerator\View\GeneratorView.xaml;TestbenchGenerator\View\NewTCView.xaml;
 
-False
+True
 

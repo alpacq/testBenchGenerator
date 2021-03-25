@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using testBenchGenerator.Common;
-using testBenchGenerator.TestbenchGenerator.Model;
+using FPGADeveloperTools.Common;
+using FPGADeveloperTools.Common.Model.ModuleFiles;
+using FPGADeveloperTools.Common.ViewModel;
+using FPGADeveloperTools.Common.ViewModel.ModuleFiles;
+using FPGADeveloperTools.Common.ViewModel.Ports;
+using FPGADeveloperTools.Common.ViewModel.TestCases;
+using FPGADeveloperTools.TestbenchGenerator.Model;
 
-namespace testBenchGenerator.TestbenchGenerator.ViewModel
+namespace FPGADeveloperTools.TestbenchGenerator.ViewModel
 {
     public class GeneratorViewModel : ViewModelBase, IGeneratable
     {

@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using OxyPlot;
-using OxyPlot.Series;
-using testBenchGenerator.Common;
-using testBenchGenerator.FIRDesigner.Model;
+using FPGADeveloperTools.Common;
+using FPGADeveloperTools.FIRDesigner.Model;
+using FPGADeveloperTools.Common.ViewModel;
 
-namespace testBenchGenerator.FIRDesigner.ViewModel
+namespace FPGADeveloperTools.FIRDesigner.ViewModel
 {
     public class FIRViewModel : ViewModelBase, IDesignable, IExportable
     {

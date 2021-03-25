@@ -1,10 +1,10 @@
-﻿<Window x:Class="testBenchGenerator.MainWindow"
+﻿<Window x:Class="FPGADeveloperTools.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ic="http://metro.mahapps.com/winfx/xaml/iconpacks"
-        xmlns:loc="clr-namespace:testBenchGenerator"
+        xmlns:loc="clr-namespace:FPGADeveloperTools"
         mc:Ignorable="d"
         Title="FPGA Developer Tools" WindowStartupLocation="CenterScreen" Icon="ide.ico" SizeChanged="Window_SizeChanged" WindowStyle="None" ResizeMode="NoResize">
     <Grid>

@@ -1,7 +1,7 @@
-﻿<Application x:Class="testBenchGenerator.App"
+﻿<Application x:Class="FPGADeveloperTools.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:testBenchGenerator"
+             xmlns:local="clr-namespace:FPGADeveloperTools"
              xmlns:oxy="http://oxyplot.org/wpf"
              StartupUri="MainWindow.xaml">
     <Application.Resources>

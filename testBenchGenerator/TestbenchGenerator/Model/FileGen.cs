@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 using System.Windows;
-using testBenchGenerator.Common;
+using FPGADeveloperTools.Common;
+using FPGADeveloperTools.Common.Model.ModuleFiles;
+using FPGADeveloperTools.Common.Model.TestCases;
+using FPGADeveloperTools.Common.Model.Ports;
 
-namespace testBenchGenerator.TestbenchGenerator.Model
+namespace FPGADeveloperTools.TestbenchGenerator.Model
 {
     public class FileGen
     {

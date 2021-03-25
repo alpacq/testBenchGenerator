@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
-using testBenchGenerator.Common;
+﻿using System.Numerics;
+using FPGADeveloperTools.Common;
+using FPGADeveloperTools.Common.Model.Signals;
 
-namespace testBenchGenerator.WaveformDesignerAndAnalyzer.Model
+namespace FPGADeveloperTools.WaveformDesignerAndAnalyzer.Model
 {
     public abstract class WaveformProcessor
     {

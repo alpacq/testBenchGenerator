@@ -260,3 +260,5 @@ C:\Users\krzys\Documents\Archiwum\Projekty\testBenchGenerator\testBenchGenerator
 C:\Users\krzys\Documents\Archiwum\Projekty\testBenchGenerator\testBenchGenerator\bin\Debug\MahApps.Metro.IconPacks.Zondicons.xml
 C:\Users\krzys\Documents\Archiwum\Projekty\testBenchGenerator\testBenchGenerator\obj\Debug\NavPopup.g.cs
 C:\Users\krzys\Documents\Archiwum\Projekty\testBenchGenerator\testBenchGenerator\obj\Debug\NavPopup.baml
+C:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\obj\Debug\NavPopup.g.cs
+C:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\obj\Debug\NavPopup.baml
