@@ -133,3 +133,4 @@ C:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\obj\Release\FPGAD
 C:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\obj\Release\FPGADeveloperTools.csproj.CopyComplete
 C:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\obj\Release\FPGADeveloperTools.exe
 C:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\obj\Release\FPGADeveloperTools.pdb
+C:\Users\krlam\Documents\testBenchGenerator\testBenchGenerator\obj\Release\FPGADeveloperTools.csprojAssemblyReference.cache

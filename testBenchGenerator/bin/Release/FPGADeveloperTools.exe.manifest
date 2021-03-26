@@ -43,14 +43,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="FPGADeveloperTools.exe" size="933888">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="FPGADeveloperTools.exe" size="936448">
       <assemblyIdentity name="FPGADeveloperTools" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>DiCSE8dRMqosDbM/MN+iK8nOB7wM+9QNMFkENs0Xto8=</dsig:DigestValue>
+        <dsig:DigestValue>Ck7qtoqRSzSHGn1P7ywNbCz3X2xIelmIImWuVc3OedI=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

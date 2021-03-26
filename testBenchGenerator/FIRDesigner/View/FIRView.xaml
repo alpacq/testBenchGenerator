@@ -147,10 +147,10 @@
             <TextBlock x:Name="infoBlock" Grid.Row="1" Grid.Column="0" Margin="100,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Left"/>
             <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10,5">
                 <StackPanel ToolTip="{Binding ProblemToolTip}" ToolTipService.IsEnabled="{Binding CanUpdateN}">
-                    <Button x:Name="design" Content="Design" Click="design_Click" FontWeight="Bold" Margin="5,0" IsEnabled="{Binding CanDesign}"/>
+                    <Button x:Name="design" Content="Design" Command="{Binding DesignCommand}"  FontWeight="Bold" Margin="5,0" IsEnabled="{Binding CanDesign}"/>
                 </StackPanel>
                 <StackPanel ToolTip="{Binding ProblemExportToolTip}" ToolTipService.IsEnabled="{Binding CanExportN}">
-                    <Button x:Name="export" Content="Export" Click="export_Click" FontWeight="Bold" Margin="5,0" IsEnabled="{Binding CanExport}"/>
+                    <Button x:Name="export" Content="Export" Command="{Binding ExportCommand}" FontWeight="Bold" Margin="5,0" IsEnabled="{Binding CanExport}"/>
                 </StackPanel>
             </StackPanel>
         </Grid>

@@ -223,6 +223,7 @@
     <Compile Include="Common\Model\Signals\SineSignal.cs" />
     <Compile Include="Common\Model\Signals\SquareSignal.cs" />
     <Compile Include="Common\Model\Signals\TriangleSignal.cs" />
+    <Compile Include="Common\RelayCommand.cs" />
     <Compile Include="Common\ViewModel\ViewModelBase.cs" />
     <Compile Include="Common\Model\Signals\WhiteNoiseSignal.cs" />
     <Compile Include="NavPopup.xaml.cs">

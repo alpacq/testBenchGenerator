@@ -376,22 +376,14 @@ namespace FPGADeveloperTools.FIRDesigner.Model
         #endregion
         public FIR()
         {
-            this.TimeVector = new List<double>();
-            this.ImpulseResponse = new List<double>();
-            this.StepResponse = new List<double>();
-            this.Window = new List<double>();
-            this.WindowedImpulseResponse = new List<double>();
-            this.WindowedStepResponse = new List<double>();
-            this.FrequencyVectorHz = new List<double>();
-            this.ImpRespMag = new List<double>();
-            this.WinRespMag = new List<double>();
-            this.WinMag = new List<double>();
+            this.CreateLists();
             this.FreqSamples = 256;
             this.Bitwidth = 16;
         }
 
         public void Update()
         {
+            this.CreateLists();
             this.ComputeTimeVector();
             this.ComputeResponses();
             this.ComputeWindow();
@@ -404,11 +396,26 @@ namespace FPGADeveloperTools.FIRDesigner.Model
 
         public void UpdateWindow()
         {
+            this.CreateLists();
             this.ComputeTimeVector();
             this.ComputeWindow();
 
             this.ComputeFrequencyVector();
             this.ComputeWindowDFT();
+        }
+
+        private void CreateLists()
+        {
+            this.TimeVector = new List<double>();
+            this.ImpulseResponse = new List<double>();
+            this.StepResponse = new List<double>();
+            this.Window = new List<double>();
+            this.WindowedImpulseResponse = new List<double>();
+            this.WindowedStepResponse = new List<double>();
+            this.FrequencyVectorHz = new List<double>();
+            this.ImpRespMag = new List<double>();
+            this.WinRespMag = new List<double>();
+            this.WinMag = new List<double>();
         }
     }
 }

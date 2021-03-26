@@ -157,7 +157,7 @@
                 <TextBlock x:Name="anDCImag" Grid.Row="8" Grid.Column="3" Text="{Binding DCImag, StringFormat={}{0:0.####################}}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10,0"/>
 
                 <StackPanel Grid.Row="9" Grid.ColumnSpan="4" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="{Binding ProblemToolTip}" ToolTipService.IsEnabled="{Binding CanImportN}">
-                    <Button x:Name="import" Content="Import" VerticalAlignment="Center" HorizontalAlignment="Center" Click="import_Click" IsEnabled="{Binding CanImport}"/>
+                    <Button x:Name="import" Content="Import" VerticalAlignment="Center" HorizontalAlignment="Center" Command="{Binding ImportCommand}" IsEnabled="{Binding CanImport}"/>
                 </StackPanel>
 
             </Grid>

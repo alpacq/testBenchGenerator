@@ -24,7 +24,7 @@ namespace FPGADeveloperTools.FIRDesigner.View
             wt.Style = (Style)FindResource("ComboBoxFlatStyle");
             ft.Style = (Style)FindResource("ComboBoxFlatStyle");
             pt.Style = (Style)FindResource("ComboBoxFlatStyle");
-            this.viewModel = new FIRViewModel(new FIR());
+            this.viewModel = new FIRViewModel(new FIR(), this);
             this.DataContext = this.viewModel;
             this.wt.SelectedIndex = 0;
             this.ft.SelectedIndex = 0;
@@ -33,32 +33,6 @@ namespace FPGADeveloperTools.FIRDesigner.View
             this.viewModel.UpdateWindow();
             this.winResp.ResetAllAxes();
             this.winChart.ResetAllAxes();
-        }
-
-        private void design_Click(object sender, RoutedEventArgs e)
-        {
-            this.viewModel.Design();
-            this.firChart.ResetAllAxes();
-            this.firResp.ResetAllAxes();
-            this.winResp.ResetAllAxes();
-            this.winChart.ResetAllAxes();
-        }
-
-        private void export_Click(object sender, RoutedEventArgs e)
-        {
-            Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
-            dlg.Filter = "Text file (*.txt)|*.txt|Xilinx coefficient file (*.coe)|*.coe";
-            dlg.Title = "Export filter coefficients";
-            dlg.ShowDialog();
-
-            if (dlg.FileName != "")
-            {
-                if (dlg.FileName.EndsWith(".txt"))
-                    this.viewModel.ExportTxt(dlg.FileName);
-                else if (dlg.FileName.EndsWith(".coe"))
-                    this.viewModel.ExportCoe(dlg.FileName);
-                this.infoBlock.Text = DateTime.Now.ToLongTimeString() + "Coefficients exported successfully.";
-            }
         }
 
         private void wt_SelectionChanged(object sender, SelectionChangedEventArgs e)

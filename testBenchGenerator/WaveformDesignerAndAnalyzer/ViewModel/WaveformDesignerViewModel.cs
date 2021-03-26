@@ -5,13 +5,20 @@ using FPGADeveloperTools.WaveformDesignerAndAnalyzer.Model;
 using OxyPlot;
 using FPGADeveloperTools.Common;
 using FPGADeveloperTools.Common.Model.Signals;
+using System.Windows.Input;
+using FPGADeveloperTools.WaveformDesignerAndAnalyzer.View;
+using System.ComponentModel;
+using System.Windows;
 
 namespace FPGADeveloperTools.WaveformDesignerAndAnalyzer.ViewModel
 {
     public class WaveformDesignerViewModel : WaveformProcessorViewModel, IDesignable, IExportable
     {
         private WaveformDesigner model;
-
+        private ICommand designCommand;
+        private ICommand exportCommand;
+        private WaveformDesignerView view;
+        private BackgroundWorker bwD;
         private string problemDesignToolTip;
         private string problemExportToolTip;
 
@@ -244,9 +251,22 @@ namespace FPGADeveloperTools.WaveformDesignerAndAnalyzer.ViewModel
             get { return !this.CanExport; }
         }
 
-        public WaveformDesignerViewModel(WaveformDesigner model)
+        public ICommand DesignCommand
+        {
+            get { return this.designCommand; }
+            set { this.designCommand = value; OnPropertyChanged("DesignCommand"); }
+        }
+
+        public ICommand ExportCommand
+        {
+            get { return this.exportCommand; }
+            set { this.exportCommand = value; OnPropertyChanged("ExportCommand"); }
+        }
+
+        public WaveformDesignerViewModel(WaveformDesigner model, WaveformDesignerView view)
         {
             this.model = model;
+            this.view = view;
             this.IPoints = new List<DataPoint>();
             this.QPoints = new List<DataPoint>();
             this.FPoints = new List<DataPoint>();
@@ -258,6 +278,11 @@ namespace FPGADeveloperTools.WaveformDesignerAndAnalyzer.ViewModel
             {
                 "' '","','"
             };
+            this.DesignCommand = new RelayCommand(new Action<object>(this.Design));
+            this.ExportCommand = new RelayCommand(new Action<object>(this.Export));
+            this.bwD = new BackgroundWorker();
+            this.bwD.DoWork += BwD_DoWork;
+            this.bwD.RunWorkerCompleted += BwD_RunWorkerCompleted;
             OnPropertyChanged("Radixes");
             OnPropertyChanged("Delimiters");
             OnPropertyChanged("IPoints");
@@ -267,7 +292,27 @@ namespace FPGADeveloperTools.WaveformDesignerAndAnalyzer.ViewModel
             OnPropertyChanged("CanExport");
         }
 
-        public void Design()
+        private void BwD_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            this.view.wfdI.ResetAllAxes();
+            this.view.wfdQ.ResetAllAxes();
+            this.view.wfdF.ResetAllAxes();
+            this.view.splashD.Visibility = Visibility.Hidden;
+            this.view.desInfoBlock.Text = DateTime.Now.ToLongTimeString() + " Waveform designed.";
+        }
+
+        private void BwD_DoWork(object sender, DoWorkEventArgs e)
+        {
+            this.DesignWaveform();
+        }
+
+        public void Design(object obj)
+        {
+            this.view.splashD.Visibility = Visibility.Visible;
+            this.bwD.RunWorkerAsync();
+        }
+
+        public void DesignWaveform()
         {
             this.model.GenerateWaveform();
             this.IPoints = new List<DataPoint>();
@@ -299,6 +344,27 @@ namespace FPGADeveloperTools.WaveformDesignerAndAnalyzer.ViewModel
             OnPropertyChanged("FPoints");
             OnPropertyChanged("CanDesign");
             OnPropertyChanged("CanExport");
+        }
+
+        public void Export(object obj)
+        {
+            Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
+            dlg.Filter = "Text File|*.txt";
+            dlg.Title = "Export Waveform";
+            dlg.FileName = (this.Type.Contains("Sine") ?
+                            ("sine_" + (this.Freq / 1000000).ToString("f2").Replace(".", "p").Replace(",", "p") + "_" + (this.Fs / 1000000).ToString("f2").Replace(".", "p").Replace(",", "p") + "_" + this.RMS.ToString().Replace(".", "p").Replace(",", "p") + "_" + (this.LengthTime * 1000).ToString().Replace(",", "p").Replace(".", "p") + "ms.txt") :
+                            "waveform.txt");
+            dlg.ShowDialog();
+
+            if (dlg.FileName != "")
+            {
+                this.ExportTxt(dlg.FileName);
+                this.view.wfdI.ResetAllAxes();
+                this.view.wfdQ.ResetAllAxes();
+                this.view.wfdF.ResetAllAxes();
+
+                this.view.desInfoBlock.Text = DateTime.Now.ToLongTimeString() + " Waveform exported successfully.";
+            }
         }
 
         public void ExportTxt(string path)

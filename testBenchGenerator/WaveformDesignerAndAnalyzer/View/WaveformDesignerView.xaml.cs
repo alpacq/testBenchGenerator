@@ -3,7 +3,6 @@ using FPGADeveloperTools.WaveformDesignerAndAnalyzer.Model;
 using FPGADeveloperTools.WaveformDesignerAndAnalyzer.ViewModel;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -15,16 +14,12 @@ namespace FPGADeveloperTools.WaveformDesignerAndAnalyzer.View
     /// </summary>
     public partial class WaveformDesignerView : UserControl
     {
-        private WaveformDesignerViewModel wfdVM;
-        private BackgroundWorker bwD;
+        private WaveformDesignerViewModel wfdVM;        
 
         public WaveformDesignerView()
         {
-            InitializeComponent();
-            this.bwD = new BackgroundWorker();
-            this.bwD.DoWork += BwD_DoWork;
-            this.bwD.RunWorkerCompleted += BwD_RunWorkerCompleted;
-            this.wfdVM = new WaveformDesignerViewModel(new WaveformDesigner());
+            InitializeComponent();            
+            this.wfdVM = new WaveformDesignerViewModel(new WaveformDesigner(), this);
             this.DataContext = this.wfdVM;
             design.Style = (Style)FindResource(typeof(Button));
             design.Template = (ControlTemplate)FindResource("btnTmplt");
@@ -42,49 +37,7 @@ namespace FPGADeveloperTools.WaveformDesignerAndAnalyzer.View
             this.wfdQ.ResetAllAxes();
             this.wfdF.ResetAllAxes();
             this.splashD.Visibility = Visibility.Hidden;
-        }
-
-        private void BwD_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            this.wfdI.ResetAllAxes();
-            this.wfdQ.ResetAllAxes();
-            this.wfdF.ResetAllAxes();
-            this.splashD.Visibility = Visibility.Hidden;
-            this.desInfoBlock.Text = DateTime.Now.ToLongTimeString() + " Waveform designed.";
-        }
-
-        private void BwD_DoWork(object sender, DoWorkEventArgs e)
-        {
-            this.wfdVM.Design();
-        }
-
-        private void export_Click(object sender, RoutedEventArgs e)
-        {
-            Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
-            dlg.Filter = "Text File|*.txt";
-            dlg.Title = "Export Waveform";
-            dlg.FileName = (this.wfdVM.Type.Contains("Sine") ?
-                            ("sine_" + (this.wfdVM.Freq / 1000000).ToString("f2").Replace(".", "p").Replace(",", "p") + "_" + (this.wfdVM.Fs / 1000000).ToString("f2").Replace(".", "p").Replace(",", "p") + "_" + this.wfdVM.RMS.ToString().Replace(".", "p").Replace(",", "p") + "_" + (this.wfdVM.LengthTime * 1000).ToString().Replace(",", "p").Replace(".", "p") + "ms.txt") :
-                            "waveform.txt");
-            dlg.ShowDialog();
-
-            if (dlg.FileName != "")
-            {
-                this.wfdVM.ExportTxt(dlg.FileName);
-                this.wfdI.ResetAllAxes();
-                this.wfdQ.ResetAllAxes();
-                this.wfdF.ResetAllAxes();
-
-                this.desInfoBlock.Text = DateTime.Now.ToLongTimeString() + " Waveform exported successfully.";
-            }
-
-        }
-
-        private void design_Click(object sender, RoutedEventArgs e)
-        {
-            this.splashD.Visibility = Visibility.Visible;
-            this.bwD.RunWorkerAsync();
-        }
+        }    
 
         private void TextBox_GotFocus(object sender, RoutedEventArgs e)
         {

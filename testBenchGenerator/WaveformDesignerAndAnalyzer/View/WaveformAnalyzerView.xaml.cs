@@ -3,7 +3,6 @@ using FPGADeveloperTools.WaveformDesignerAndAnalyzer.Model;
 using FPGADeveloperTools.WaveformDesignerAndAnalyzer.ViewModel;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -15,26 +14,18 @@ namespace FPGADeveloperTools.WaveformDesignerAndAnalyzer.View
     /// </summary>
     public partial class WaveformAnalyzerView : UserControl
     {
-        private WaveformAnalyzerViewModel wfaVM;
-        private BackgroundWorker bwA;
-        private BackgroundWorker bwAA;
+        private WaveformAnalyzerViewModel wfaVM;        
 
         public WaveformAnalyzerView()
         {
             InitializeComponent();
-            this.wfaVM = new WaveformAnalyzerViewModel(new WaveformAnalyzer());
+            this.wfaVM = new WaveformAnalyzerViewModel(new WaveformAnalyzer(), this);
             import.Style = (Style)FindResource(typeof(Button));
             import.Template = (ControlTemplate)FindResource("btnTmplt");
             anType.Style = (Style)FindResource("ComboBoxFlatStyle");
             anRadix.Style = (Style)FindResource("ComboBoxFlatStyle");
             anDel.Style = (Style)FindResource("ComboBoxFlatStyle");
-            this.DataContext = this.wfaVM;
-            this.bwA = new BackgroundWorker();
-            this.bwAA = new BackgroundWorker();
-            this.bwA.DoWork += BwA_DoWork;
-            this.bwAA.DoWork += BwAA_DoWork;
-            this.bwA.RunWorkerCompleted += BwA_RunWorkerCompleted;
-            this.bwAA.RunWorkerCompleted += BwAA_RunWorkerCompleted;
+            this.DataContext = this.wfaVM;            
             this.anType.SelectedIndex = 0;
             this.anRadix.SelectedIndex = 0;
             this.anDel.SelectedIndex = 0;
@@ -43,34 +34,7 @@ namespace FPGADeveloperTools.WaveformDesignerAndAnalyzer.View
             this.wfaF.ResetAllAxes();
             this.splashA.Visibility = Visibility.Hidden;
             this.splashAA.Visibility = Visibility.Hidden;
-        }
-
-        private void BwAA_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            this.splashAA.Visibility = Visibility.Hidden;
-            this.anInfoBlock.Text = DateTime.Now.ToLongTimeString() + " Waveform analyzed.";
-        }
-
-        private void BwAA_DoWork(object sender, DoWorkEventArgs e)
-        {
-            this.wfaVM.Analyze();
-        }
-
-        private void BwA_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            this.wfaI.ResetAllAxes();
-            this.wfaQ.ResetAllAxes();
-            this.wfaF.ResetAllAxes();
-            this.splashA.Visibility = Visibility.Hidden;
-            this.anInfoBlock.Text = DateTime.Now.ToLongTimeString() + " Waveform imported successfully.";
-            this.splashAA.Visibility = Visibility.Visible;
-            this.bwAA.RunWorkerAsync();
-        }
-
-        private void BwA_DoWork(object sender, DoWorkEventArgs e)
-        {
-            this.wfaVM.Import();
-        }
+        }       
 
         private void TextBox_GotFocus(object sender, RoutedEventArgs e)
         {
@@ -157,32 +121,6 @@ namespace FPGADeveloperTools.WaveformDesignerAndAnalyzer.View
             }
         }
 
-        private void import_Click(object sender, RoutedEventArgs e)
-        {
-            // Create OpenFileDialog 
-            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
-
-
-
-            // Set filter for file extension and default file extension 
-            dlg.DefaultExt = ".txt";
-            dlg.Filter = "txt Files (*.txt)|*.txt";
-
-
-            // Display OpenFileDialog by calling ShowDialog method 
-            Nullable<bool> result = dlg.ShowDialog();
-
-
-            // Get the selected file name and display in a TextBox 
-            if (result == true)
-            {
-                // Open document 
-                string filename = dlg.FileName;
-                (this.DataContext as WaveformAnalyzerViewModel).Path = filename;
-                this.splashA.Visibility = Visibility.Visible;
-                this.bwA.RunWorkerAsync();
-            }
-        }
 
         private void anRadix_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

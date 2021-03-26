@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Windows.Input;
 using FPGADeveloperTools.Common;
 using FPGADeveloperTools.Common.Model.ModuleFiles;
 using FPGADeveloperTools.Common.ViewModel;
 using FPGADeveloperTools.Common.ViewModel.ModuleFiles;
 using FPGADeveloperTools.Common.ViewModel.Ports;
 using FPGADeveloperTools.Common.ViewModel.TestCases;
+using FPGADeveloperTools.NewTCWindow.View;
+using FPGADeveloperTools.NewTCWindow.ViewModel;
 using FPGADeveloperTools.TestbenchGenerator.Model;
+using FPGADeveloperTools.TestbenchGenerator.View;
 
 namespace FPGADeveloperTools.TestbenchGenerator.ViewModel
 {
@@ -14,6 +18,11 @@ namespace FPGADeveloperTools.TestbenchGenerator.ViewModel
     {
         private ModuleFileViewModel moduleFile;
         private TestCaseViewModel selectedTC;
+        private ICommand generateCommand;
+        private ICommand addCommand;
+        private ICommand removeCommand;
+        private ICommand initCommand;
+        private GeneratorView view;
         private string problemAddToolTip;
         private string problemRemoveToolTip;
         private string problemGenerateToolTip;
@@ -150,8 +159,105 @@ namespace FPGADeveloperTools.TestbenchGenerator.ViewModel
             get { return !this.CanGenerate; }
         }
 
-        public GeneratorViewModel(string modulePath)
-        {            
+        public ICommand GenerateCommand
+        {
+            get { return this.generateCommand; }
+            set { this.generateCommand = value; OnPropertyChanged("GenerateCommand"); }
+        }
+
+        public ICommand AddCommand
+        {
+            get { return this.addCommand; }
+            set { this.addCommand = value; OnPropertyChanged("AddCommand"); }
+        }
+
+        public ICommand RemoveCommand
+        {
+            get { return this.removeCommand; }
+            set { this.removeCommand = value; OnPropertyChanged("RemoveCommand"); }
+        }
+
+        public ICommand InitCommand
+        {
+            get { return this.initCommand; }
+            set { this.initCommand = value; OnPropertyChanged("InitCommand"); }
+        }
+
+        public GeneratorViewModel(GeneratorView view)
+        {
+            this.view = view;            
+            this.GenerateCommand = new RelayCommand(new Action<object>(this.Generate));
+            this.AddCommand = new RelayCommand(new Action<object>(this.AddTC));
+            this.RemoveCommand = new RelayCommand(new Action<object>(this.RemoveTC));
+            this.InitCommand = new RelayCommand(new Action<object>(this.Init));
+            this.OnPropertyChanged("CanAdd"); this.OnPropertyChanged("CanAddN");
+            this.OnPropertyChanged("CanRemove"); this.OnPropertyChanged("CanRemoveN");
+            this.OnPropertyChanged("CanGenerate"); this.OnPropertyChanged("CanGenerateN");
+        }
+
+        public void Generate(object obj)
+        {
+            bool result = this.GenerateFile();
+
+            this.view.infoBlock.Text = result ? DateTime.Now.ToLongTimeString() + " Testbench file generated successfully." : DateTime.Now.ToLongTimeString() + " Error - testbench file not generated.";
+        }
+
+        public bool GenerateFile()
+        {
+            string tbFilePath = String.Empty;
+            if (this.ModuleFile is VerilogModuleFileViewModel)
+                tbFilePath = this.ModuleFile.Path.Replace(".sv", "_tb.sv").Replace(".v", "_tb.sv");
+            else
+                tbFilePath = this.ModuleFile.Path.Replace(".vhd", "_tb.sv");
+
+            FileGen file = new FileGen(this.ModuleFile.ModuleFile, tbFilePath);
+
+            return file.GenerateFile();
+        }
+
+        public void AddTC(object obj)
+        {
+            NewTCView newTCWindow = new NewTCView(new NewTCViewModel(this.ModuleFile));
+            newTCWindow.ShowDialog();
+            this.TestCases = ((NewTCViewModel)newTCWindow.DataContext).ModuleFileVM.TestCases;
+            this.view.datains.Items.Refresh();
+        }
+
+        public void RemoveTC(object obj)
+        {
+            this.TestCases.Remove(this.SelectedTestCase);
+            this.SelectedTestCase = null;
+            this.view.datains.Items.Refresh();
+        }
+
+        public void Init(object obj)
+        {
+            // Create OpenFileDialog 
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+
+
+
+            // Set filter for file extension and default file extension 
+            dlg.DefaultExt = ".sv";
+            dlg.Filter = "SystemVerilog Files (*.sv)|*.sv|Verilog Files (*.v)|*.v|VHDL Files (*.vhd)|*.vhd";
+
+
+            // Display OpenFileDialog by calling ShowDialog method 
+            Nullable<bool> result = dlg.ShowDialog();
+
+
+            // Get the selected file name and display in a TextBox 
+            if (result == true)
+            {
+                // Open document 
+                string filename = dlg.FileName;
+                this.LoadModule(filename);
+                this.view.dutFile.Text = filename;
+            }
+        }
+
+        public void LoadModule(string modulePath)
+        {
             if (modulePath != null && modulePath != String.Empty)
             {
                 if (modulePath.EndsWith(".sv") || modulePath.EndsWith(".v"))
@@ -164,22 +270,6 @@ namespace FPGADeveloperTools.TestbenchGenerator.ViewModel
                 this.OnPropertyChanged("Outputs");
                 this.OnPropertyChanged("Parameters");
             }
-            this.OnPropertyChanged("CanAdd"); this.OnPropertyChanged("CanAddN");
-            this.OnPropertyChanged("CanRemove"); this.OnPropertyChanged("CanRemoveN");
-            this.OnPropertyChanged("CanGenerate"); this.OnPropertyChanged("CanGenerateN");
-        }
-
-        public bool Generate()
-        {
-            string tbFilePath = String.Empty;
-            if (this.ModuleFile is VerilogModuleFileViewModel)
-                tbFilePath = this.ModuleFile.Path.Replace(".sv", "_tb.sv").Replace(".v", "_tb.sv");
-            else
-                tbFilePath = this.ModuleFile.Path.Replace(".vhd", "_tb.sv");
-
-            FileGen file = new FileGen(this.ModuleFile.ModuleFile, tbFilePath);
-
-            return file.GenerateFile();
         }
     }
 }

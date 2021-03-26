@@ -161,10 +161,10 @@
                 <ComboBox x:Name="desDel" Grid.Row="8" Grid.Column="3" BorderThickness="1" ItemsSource="{Binding Delimiters}" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Margin="10,0" SelectionChanged="desDel_SelectionChanged"/>
 
                 <StackPanel Grid.Column="0" Grid.ColumnSpan="2" ToolTip="{Binding ProblemDesignToolTip}" ToolTipService.IsEnabled="{Binding CanDesignN}" Grid.Row="9" VerticalAlignment="Center" HorizontalAlignment="Center">
-                    <Button x:Name="design" Content="Design" Click="design_Click" IsEnabled="{Binding CanDesign}"/>
+                    <Button x:Name="design" Content="Design" Command="{Binding DesignCommand}" IsEnabled="{Binding CanDesign}"/>
                 </StackPanel>
                 <StackPanel Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="9" ToolTip="{Binding ProblemExportToolTip}" ToolTipService.IsEnabled="{Binding CanExportN}" VerticalAlignment="Center" HorizontalAlignment="Center">
-                    <Button x:Name="export" Content="Export" Click="export_Click" IsEnabled="{Binding CanExport}"/>
+                    <Button x:Name="export" Content="Export" Command="{Binding ExportCommand}" IsEnabled="{Binding CanExport}"/>
                 </StackPanel>
 
             </Grid>

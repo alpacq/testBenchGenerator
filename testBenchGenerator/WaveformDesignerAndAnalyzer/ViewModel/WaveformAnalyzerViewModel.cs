@@ -3,13 +3,20 @@ using System;
 using System.Collections.Generic;
 using FPGADeveloperTools.Common;
 using FPGADeveloperTools.WaveformDesignerAndAnalyzer.Model;
+using System.Windows.Input;
+using FPGADeveloperTools.WaveformDesignerAndAnalyzer.View;
+using System.Windows;
+using System.ComponentModel;
 
 namespace FPGADeveloperTools.WaveformDesignerAndAnalyzer.ViewModel
 {
     public class WaveformAnalyzerViewModel : WaveformProcessorViewModel, IImportable
     {        
         private string problemToolTip;
-
+        private WaveformAnalyzerView view;
+        private ICommand importCommand;
+        private BackgroundWorker bwA;
+        private BackgroundWorker bwAA;
         private WaveformAnalyzer model;
 
         public override WaveformProcessor Model
@@ -134,9 +141,16 @@ namespace FPGADeveloperTools.WaveformDesignerAndAnalyzer.ViewModel
             get { return !this.CanImport; }
         }        
 
-        public WaveformAnalyzerViewModel(WaveformAnalyzer model)
+        public ICommand ImportCommand
+        {
+            get { return this.importCommand; }
+            set { this.importCommand = value; OnPropertyChanged("ImportCommand"); }
+        }
+
+        public WaveformAnalyzerViewModel(WaveformAnalyzer model, WaveformAnalyzerView view)
         {
             this.model = model;
+            this.view = view;
             this.IPoints = new List<DataPoint>();
             this.QPoints = new List<DataPoint>();
             this.FPoints = new List<DataPoint>();
@@ -148,6 +162,13 @@ namespace FPGADeveloperTools.WaveformDesignerAndAnalyzer.ViewModel
             {
                 "' '","','"
             };
+            this.ImportCommand = new RelayCommand(new Action<object>(this.Import));
+            this.bwA = new BackgroundWorker();
+            this.bwAA = new BackgroundWorker();
+            this.bwA.DoWork += BwA_DoWork;
+            this.bwAA.DoWork += BwAA_DoWork;
+            this.bwA.RunWorkerCompleted += BwA_RunWorkerCompleted;
+            this.bwAA.RunWorkerCompleted += BwAA_RunWorkerCompleted;
             OnPropertyChanged("Radixes");
             OnPropertyChanged("Delimiters");
             OnPropertyChanged("IPoints");
@@ -155,7 +176,61 @@ namespace FPGADeveloperTools.WaveformDesignerAndAnalyzer.ViewModel
             OnPropertyChanged("FPoints");
         }
 
-        public void Import()
+        private void BwAA_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            this.view.splashAA.Visibility = Visibility.Hidden;
+            this.view.anInfoBlock.Text = DateTime.Now.ToLongTimeString() + " Waveform analyzed.";
+        }
+
+        private void BwAA_DoWork(object sender, DoWorkEventArgs e)
+        {
+            this.Analyze();
+        }
+
+        private void BwA_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            this.view.wfaI.ResetAllAxes();
+            this.view.wfaQ.ResetAllAxes();
+            this.view.wfaF.ResetAllAxes();
+            this.view.splashA.Visibility = Visibility.Hidden;
+            this.view.anInfoBlock.Text = DateTime.Now.ToLongTimeString() + " Waveform imported successfully.";
+            this.view.splashAA.Visibility = Visibility.Visible;
+            this.bwAA.RunWorkerAsync();
+        }
+
+        private void BwA_DoWork(object sender, DoWorkEventArgs e)
+        {
+            this.ImportFile();
+        }
+
+        public void Import(object obj)
+        {
+            // Create OpenFileDialog 
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+
+
+
+            // Set filter for file extension and default file extension 
+            dlg.DefaultExt = ".txt";
+            dlg.Filter = "txt Files (*.txt)|*.txt";
+
+
+            // Display OpenFileDialog by calling ShowDialog method 
+            Nullable<bool> result = dlg.ShowDialog();
+
+
+            // Get the selected file name and display in a TextBox 
+            if (result == true)
+            {
+                // Open document 
+                string filename = dlg.FileName;
+                this.Path = filename;
+                this.view.splashA.Visibility = Visibility.Visible;
+                this.bwA.RunWorkerAsync();
+            }
+        }
+
+        public void ImportFile()
         {
             this.model.ReadFile();
 

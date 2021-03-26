@@ -1,13 +1,16 @@
-﻿using FPGADeveloperTools.Common.Model.Ports;
+﻿using FPGADeveloperTools.Common;
+using FPGADeveloperTools.Common.Model.Ports;
 using FPGADeveloperTools.Common.Model.TestCases;
 using FPGADeveloperTools.Common.ViewModel;
 using FPGADeveloperTools.Common.ViewModel.ModuleFiles;
 using FPGADeveloperTools.Common.ViewModel.Ports;
 using FPGADeveloperTools.Common.ViewModel.TestCases;
 using FPGADeveloperTools.NewTCWindow.Model;
+using FPGADeveloperTools.NewTCWindow.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Input;
 
 namespace FPGADeveloperTools.NewTCWindow.ViewModel
 {
@@ -27,6 +30,14 @@ namespace FPGADeveloperTools.NewTCWindow.ViewModel
         private List<string> seqs;
         private List<string> radixes;
         private string problemToolTip;
+        private ICommand addCommand;
+        private NewTCView view;
+
+        public NewTCView View
+        {
+            get { return this.view; }
+            set { this.view = value; }
+        }
 
         public ModuleFileViewModel ModuleFileVM
         {
@@ -183,6 +194,13 @@ namespace FPGADeveloperTools.NewTCWindow.ViewModel
         {
             get { return !this.CanSave; }
         }
+
+        public ICommand AddCommand
+        {
+            get { return this.addCommand; }
+            set { this.addCommand = value; OnPropertyChanged("AddCommand"); }
+        }
+
         public NewTCViewModel(ModuleFileViewModel moduleFileVM)
         {
             this.Seqs = new List<string>()
@@ -193,6 +211,7 @@ namespace FPGADeveloperTools.NewTCWindow.ViewModel
             {
                 "Decimal", "Hexadecimal", "Floating Point"
             };
+            this.AddCommand = new RelayCommand(new Action<object>(this.Add));
             this.moduleFileVM = moduleFileVM;
             this.Ins = new List<PortSelViewModel>();
             foreach (PortViewModel port in this.Inputs)
@@ -243,7 +262,7 @@ namespace FPGADeveloperTools.NewTCWindow.ViewModel
             this.InputPath = this.TCVM.DataVector;
         }
 
-        public void Add()
+        public void Add(object obj)
         {
             if (this.TCVM == null)
             {
@@ -294,6 +313,7 @@ namespace FPGADeveloperTools.NewTCWindow.ViewModel
                 this.TCVM.ValidOut = this.ValidOut.Port;
                 this.TCVM.VldSeq = this.Seq;
             }
+            this.View.Close();
         }
 
         public void CheckIfCanSave()

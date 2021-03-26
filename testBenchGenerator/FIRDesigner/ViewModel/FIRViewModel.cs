@@ -5,15 +5,20 @@ using OxyPlot;
 using FPGADeveloperTools.Common;
 using FPGADeveloperTools.FIRDesigner.Model;
 using FPGADeveloperTools.Common.ViewModel;
+using System.Windows.Input;
+using FPGADeveloperTools.FIRDesigner.View;
 
 namespace FPGADeveloperTools.FIRDesigner.ViewModel
 {
     public class FIRViewModel : ViewModelBase, IDesignable, IExportable
     {
         private FIR fir;
+        private FIRView view;
         private string problemToolTip;
         private string problemExportToolTip;
         private string plotType;
+        private ICommand designCommand;
+        private ICommand exportCommand;
 
         public FIR FIR
         {
@@ -146,18 +151,35 @@ namespace FPGADeveloperTools.FIRDesigner.ViewModel
         }
 
         public IList<DataPoint> WinRespPoints { get; private set; }
+
         public IList<DataPoint> WinChartPoints { get; private set; }
 
         public IList<DataPoint> FIRRespPoints { get; private set; }
 
         public IList<DataPoint> FIRChartPoints { get; private set; }
 
+        public ICommand DesignCommand
+        {
+            get { return this.designCommand; }
+            set { this.designCommand = value; OnPropertyChanged("DesignCommand"); }
+        }
+
+        public ICommand ExportCommand
+        {
+            get { return this.exportCommand; }
+            set { this.exportCommand = value; OnPropertyChanged("ExportCommand"); }
+        }
+
         public string Coeffs
         {
             get 
             {
                 string coeffs = String.Empty;
-                foreach (double coeff in this.WindowedImpulseResponse) coeffs += (Math.Round(coeff * (Math.Pow(2, (this.Bitwidth - 1)))).ToString() + ", ");
+                foreach (double coeff in this.WindowedImpulseResponse)
+                {
+                    double bwVal = Math.Round(coeff * (Math.Pow(2, (this.Bitwidth - 1))));
+                    coeffs += (bwVal.ToString() + ", ");
+                }
                 if(coeffs.Length > 2)
                     coeffs = coeffs.Remove(coeffs.Length - 2);
                 return coeffs;
@@ -273,13 +295,16 @@ namespace FPGADeveloperTools.FIRDesigner.ViewModel
             get { return this.TimeVector != null ? this.TimeVector.LastOrDefault() : 0.0; }
         }
 
-        public FIRViewModel(FIR fir)
+        public FIRViewModel(FIR fir, FIRView view)
         {
             this.fir = fir;
+            this.view = view;
             this.WinRespPoints = new List<DataPoint>();
             this.WinChartPoints = new List<DataPoint>();
             this.FIRRespPoints = new List<DataPoint>();
             this.FIRChartPoints = new List<DataPoint>();
+            this.DesignCommand = new RelayCommand(new Action<object>(this.Design));
+            this.ExportCommand = new RelayCommand(new Action<object>(this.Export));
             OnPropertyChanged("WinChartPoints");
             OnPropertyChanged("WinRespPoints");
             OnPropertyChanged("FIRRespPoints");
@@ -290,7 +315,7 @@ namespace FPGADeveloperTools.FIRDesigner.ViewModel
             OnPropertyChanged("CanDesign");
         }
 
-        public void Design()
+        public void Design(object obj)
         {
             if(this.CanDesign)
                 this.FIR.Update();
@@ -317,6 +342,10 @@ namespace FPGADeveloperTools.FIRDesigner.ViewModel
             OnPropertyChanged("WinRespPoints");
             OnPropertyChanged("Coeffs");
             OnPropertyChanged("CanExport"); OnPropertyChanged("CanExportN");
+            this.view.firChart.ResetAllAxes();
+            this.view.firResp.ResetAllAxes();
+            this.view.winResp.ResetAllAxes();
+            this.view.winChart.ResetAllAxes();
         }
 
         public void UpdateWindow()
@@ -332,6 +361,23 @@ namespace FPGADeveloperTools.FIRDesigner.ViewModel
                     this.WinChartPoints.Add(new DataPoint(this.FrequencyVectorHz[i], this.WinMag[i]));
                 OnPropertyChanged("WinChartPoints");
                 OnPropertyChanged("WinRespPoints");
+            }
+        }
+
+        public void Export(object obj)
+        {
+            Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
+            dlg.Filter = "Text file (*.txt)|*.txt|Xilinx coefficient file (*.coe)|*.coe";
+            dlg.Title = "Export filter coefficients";
+            dlg.ShowDialog();
+
+            if (dlg.FileName != "")
+            {
+                if (dlg.FileName.EndsWith(".txt"))
+                    this.ExportTxt(dlg.FileName);
+                else if (dlg.FileName.EndsWith(".coe"))
+                    this.ExportCoe(dlg.FileName);
+                this.view.infoBlock.Text = DateTime.Now.ToLongTimeString() + "Coefficients exported successfully.";
             }
         }
 

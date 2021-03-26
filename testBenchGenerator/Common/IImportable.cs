@@ -1,9 +1,13 @@
-﻿namespace FPGADeveloperTools.Common
+﻿using System.Windows.Input;
+
+namespace FPGADeveloperTools.Common
 {
     public interface IImportable
     {
         bool CanImport { get; }
 
-        void Import();
+        ICommand ImportCommand { get; set; }
+
+        void Import(object obj);
     }
 }

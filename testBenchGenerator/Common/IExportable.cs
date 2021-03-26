@@ -1,9 +1,13 @@
-﻿namespace FPGADeveloperTools.Common
+﻿using System.Windows.Input;
+
+namespace FPGADeveloperTools.Common
 {
     public interface IExportable
     {
         bool CanExport { get; }
 
-        void ExportTxt(string path);
+        ICommand ExportCommand { get; set; }
+
+        void Export(object obj);
     }
 }

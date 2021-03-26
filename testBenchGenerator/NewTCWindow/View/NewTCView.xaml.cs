@@ -27,6 +27,7 @@ namespace FPGADeveloperTools.NewTCWindow.View
             vipCB.Style = (Style)FindResource("ComboBoxFlatStyle");
             vopCB.Style = (Style)FindResource("ComboBoxFlatStyle");
             this.viewModel = viewModel;
+            this.viewModel.View = this;
             this.DataContext = this.viewModel;
             if (this.viewModel.Clock != null)
                 this.clkCB.SelectedIndex = this.viewModel.Clocks.FindIndex(c => c.Name == this.viewModel.Clock.Name);
@@ -35,12 +36,6 @@ namespace FPGADeveloperTools.NewTCWindow.View
             if (this.viewModel.ValidOut != null)
                 this.vopCB.SelectedIndex = this.viewModel.Outputs.FindIndex(i => i.Name == this.viewModel.ValidOut.Name);
             this.CenterWindowOnScreen();
-        }
-
-        private void add_Click(object sender, RoutedEventArgs e)
-        {
-            this.viewModel.Add();
-            this.Close();
         }
 
         private void cancel_Click(object sender, RoutedEventArgs e)

@@ -256,12 +256,6 @@
         "Entry"
         {
         "MsmKey" = "8:_7485AA9628C1F2EB8E24A4D92B599309"
-        "OwnerKey" = "8:_D12C2E07EB844B4CBAF5A56D52BB9119"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_7485AA9628C1F2EB8E24A4D92B599309"
         "OwnerKey" = "8:_26C14E80C61E72DF181948B9DA14B460"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -419,6 +413,12 @@
         {
         "MsmKey" = "8:_7485AA9628C1F2EB8E24A4D92B599309"
         "OwnerKey" = "8:_52C3CD59CB3BC243BB426AD20CF3A213"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_7485AA9628C1F2EB8E24A4D92B599309"
+        "OwnerKey" = "8:_D12C2E07EB844B4CBAF5A56D52BB9119"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -2105,7 +2105,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:FPGA Developer Tools"
         "ProductCode" = "8:{0EE7001B-8E2D-4202-BCBF-20080E26FBB6}"
-        "PackageCode" = "8:{EEB0367E-5CBB-446E-A03C-C3CD8FFAD0A0}"
+        "PackageCode" = "8:{FFAFD82A-667C-46B0-9686-E9E65930C951}"
         "UpgradeCode" = "8:{E451C52A-E778-4F7A-9E11-1F819F6405F0}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
@@ -2236,7 +2236,7 @@
             "Target" = "8:_D12C2E07EB844B4CBAF5A56D52BB9119"
             "Folder" = "8:_8FA6BEC869784EFCA786EBBF6B2B367D"
             "WorkingFolder" = "8:_B7285D79E9164B95B80452A3A7F140B9"
-            "Icon" = "8:"
+            "Icon" = "8:_4D29DDCDA6194FC485BC1612037A3894"
             "Feature" = "8:"
             }
         }
@@ -2640,7 +2640,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_D12C2E07EB844B4CBAF5A56D52BB9119"
             {
-            "SourcePath" = "8:"
+            "SourcePath" = "8:..\\testBenchGenerator\\obj\\Release\\FPGADeveloperTools.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_B7285D79E9164B95B80452A3A7F140B9"

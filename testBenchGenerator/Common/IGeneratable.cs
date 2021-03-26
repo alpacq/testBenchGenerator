@@ -1,9 +1,13 @@
-﻿namespace FPGADeveloperTools.Common
+﻿using System.Windows.Input;
+
+namespace FPGADeveloperTools.Common
 {
     public interface IGeneratable
     {
         bool CanGenerate { get; }
 
-        bool Generate();
+        ICommand GenerateCommand { get; set; }
+
+        void Generate(object obj);
     }
 }
